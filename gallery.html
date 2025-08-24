@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Slideshow with Manual Controls</title>
+    <style>
+        * { 
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Verdana', sans-serif;
+        }
+        
+        body {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+        }
+
+        /* Header Styling */
+        .header {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .department-name {
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .qutrix {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-top: 5px;
+        }
+
+        /* Slideshow container */
+        .slideshow-container {
+            max-width: 800px;
+            height: 400px;
+            position: relative;
+            margin: 20px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background-color: #fff;
+        }
+
+        .mySlides {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        /* Image Styling - Fit Inside Box */
+        .mySlides img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+            background-color: white;
+        }
+
+        /* Caption text */
+        .text {
+            color: white;
+            font-size: 16px;
+            padding: 10px;
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        /* Number text (1/3 etc) */
+        .numbertext {
+            color: white;
+            font-size: 12px;
+            padding: 8px;
+            position: absolute;
+            top: 0;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 5px;
+        }
+
+        /* Dots/bullets/indicators */
+        .dot-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .dot {
+            height: 12px;
+            width: 12px;
+            margin: 0 4px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+            cursor: pointer;
+        }
+
+        .active {
+            background-color: #ffcc00;
+        }
+
+        /* Buttons for manual control */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: auto;
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.3s;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+        }
+
+        .prev {
+            left: 10px;  /* Move it fully to the left */
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .prev:hover, .next:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="department-name">PG & Research Department of Computer Science</div><br>
+        <div class="qutrix">Qutrix Gallery</div><br>
+    </div>
+
+    <div class="slideshow-container">
+
+        <div class="mySlides fade">
+            <div class="numbertext">1 / 3</div>
+            <img src="images/College_logo.png" alt="College Logo">
+            <div class="text">Our College Logo</div>
+        </div>
+
+        <div class="mySlides fade">
+            <div class="numbertext">2 / 3</div>
+            <img src="images/College_name-removebg-preview.jpg" alt="College Name">
+            <div class="text">Our College Name</div>
+        </div>
+
+        <div class="mySlides fade">
+            <div class="numbertext">3 / 3</div>
+            <img src="images/lets-dance-neon-signs-style-text-free-vector.jpg" alt="Qutrix Event">
+            <div class="text">Qutrix - Tech Fest</div>
+        </div>
+
+        <!-- Manual Controls -->
+        <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+        <a class="next" onclick="changeSlide(1)">&#10095;</a>
+
+    </div>
+
+    <div class="dot-container">
+        <span class="dot" onclick="currentSlide(1)"></span> 
+        <span class="dot" onclick="currentSlide(2)"></span> 
+        <span class="dot" onclick="currentSlide(3)"></span> 
+    </div>
+
+    <script>
+        let slideIndex = 0;
+        let autoSlide;
+
+        function showSlides() {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+
+            autoSlide = setTimeout(showSlides, 2000); // Change image every 2 seconds
+        }
+
+        function changeSlide(n) {
+            clearTimeout(autoSlide); // Stop auto-slide when manually changed
+            slideIndex += n;
+            let slides = document.getElementsByClassName("mySlides");
+            if (slideIndex > slides.length) {slideIndex = 1}
+            if (slideIndex < 1) {slideIndex = slides.length}
+            updateSlides();
+        }
+
+        function currentSlide(n) {
+            clearTimeout(autoSlide);
+            slideIndex = n;
+            updateSlides();
+        }
+
+        function updateSlides() {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+
+            autoSlide = setTimeout(showSlides, 2000);
+        }
+
+        showSlides();
+    </script>
+
+</body>
+</html>

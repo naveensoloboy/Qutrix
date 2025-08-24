@@ -1,0 +1,46 @@
+/* Time Schedule Overlay */
+.timesheduleoverlay {
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+}
+
+/* Time Schedule Popup */
+.timeshedulepopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    z-index: 20;
+    text-align: center;
+}
+
+.timeshedule {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 8px;
+}
+
+.tclosebtn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.tclosebtn:hover {
+    background: darkred;
+}

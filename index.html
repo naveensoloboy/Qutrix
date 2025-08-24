@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qutrix </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!--Floating Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <link rel="stylesheet" href="style/index.css">
+    
+    <!-- Stylesheet for Demo Video -->
+    <style>
+        
+        
+        
+        .posterimg{
+            border-radius:20px;
+            position:relative;
+            top:30px;
+            left:10%;
+            width:80%;
+            height:fit-content;
+        }
+
+        .posterimg .simg{
+            border-radius:10px;
+            width:100%;
+            height:100%
+        }
+        
+
+      
+
+
+
+
+    </style>
+
+</head>
+<body>
+
+
+            <!--College Name-->
+            <div class="main">
+                <img class="clg-logo" src="images/College_logo.png">
+                <img class="clg-name" src="images/College_name-whiite_bg.jpg">
+            </div>
+
+            <!-- <hr class="firsthr" style="background-color:black;margin-top:5px;margin-bottom:0px;height:2px;"> -->
+
+
+            <!-- Department Name -->
+            <div class="department-name">PG & Research Department of Computer Science</div>
+
+            <!-- GAIT -->
+            <div class="gait">GAIT (GobiArts Association of Information Technology)</div>
+
+            <!-- Navigation Bar -->
+            <nav class="navbar">
+                <a href="admin_login_form.html" class="logo">QUTRIX</a>
+            
+                <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+            
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="index_about.html">About</a></li>
+                    <li><a href="card.html">Events</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="#footer">Contact</a></li>
+                </ul>
+            </nav>
+
+ 
+            <div class="posterimg">
+                <img class="simg" src="images/img01.jpg" alt="Image 1">
+            </div>
+        
+        
+        
+            <div class="btns">
+                <button class="register-btn"><a href="card.html">Register</a></button>
+                <button id="openVideoPopup" class="rlink">How to REGISTER</button>
+            </div>
+
+            <!-- The popup overlay -->
+            <div id="videoPopup" class="popup-overlay">
+                <div class="popup-content">
+                    <span id="closePopup" class="close-btn">&times;</span>
+                    <video controls>
+                        <source src="register.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+
+            <div class="compliments">
+                <ul type="none">
+                    <li><span>i.</span><span> Secure Your Spot For Free.</span></li>
+                    <li><span>ii.</span><span> Complimentary Meals & Refreshments Included.</span></li>
+                    <li><span>iii.</span><span> Receive Your Official Certificate of Participation.</span></li>
+                </ul>
+            </div>
+
+            <marquee><b>Website Designed By Mr. S.Naveen (22CS048)</b></marquee>
+
+      
+        <!--Footer-->
+<footer class="footer" id="footer">
+    <div class="contact">
+        <h3>Contact Us</h3>
+        <p>Dr. P. Prabhusundhar, Assistant Professor</p>
+        <p>GAIT Co-ordinator, Department of Computer Science</p>
+        <p>Gobi Arts & Science College (Autonomous)</p>
+        <p>Karattadipalayam (PO), Gobichettipalayam - 638 453</p>
+        <p><strong>Contact No:</strong> <a href="tel:+919600877997">96008 77997</a></p>
+        <p><strong>Email:</strong> <a href="mailto:example@example.com">example@example.com</a></p>
+    </div>
+
+    <!-- Social Media Icons -->
+    <div class="social-icons">
+        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+    </div>
+
+    <div class="copyright">
+        <p>&copy; 2025 Qutrix. All rights reserved.</p>
+    </div>
+</footer>
+<!-- End of Footer -->
+
+    <script type="text/javascript">
+        const openPopup = document.getElementById('openVideoPopup');
+        const videoPopup = document.getElementById('videoPopup');
+        const closePopup = document.getElementById('closePopup');
+
+        // Open the popup
+        openPopup.addEventListener('click', function() {
+            videoPopup.style.display = 'block';
+        });
+
+        // Close the popup
+        closePopup.addEventListener('click', function() {
+            videoPopup.style.display = 'none';
+        });
+
+        // Close the popup when clicking outside of the content
+        window.addEventListener('click', function(event) {
+            if (event.target === videoPopup) {
+                videoPopup.style.display = 'none';
+            }
+        });
+
+
+     
+        function toggleMenu() {
+            document.querySelector(".nav-links").classList.toggle("active");
+        }
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,360 @@
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1.0">
+      <title>Qutrix Events</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity=" sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="  anonymous" referrerpolicy="no-referrer" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+      <!--=============== CSS ===============-->
+      <link rel="stylesheet" href="style/cardstyle.css">
+      <link rel="stylesheet" href="style/rulesstyle.css">
+      <link rel="stylesheet" href="style/timeshedule.css">
+      <style>
+         .general-div{
+            color: #002147;
+            border: 3px solid #002147;
+            border-radius: 20px;
+            width: fit-content;
+            margin:30px 15%;
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+         }
+
+        
+      </style>
+   </head>
+   <body>
+
+      <!--College Name-->
+      <div class="main">
+         <img class="clg-logo" src="images/College_logo.png">
+         <img class="clg-name" src="images/College_name-whiite_bg.jpg">
+     </div>
+
+      <!-- Department Name -->
+        <div class="department-name">PG & Research Department of Computer Science</div>
+
+        <!-- GAIT -->
+        <div class="gait">GAIT (GobiArts Association of Information Technology)</div>
+
+<!-- Navigation Bar -->
+<nav class="navbar">
+    <a href="#" class="logo">QUTRIX</a>
+
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="card_about.html">About Us</a></li>
+        <li><a href="#" onclick="showTimeSchedule()">Time Schedule</a></li>
+    </ul>
+</nav>
+      
+      <!-- Time Schedule Popup -->
+<div class="timesheduleoverlay" id="timesheduleoverlay" onclick="tclose()"></div>
+<div class="timeshedulepopup" id="timeshedulepopup">
+    <img class="timeshedule" src="images/Time_shedule_fixed.jpeg">
+    <button class="tclosebtn" onclick="tclose()">Close</button>
+</div>
+
+      <div class="general-div">
+         <ul>
+            <h2>GENERAL RULES</h2>
+            <li>No Registration Fee.</li>
+            <li>Participation Certificate should be provided.</li>
+            <li>Participants should bring their Student Id Card and Bonafide-Certificate(Optional).</li>
+            <li>Spot registration is also allowed up to 9:00a.m.</li>
+            <li>Electronic devices are strictly prohibited inside the Campus(as per college rules).</li>
+            <li>Judges decision will be final and binding.</li>
+            <li>If college has various departments,only 5 Members per Department is Permitted to participate in events.</li>
+            <li>Each Participant should participate in only <strong>two</strong> events.</li>
+            <li><strong>Web Design Prelims, Quiz Prelims</strong> will take place <strong>simultaneously.</strong> </li>
+            <li><strong>Word Hunt Prelims, Software Contest Prelims</strong> will takes place <strong>simultaneously.</strong></li>
+            <li><strong> Dance</strong> participants should participate only in <strong> dance and paper presentation</strong>.They will not be allowed to participate in any other events.</li>
+            <li>After registration you are redirected to WhatApp group link page. Particpants are instructed to join their respective event WhatsApp group for further details and queries.</li>
+            <li>If you face any difficulties while registering , kindly contact us (Mr. T.Nitish-9952877911, Mr. K.Sabareeswaran-8111063623, Mr. M.Gokula Kannan-96886 57903, Mr. S.Amirthalingam-63829 19606).</li>
+            <ul>
+               <h3>PAPER PRESENTATION TOPICS</h3>
+               <li>AI in health care</li>
+               <li>Cyber Security for remote work</li>
+               <li>Smart Homes and IoT</li>
+               <li>Serverless Computing</li>
+               <li>IoT in Agriculture</li>
+               <li>AI and it's impact on various industries</li>
+            </ul>
+         </ul>
+      </div>
+
+      
+
+
+
+
+
+      <div id=main>
+   
+         <div class="rules">
+            <div class="pprule" id="pprule">
+               <div class="poverlay"></div>
+               <div class="ppopup">
+                     <u>PAPER PRESENTATION :</u>
+                     <ul>
+                       <li>One Team Per Department.</li>
+                       <li>Maximum of Three Participants per team (Equal participation is must).</li>
+                       <li>The paper must be IEEE format.</li>
+                       <li>Full paper of minimum 6 pages with an abstract, not exceeding 250 words along with Hard 
+                           Copies and One Soft copy through mail (qutrix2k24ppt@gmail.com) should be sent.</li>
+                       <li>Title, Participants Name, Mobile Number, E-mail id, College name (for further communication) </li>
+                       <li>Paper Size :A4, Font Name: Times New Roman, Font Size: Heading-14, Sub Heading: 12+BOLD, 
+                           Paragraph -12, Line spacing -1.5</li>
+                       <li> Paper should reach us on or before 5<sup>th</sup> September, 2024 along with a Bonafide Certificate</li>
+                       <li>Selected teams will be informed through e-mail on 9<sup>th</sup> September 2024. Selected team should 
+                           participate in the event and should give a Power Point Presentation at allocated time</li>
+                       <li>For Queries : 99440 68447</li>
+                        <ul >
+                           <h3>TOPICS</h3>
+                           <li>AI in health care</li>
+                           <li>Cyber Security for remote work</li>
+                           <li>Smart Homes and IoT</li>
+                           <li>Serverless Computing</li>
+                           <li>IoT in Agriculture</li>
+                           <li>AI and it's impact on various industries</li>
+                        </ul>
+                     </ul>
+                     <a href="event_registration_form.html"><button class="registerbtn" onclick="showRegister()">Register</button></a>
+                     <button class="closerulebtn" onclick="pcloserule()">Close</button>
+                     
+               </div>
+            </div>
+      
+            <div class="qrule">
+               <div class="qoverlay"></div>
+               <div class="qpopup">
+                   <u>Quiz :</u>
+                   <ul>
+                       <li>One team per Department.</li>
+                       <li>Two members per team.</li>
+                       <li>Prelims will be conducted.</li>
+                       <li>Five Teams will be selected for finals.</li>
+                       <li>FINALS: Technical Rounds.</li>
+                       <li>For Queries : 95850 24168</li>
+                   </ul>
+                   <a href="event_registration_form.html"><button class="registerbtn">Register</button></a>
+                   <button class="closerulebtn" onclick="qcloserule()">Close</button>
+               </div>
+            </div>
+      
+            <div class="whrule">
+             <div class="whoverlay"></div>
+             <div class="whpopup">
+                <u>WORD HUNT</u>
+                <ul>
+                    <li>One team per Department.</li>
+                    <li>Two members per team.</li>
+                    <li>Prelims will be conducted.</li>
+                    <li>5 Teams will be Selected to Finals.</li>
+                    <li>FINALS: Technical and Non-Technical Rounds.</li>
+                    <li>For Queries : 75021 01285</li>
+                </ul>
+                <a href="event_registration_form.html"><button class="registerbtn">Register</button></a>
+                <button class="closerulebtn" onclick="whcloserule()">Close</button>
+             </div>
+            </div>
+      
+            <div class="wdrule">
+             <div class="wdoverlay"></div>
+             <div class="wdpopup">
+                <u>WEB DESIGN</u>
+                <ul>
+                    <li>One team per Department.</li>
+                    <li>Two Members per team.</li>
+                    <li>Prelims will be conducted.</li>
+                    <li>5 Teams will be Selected to Finals.</li>
+                    <li>FINALS: Participants need to design a web page(designing tools). The best web page designers within allocated time will be declared as winner.</li>
+                    <li>For Queries : 99440 68447</li>
+                </ul>
+                <a href="event_registration_form.html"><button class="registerbtn">Register</button></a>
+                <button class="closerulebtn" onclick="wdcloserule()">Close</button>
+             </div>
+            </div>
+
+            <div class="scrule">
+               <div class="scoverlay"></div>
+               <div class="scpopup">
+                  <u>SOFTWARE CONTEST</u>
+                  <ul>
+                     <li>One team per Department.</li>
+                     <li>Two Members per team.</li>
+                     <li>Prelims will be conducted. </li>
+                     <li>5 Teams will be Selected to Finals.</li>
+                     <li>FINALS: Participants need to debug the code for the given set of problems In Any Language. The 
+                        one who solves maximum number of problems correctly in the allotted time shall be declared as 
+                        winner.</li>
+                    <li>For Queries : 96774 40870</li>
+                  </ul>
+                  <a href="event_registration_form.html"><button class="registerbtn">Register</button></a>
+                  <button class="closerulebtn" onclick="sccloserule()">Close</button>
+               </div>
+            </div>
+      
+            <div class="mrule">
+               <div class="moverlay"></div>
+               <div class="mpopup">
+                  <u>MARKETING</u>
+                  <ul>
+                    <li>One team per Department.</li>
+                    <li>Three members per team.</li>
+                    <li>Prelims will be conducted.</li>
+                    <li>5 Teams will be Selected to Finals.</li>
+                    <li>5 Minutes for Presentation.</li>
+                    <li>Explore your hidden Talent other than dance.</li>
+                    <li>FINALS: Non-techenical Rounds</li>
+                    <li>For Queries : 89030 95510</li>
+                  </ul>
+                  <a href="event_registration_form.html"><button class="registerbtn">Register</button></a>
+                  <button class="closerulebtn" onclick="mcloserule()">Close</button>
+               </div>
+            </div>
+         
+
+            <div class="dancerule">
+             <div class="danceoverlay"></div>
+             <div class="dancepopup">
+                <u>DANCE (NON-TECHNICAL ROUND)</u>
+                <ul>
+                    <li>Maximum of 4 members per team.</li>
+                    <li>Songs must follow a <b>karaoke</b> theme.</li>
+                    <li>Boys and girls cannot be on the same dance team. Each team must have only boys or only girls.</li>
+                    <li>Proper dress code must be followed and Dance should be decent</li>
+                    <li>Karaoke performance should be appropriate and non-offensive.</li>
+                    <li>The maximum duration of the dance is 5 minutes per team.</li>                    
+                    <li>Register through our website and submit your audio(song) clip via respective WhatsApp Group on or before September 7,2024.</li>
+                    <li>Seleced teams will be informed on or before September 9,2024.</li>
+                    <li>For Queries :</li>
+                    <ul>
+                        <li>Mr.Wilson Victor : 88705 85714</li>
+                        <li>Ms.Haritha : 88701 66955</li>
+                    </ul>
+                </ul>
+                <a href="event_registration_form.html"><button class="registerbtn">Register</button></a>
+                <button class="closerulebtn" onclick="dancecloserule()">Close</button>
+             </div>
+            </div>
+         </div>
+      
+         <div class="container">
+          <div class="card__container">
+             <article class="card__article">
+                <img src="images/ppimage.jpg" alt="image" class="card__img">
+
+                <div class="card__data">
+                   <span class="card__description">Innovative research showcase</span>
+                   <h2 class="card__title">PAPER PRESENTATION</h2>
+                   <a href="#pprule" onclick="pshow()" class="card__button rlink">Register</a>
+                </div>
+             </article>
+         
+             <article class="card__article">
+                <img src="images/quizimage.jpg" alt="image" class="card__img">
+
+                <div class="card__data">
+                   <span class="card__description">Challenging, engaging, informative</span>
+                   <h2 class="card__title">Quiz</h2>
+                   <a href="#qrule" onclick="qshow()" class="card__button rlink">Register</a>
+                </div>
+             </article>
+         
+             <article class="card__article">
+                <img src="images/WordHunt.jpeg" alt="image" class="card__img">
+
+                <div class="card__data">
+                   <span class="card__description">Linguistic treasure hunt</span>
+                   <h2 class="card__title">Word Hunt</h2>
+                   <a href="#whrule" onclick="whshow()" class="card__button rlink">Register</a>
+                </div>
+             </article>
+         
+             <article class="card__article">
+                <img src="images/wdimage.avif" alt="image" class="card__img">
+
+                <div class="card__data">
+                   <span class="card__description">Creative, responsive, intuitive.</span>
+                   <h2 class="card__title">Web Design</h2>
+                   <a href="#wdrule" onclick="wdshow()" class="card__button rlink">Register</a>
+                </div>
+             </article>
+         
+             <article class="card__article">
+                <img src="images/software-contest.png" alt="image" class="card__img">
+
+                <div class="card__data">
+                   <span class="card__description">Code. Compete. Conquer.</span>
+                   <h2 class="card__title">Software Contest</h2>
+                   <a href="#scrule" onclick="scshow()" class="card__button rlink">Register</a>
+                </div>
+             </article>
+         
+             <article class="card__article" style=>
+                <img src="images/marketingimage.jpg" alt="image" class="card__img">
+
+                <div class="card__data">
+                   <span class="card__description">Innovative, impactful, engaging.</span>
+                   <h2 class="card__title">Marketing</h2>
+                   <a href="#mrule" onclick="mshow()" class="card__button rlink">Register</a>
+                </div>
+             </article>
+
+            <article class="card__article">
+               <img src="images/lets-dance-neon-signs-style-text-free-vector.jpg" alt="image" class="card__img">
+
+               <div class="card__data">
+                  <span class="card__description">Rhythmic, Expressive, Graceful</span>
+                  <h2 class="card__title">NON-TECHNICAL ROUND DANCING</h2>
+                  <a href="#dancerule" onclick="danceshow()" class="card__button rlink">Register</a>
+               </div>
+            </article>
+          </div>
+         </div>
+
+      </div>
+
+      <marquee><b>Website Designed By Mr. S.Naveen (22CS048)</b></marquee>
+
+      <!--Footer-->
+<footer class="footer" id="footer">
+   <div class="contact">
+       <h3>Contact Us</h3>
+       <p>Dr. P. Prabhusundhar, Assistant Professor</p>
+       <p>GAIT Co-ordinator, Department of Computer Science</p>
+       <p>Gobi Arts & Science College (Autonomous)</p>
+       <p>Karattadipalayam (PO), Gobichettipalayam - 638 453</p>
+       <p><strong>Contact No:</strong><a href="tel:+919600877997">+91 96008 77997</a></p>
+       <p><strong>Email:</strong> <a href="mailto:example@example.com">example@example.com</a></p>
+   </div>
+
+   <!-- Social Media Icons -->
+   <div class="social-icons">
+       <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+       <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+       <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+       <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+   </div>
+
+   <div class="copyright">
+       <p>&copy; 2025 Qutrix. All rights reserved.</p>
+   </div>
+</footer>
+<!-- End of Footer -->
+ 
+
+      <script src="script/rulesscript.js"></script>
+      <script>
+         function toggleMenu() {
+            document.querySelector(".nav-links").classList.toggle("active");
+        }
+      </script>
+   
+   </body>
+</html>

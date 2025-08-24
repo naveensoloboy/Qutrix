@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registration</title>
+    <style>
+        /* Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #141e30, #243b55);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+            color: white;
+        }
+
+        h2 {
+            font-weight: 600;
+            margin-bottom: 20px;
+            border-bottom: 2px solid white;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        label {
+            font-weight: 400;
+            display: block;
+            margin: 10px 0 5px;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            outline: none;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            color: black;
+            outline: none;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        select {
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px;
+            margin-top: 15px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        .container form {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Admin Registration</h2>
+        <form action="admin_register.php" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" name="username" placeholder="Enter username" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" name="password" placeholder="Enter password" required>
+
+            <label for="event">Select Event:</label>
+            <select name="event" required>
+                <option value="" disabled selected>Select an Event</option>
+                <option value="ADMINISTRATOR">ADMINISTRATOR</option>
+                <option value="PAPER PRESENTATION">PAPER PRESENTATION</option>
+                <option value="QUIZ">QUIZ</option>
+                <option value="SOFTWARE CONTEST">SOFTWARE CONTEST</option>
+                <option value="WEB DESIGN">WEB DESIGN</option>
+                <option value="WORD HUNT">WORD HUNT</option>
+                <option value="MARKETING">MARKETING</option>
+                <option value="DANCE">DANCE</option>
+            </select>
+
+            <label for="auth_key">Authentication Key:</label>
+            <input type="password" name="auth_key" placeholder="Enter authentication key" required>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,266 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    /* background-color: var(--bodyy-color);
+    color: var(--text-color); */
+}
+
+.rules {
+    width: 80%;
+    align-items: center;
+    text-align: justify;
+}
+
+ul {
+    padding: 30px;
+}
+
+.registerbtn,
+.closerulebtn {
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 1px solid white;
+}
+
+.tclosebtn{
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: bold;
+    color: #002147;
+    background: #d4e7f0;
+}
+
+.registerbtn {
+    background-color: green;
+    color: white;
+}
+
+.closerulebtn {
+    background-color: red;
+    color: white;
+}
+
+.poverlay,
+.qoverlay,
+.whoverlay,
+.wdoverlay,
+.scoverlay,
+.moverlay,
+.danceoverlay {
+    background-color: #002147;
+    width: 100%;
+    height: 120%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0.9;
+    z-index: 5;
+    display: none;
+}
+
+.ppopup,
+.qpopup,
+.whpopup{
+    position: absolute;
+    z-index: 6;
+    background-color: #d4e7f0;
+    color: #002147;
+    width: 85%;
+    padding: 20px;
+    border-radius: 20px;
+    left: 50%;
+    display: none;
+    overflow: hidden;
+    transform: translateX(-50%);
+}
+
+.wdpopup,
+.scpopup,
+.mpopup {
+    position: absolute;
+    z-index: 6;
+    background-color: #d4e7f0;
+    color: #002147;
+    width: 85%;
+    padding: 20px;
+    border-radius: 20px;
+    left: 50%;
+    top: 210%;
+    display: none;
+    overflow: hidden;
+    transform: translateX(-50%);
+}
+
+.dancepopup{
+    position: absolute;
+    z-index: 6;
+    background-color: #d4e7f0;
+    color: #002147;
+    width: 85%;
+    padding: 20px;
+    border-radius: 20px;
+    left: 50%;
+    top: 260%;
+    display: none;
+    overflow: hidden;
+    transform: translateX(-50%);
+}
+
+/* Mobile devices (max-width: 480px) */
+@media only screen and (max-width: 480px) {
+    ul {
+        padding: 20px;
+    }
+    .closerulebtn {
+        right: -60%;
+    }
+    .timeshedule{
+        width: 250px;
+        height: 500px;
+    }
+    .poverlay,
+    .qoverlay,
+    .whoverlay,
+    .wdoverlay,
+    .scoverlay,
+    .moverlay,
+    .danceoverlay{
+        height: 120%;
+    }
+    .ppopup,
+    .qpopup,
+    .whpopup,
+    .wdpopup,
+    .scpopup,
+    .mpopup,
+    .dancepopup {
+        width: 110%;
+        left: 56%;
+    }
+    ul{
+        padding: 20px;
+    }
+    .closerulebtn{
+        position: relative;
+        right: -50%;
+    }
+    .poverlay{
+        height: 2240px;
+    }
+    .qoverlay{
+        height: 2240px;
+    }
+    .qpopup{
+        top: 2000px;
+    }
+    .whoverlay{
+        height: 2240px;
+    }
+    .whpopup{
+        top: 2350px;
+    }
+    .wdoverlay{
+        height: 2240px;
+    }
+    .wdpopup{
+        top:2650px;
+        position: absolute;       
+    }
+    .scoverlay{
+        height: 2240px;
+    }
+    .scpopup{
+        top:2950px;       
+        position: absolute;
+    }
+    .moverlay{
+        height: 2600px;
+    }
+    .mpopup{
+        top:3400px;       
+        position: absolute;
+    }
+    .danceoverlay{
+        height: 150vh;
+    }
+    .dancepopup{
+        top: 3650;
+        position: absolute;
+    }
+    .ppopup,.qpopup,.wdpopup,.whpopup,.mpopup,.scpopup,.dancepopup{
+        left: 57%;
+        width: 95%;
+    }
+}
+
+/* Tablets (max-width: 768px) */
+@media only screen and (max-width: 768px) {
+    .rules {
+        width: 90%;
+    }
+
+    .registerbtn,
+    .closerulebtn {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    .ppopup,
+    .qpopup,
+    .whpopup,
+    .wdpopup,
+    .scpopup,
+    .mpopup {
+        width: 80%;
+        padding: 15px;
+    }
+}
+
+/* Small Laptops (max-width: 1024px) */
+@media only screen and (max-width: 1024px) {
+    .rules {
+        width: 85%;
+    }
+
+    .ppopup,
+    .qpopup,
+    .whpopup,
+    .wdpopup,
+    .scpopup,
+    .mpopup {
+        width: 95%;
+    }
+}
+
+/* Desktops (min-width: 1025px) */
+@media only screen and (min-width: 1025px) {
+    .rules {
+        width: 75%;
+    }
+
+    .ppopup,
+    .qpopup,
+    .whpopup,
+    .wdpopup,
+    .scpopup,
+    .mpopup {
+        width: 70%;
+    }
+}
+
+/* Extra-large screens (min-width: 1440px) */
+@media only screen and (min-width: 1440px) {
+    .rules {
+        width: 70%;
+    }
+
+    .ppopup,
+    .qpopup,
+    .whpopup,
+    .wdpopup,
+    .scpopup,
+    .mpopup {
+        width: 60%;
+    }
+}

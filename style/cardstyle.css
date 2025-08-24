@@ -1,0 +1,694 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  /*========== Colors ==========*/
+  /*Color mode HSL(hue, saturation, lightness)*/
+  --first-color: hsl(82, 60%, 28%);
+  --title-color: hsl(0, 0%, 15%);
+  --text-color: hsl(0, 0%, 35%);
+  --body-color: hsl(0, 0%, 100%);
+  --container-color: hsl(0, 0%, 100%);
+
+  --bodyy-color: #fcfeff;
+
+  /*========== Font and typography ==========*/
+  /*.5rem = 8px | 1rem = 16px ...*/
+  --body-font: "Poppins", sans-serif;
+  --h2-font-size: 1.25rem;
+  --small-font-size: .813rem;
+}
+
+/*========== Responsive typography ==========*/
+@media screen and (min-width: 1120px) {
+  :root {
+    --h2-font-size: 1.5rem;
+    --small-font-size: .875rem;
+  }
+}
+
+/*=============== BASE ===============*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: var(--body-font);
+  background-color: var(--bodyy-color);
+  color: var(--text-color);
+
+}
+
+/* Main Header Styling */
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the content */
+  padding: 5px 20px;
+  height: 120px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-bottom: 0px solid #FFD700; /* Gold bottom border */
+}
+
+/* College Logo Styling */
+.main .clg-logo {
+  width: 120px;
+  height: auto;
+  max-height: 100px;
+  object-fit: contain;
+}
+
+/* College Name Styling */
+.main .clg-name {
+  width: auto;
+  height: 100px;
+  max-width: 700px;
+  object-fit: contain;
+}
+
+
+
+
+/* For tablets (screens between 768px and 1024px) */
+@media (max-width: 1024px) {
+  .main {
+      gap: 15px;
+  }
+
+  .main .clg-logo {
+      width: 80px;
+      height: 80px;
+  }
+
+  .main .clg-name {
+      width: 600px;
+      height: 80px;
+  }
+}
+
+/* For mobile devices (screens between 480px and 768px) */
+@media (max-width: 768px) {
+  .main{
+    height: 80px;
+      padding: 0 20px;
+  }
+
+  .main .clg-logo {
+      width: 70px;
+      height: 70px;
+  }
+
+  .main .clg-name {
+      width: 500px;
+      height: 70px;
+  }
+}
+
+/* For smaller mobile devices (screens under 480px) */
+@media (max-width: 480px) {
+  .main{
+      padding: 0 45px;
+  }
+
+  .main .clg-logo {
+      width: 55px;
+      height: 55px;
+  }
+
+  .main .clg-name {
+      width: 100%;
+      height: 60px;
+  }
+}
+/* GAIT */
+.department-name {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #FFD700; /* Gold color */
+  background-color: #002147; /* Dark blue background */
+  padding: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Department Name Styling */
+.gait {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #002147;
+  background-color: #FFD700; /* Gold background */
+  padding: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #002147; /* Dark blue background */
+  padding: 10px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* Logo Styling */
+.navbar .logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #FFD700; /* Gold color */
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.navbar .logo:hover {
+  color: white;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar ul li {
+  display: inline-block;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 15px;
+  transition: 0.3s;
+}
+
+.navbar ul li a:hover {
+  background-color: #FFD700; /* Gold on hover */
+  border-radius: 5px;
+  color: #002147;
+}
+
+/* Mobile Menu */
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  right: 20px; /* Moves the toggle to the right */
+  top: 10px;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .navbar .logo {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+  .navbar ul {
+      flex-direction: column;
+      width: 100%;
+      display: none;
+      background-color: #002147;
+      padding: 10px 0;
+      
+      top: 50px;
+      right: 0; /* Align menu items to the right */
+      text-align: center; /* Right-align text */
+  }
+
+  .navbar ul.active {
+      display: flex;
+  }
+
+  .menu-toggle {
+      display: block;
+      margin-top: -10px;
+  }
+
+  /* Adjust Department Name for Mobile */
+  .department-name {
+      font-size: 12px;
+      padding: 8px;
+  }
+
+  .gait{
+    font-size: 10px;
+    padding: 8px;
+}
+}
+
+
+
+/* Footer Styling */
+.footer {
+  background-color: #002147;
+  top: 500px;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  border-top: 5px solid #054997; /* Gold border on top */
+  position: relative;
+}
+
+.footer .contact {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer p {
+  margin: 5px 0;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.footer a {
+  color: #FFD700; /* Gold color */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer .social-icons {
+  margin-top: 10px;
+}
+
+.footer .social-icons a {
+  margin: 0 10px;
+  font-size: 20px;
+  color: white;
+  transition: 0.3s;
+}
+
+.footer .social-icons a:hover {
+  color: #FFD700; /* Gold hover effect */
+}
+
+.footer .copyright {
+  margin-top: 15px;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    top: 10px;
+  }
+}
+
+
+/*=============== CARD ===============*/
+.container {
+  display: grid;
+  place-items: center;
+  margin-inline: 1.5rem;
+  padding-block: 1rem;
+}
+
+.card__container {
+  display: grid;
+  row-gap: 3.5rem;
+}
+
+.card__article {
+  border-radius: 1.6rem;
+  border: 2px solid #1b2945;
+  position: relative;
+  overflow: hidden;
+}
+
+.card__img {
+  width: 328px;
+  border-radius: 1.5rem;
+  height: 300px;
+}
+
+.card__data {
+  width: 280px;
+  background-color: #1b2945;
+  /*background-color: rgb(100, 101, 99);*/
+  padding: 1.5rem 2rem;
+  box-shadow: 0 8px 24px hsla(0, 0%, 0%, .15);
+  border-radius: 1rem;
+  position: absolute;
+  bottom: -9rem;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  opacity: 0;
+  transition: opacity 1s 1s;
+}
+
+.card__description {
+  display: block;
+  font-size: var(--small-font-size);
+  /*color: white;*/
+  color: #d4e7f0;
+  margin-bottom: .25rem;
+}
+
+.card__title {
+  color: #d4e7f0;
+  /*color: white;*/
+  font-size: large;
+  font-weight: 700;
+  margin-bottom: .75rem;
+}
+
+.card__button {
+  text-decoration: none;
+  font-size: var(--small-font-size);
+  font-weight: 500;
+  /*color: white;*/
+}
+
+.card__button:hover {
+  text-decoration: none;
+}
+
+/* CSS */
+.rlink {
+  top: 0px;
+  left: 45px;
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: #002147;
+  background-color: #d4e7f0;
+  /* color: rgb(255, 255, 255);
+  background: #111; */
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.rlink:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing-button-85 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-button-85 {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.rlink:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #222;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+
+/* .rlink{
+  padding: 5px;
+  border-radius: 5px;
+  background-color: blue;
+  color: aqua; 
+  animation: blinker 2s linear infinite;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-delay: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  animation-play-state: running;
+  animation-name: blinker;
+  animation-timeline: auto;
+  animation-range-start: normal;
+  animation-range-end: normal;
+} 
+
+@keyframes blinker {
+  10% {
+      opacity: 0;
+  }
+}*/
+
+/* Naming animations in hover */
+.card__article:hover .card__data {
+  animation: show-data 1s forwards;
+  opacity: 1;
+  transition: opacity .3s;
+}
+
+.card__article:hover {
+  animation: remove-overflow 2s forwards;
+}
+
+.card__article:not(:hover) {
+  animation: show-overflow 2s forwards;
+}
+
+.card__article:not(:hover) .card__data {
+  animation: remove-data 1s forwards;
+}
+
+.rules{
+  width: 80%;
+  align-items: center;
+  text-align: justify;
+}
+
+/* Card animation */
+@keyframes show-data {
+  50% {
+    transform: translateY(-10rem);
+  }
+  100% {
+    transform: translateY(-7rem);
+  }
+}
+
+@keyframes remove-overflow {
+  to {
+    overflow: initial;
+  }
+}
+
+@keyframes remove-data {
+  0% {
+    transform: translateY(-7rem);
+  }
+  50% {
+    transform: translateY(-10rem);
+  }
+  100% {
+    transform: translateY(.5rem);
+  }
+}
+
+@keyframes show-overflow {
+  0% {
+    overflow: initial;
+    pointer-events: none;
+  }
+  50% {
+    overflow: hidden;
+  }
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* For small devices */
+@media screen and (max-width: 340px) {
+  .container {
+    margin-inline: 1rem;
+  }
+
+  .card__data {
+    width: 250px;
+    padding: 1rem;
+  }
+}
+
+/* For medium devices */
+@media screen and (min-width: 768px) {
+  .card__container {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1.5rem;
+  }
+}
+
+/* For large devices */
+@media screen and (min-width: 1120px) {
+  .container {
+    height: 100vh;
+  }
+  .card__container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .card__img {
+    width: 348px;
+  }
+  .card__data {
+    width: 316px;
+    padding-inline: 2.5rem;
+  }
+}
+
+/* Mobile devices (max-width: 480px) */
+@media only screen and (max-width: 480px) {
+  body {
+    width: 435px;
+  }
+  
+  .clgname img {
+    margin-top: -10px;
+    margin-left: -80px;
+    height: 60px;
+    width: 60px;
+  }
+
+  .clgname div {
+    margin-top: -5px;
+  }
+
+  .clgname .gasc {
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  .clgname .kar {
+    font-size: 10px;
+  }
+
+  .gait1 {
+    font-size: 10px;
+  }
+
+  .navbar {
+    padding: 5px;
+    display: flex;
+  }
+
+  .navbar-links {
+    flex-direction: row;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .navbar-links a {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+
+
+  .contactend {
+    position: relative;
+    left: -30px;
+    top: 10px;
+    background-color: yellowgreen;
+    display: block;
+    width: 445px;
+    height: 2px;
+  }
+
+  .container {
+    margin-inline: 1rem;
+  }
+
+  .card__data {
+    width: 250px;
+    padding: 1rem;
+  }
+}
+
+/* 🔹 MARQUEE STYLING */
+marquee {
+  background: #002147; /* Dark Blue Background */
+  top: 490px;
+  position: relative;
+  color: #FFD700;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 0;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: Arial, sans-serif;
+  border-radius: 3px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 🔹 MARQUEE HOVER EFFECT (PAUSE ON HOVER) */
+marquee:hover {
+  animation-play-state: paused;
+}
+
+/* 🔹 MARQUEE CONTAINER FOR BETTER ALIGNMENT */
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+@media screen and (max-width: 768px) {
+  marquee {
+    top: 0;
+    margin-bottom: 0;
+  }
+}

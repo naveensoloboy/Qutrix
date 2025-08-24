@@ -1,0 +1,447 @@
+.l{
+  position: absolute;
+  top: 30px;
+  left: 87%;
+  font-size: 20px;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  width: 80%;
+  max-width: 300px;
+  background-color: #f0f8ff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.container h1 {
+  font-size: 24px;
+  color: #002147;
+  margin-bottom: 20px;
+}
+
+.container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container label {
+  font-weight: bold;
+  color: #002147;
+  margin-bottom: 5px;
+  width: 100%;
+  text-align: left;
+}
+
+.container input {
+  background-color: #eef2f7;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+  transition: border 0.3s ease;
+}
+
+.container input:focus {
+  border-color: #0044ff;
+  outline: none;
+}
+
+.container .signin {
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.container .signin:hover {
+  background-color: #0056b3;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 18, 71, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .container {
+      width: 100%;
+      padding: 20px;
+      margin: 10px;
+  }
+  
+  .container h1 {
+      font-size: 20px;
+  }
+  
+  .container input {
+      font-size: 14px;
+  }
+  
+  .container .signin {
+      font-size: 14px;
+      padding: 10px;
+  }
+}
+<<<<<<< HEAD
+=======
+.l{
+  position: absolute;
+  top: 30px;
+  left: 87%;
+  font-size: 20px;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  width: 80%;
+  max-width: 300px;
+  background-color: #f0f8ff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.container h1 {
+  font-size: 24px;
+  color: #002147;
+  margin-bottom: 20px;
+}
+
+.container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container label {
+  font-weight: bold;
+  color: #002147;
+  margin-bottom: 5px;
+  width: 100%;
+  text-align: left;
+}
+
+.container input {
+  background-color: #eef2f7;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+  transition: border 0.3s ease;
+}
+
+.container input:focus {
+  border-color: #0044ff;
+  outline: none;
+}
+
+.container .signin {
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.container .signin:hover {
+  background-color: #0056b3;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 18, 71, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .container {
+      width: 100%;
+      padding: 20px;
+      margin: 10px;
+  }
+  
+  .container h1 {
+      font-size: 20px;
+  }
+  
+  .container input {
+      font-size: 14px;
+  }
+  
+  .container .signin {
+      font-size: 14px;
+      padding: 10px;
+  }
+}
+.l{
+  position: absolute;
+  top: 30px;
+  left: 87%;
+  font-size: 20px;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  width: 80%;
+  max-width: 300px;
+  background-color: #f0f8ff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.container h1 {
+  font-size: 24px;
+  color: #002147;
+  margin-bottom: 20px;
+}
+
+.container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container label {
+  font-weight: bold;
+  color: #002147;
+  margin-bottom: 5px;
+  width: 100%;
+  text-align: left;
+}
+
+.container input {
+  background-color: #eef2f7;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+  transition: border 0.3s ease;
+}
+
+.container input:focus {
+  border-color: #0044ff;
+  outline: none;
+}
+
+.container .signin {
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.container .signin:hover {
+  background-color: #0056b3;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 18, 71, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .container {
+      width: 100%;
+      padding: 20px;
+      margin: 10px;
+  }
+  
+  .container h1 {
+      font-size: 20px;
+  }
+  
+  .container input {
+      font-size: 14px;
+  }
+  
+  .container .signin {
+      font-size: 14px;
+      padding: 10px;
+  }
+}
+.l{
+  position: absolute;
+  top: 30px;
+  left: 87%;
+  font-size: 20px;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  width: 80%;
+  max-width: 300px;
+  background-color: #f0f8ff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.container h1 {
+  font-size: 24px;
+  color: #002147;
+  margin-bottom: 20px;
+}
+
+.container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container label {
+  font-weight: bold;
+  color: #002147;
+  margin-bottom: 5px;
+  width: 100%;
+  text-align: left;
+}
+
+.container input {
+  background-color: #eef2f7;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+  transition: border 0.3s ease;
+}
+
+.container input:focus {
+  border-color: #0044ff;
+  outline: none;
+}
+
+.container .signin {
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.container .signin:hover {
+  background-color: #0056b3;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 18, 71, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .container {
+      width: 100%;
+      padding: 20px;
+      margin: 10px;
+  }
+  
+  .container h1 {
+      font-size: 20px;
+  }
+  
+  .container input {
+      font-size: 14px;
+  }
+  
+  .container .signin {
+      font-size: 14px;
+      padding: 10px;
+  }
+}
+>>>>>>> 339c8e4 (first commit)

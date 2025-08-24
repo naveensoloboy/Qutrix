@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>About Us - Gobi Arts & Science College</title>
+	<link rel="stylesheet" href="style/about.css">
+</head>
+
+<body>
+	<h1 align="center" style="font-weight: bold;color: #001427;">ABOUT - US </h1>
+
+	<div class="about-us">
+		<h3 align="center">GAIT :(GobiArts Association   Information Technology)</h3>
+		<ul>
+			<li>GobiArts Association   Information Technology is an association formed by the Department   Computer Science.</li>
+		</ul>
+		<span id="dots">...</span>
+    <span id="more">
+        <ul><li>It is a Forum through which the students improve their leadership qualities and organisational abilities. Guest Lectures, Seminars etc are also regularly organised through this outfit.</li>
+            <li>GAIT conducts intercollegiate meet (QUTRIX) and intra collegiate meet (GAITFEST) every year.</li></ul>
+    </span>
+    <button onclick="toggleReadMore()" class="read-more-button" id="readMoreBtn">Read More</button>
+</div>
+
+<div class="about-us-gait" style="margin-top: 20px;">
+    <h2 align="center">Intercollegiate meet (QUTRIX)</h2>
+    <p style="font-weight: 550;">
+        It is the annual technical extravaganza and the state level technical symposium conducted during the month   September every year.Qutrix invites students   Computer Science from various Institutions and Universities   TamilNadu and Pondichery. This helps the students   Computer Science and the participants to improve the communication skills, organisational abilities, leadership qualities and develop the spirit   team work among them.
+    </p>
+</div>
+
+<div class="about-us-gait" style="margin-top: 20px;">
+    <h2 align="center">Intra Collegiate meet (GAITFEST)</h2>
+    <p style="font-weight: 550;">
+        The Gobi Arts Association   Information Techonology (GAIT) organizes an annual intra-college meet (GAITFEST) that serves as a vibrant platform for students to engage in various IT-related activities. This meet is designed for paper presentation,quiz,word hunt,web design,software contest,marketing skill development among the participants. Events typically include coding competitions, project Showcases and tech talks. The intra collage not only allows Students to demonstrate their technical powers but also encourages teamwork and knowledge sharing.
+            </p>
+</div>
+
+<script>
+    function toggleReadMore() {
+        var dots = document.getElementById("dots");
+        var moreText = document.getElementById("more");
+        var btnText = document.getElementById("readMoreBtn");
+
+        if (dots.style.display === "none") {
+            dots.style.display = "inline";
+            btnText.textContent = "Read More";
+            moreText.style.display = "none";
+        } else {
+            dots.style.display = "none";
+            btnText.textContent = "Read Less";
+            moreText.style.display = "inline";
+        }
+    }
+
+    function toggleReadMoreGait() {
+        var dotsg = document.getElementById("dotsGait");
+        var moreTextg = document.getElementById("moreGait");
+        var btnTextg = document.getElementById("readMoreGaitBtn");
+
+        if (dotsg.style.display === "none") {
+            dotsg.style.display = "inline";
+            btnTextg.textContent = "Read More";
+            moreTextg.style.display = "none";
+        } else {
+            dotsg.style.display = "none";
+            btnTextg.textContent = "Read Less";
+            moreTextg.style.display = "inline";
+        }
+    }
+</script>
+
+</body>
+</html>
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About - GAIT</title>
+</head>
+<body>
+
+    <div class="gaitdetails" id="gaitdetails">
+            <div class="gaitdetail">
+                <h2>GAIT :(Gobi Arts Association   Information Technology)</h2><br>
+                <h4>Gobi Arts Association   Information Technology is an association formed by the Department   Computer Science. It is a Forum through which the students improve their leadership qualities and organisational abilities. Guest Lectures, Seminars etc are also regularly organised through this outfit. GAIT conducts intercollegiate meet and intra collegiate meet (GAITFEST) every year.</h4>
+            </div>
+            
+            <div class="qutrixdetail" id="qutrixdetail">
+                <h2 >Intercollegiate meet (QUTRIX)</h2><br>
+                <h4>It is the annual technical extravaganza and the state level technical symposium conducted during the month   March every year. Qutrix invites students   Computer Science from various Institutions and Universities   TamilNadu and Pondichery. This helps the students   Computer Science and the participants to improve the communication skills, organisational abilities, leadership qualities and develop the spirit   team work among them.</h4>
+            </div>
+    </div>
+
+
+</body>
+</html> -->
