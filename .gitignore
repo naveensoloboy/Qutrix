@@ -1,6 +1,0 @@
-# .gitignore
-config.php
-.env
-*.env
-/db-config/
-/uploads/

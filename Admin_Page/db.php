@@ -1,8 +1,8 @@
 <?php
-$servername = "database-1.czeem0wiahps.eu-north-1.rds.amazonaws.com";
-$username = "admin";
-$password = "awspass2025";
-$dbname = "mywebappdb";
+$servername = "localhost";
+$username = "root";
+$password = "3705";
+$dbname = "qutrix";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
