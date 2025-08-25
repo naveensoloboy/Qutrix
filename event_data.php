@@ -1,14 +1,17 @@
 <?php
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require 'db.php';
+require 'db.php'; // MongoDB connection
 
 $event = isset($_GET['event']) ? $_GET['event'] : '';
-$sql = "SELECT * FROM registrations WHERE FIND_IN_SET('$event', events) ORDER BY college_name ASC";
-$result = $conn->query($sql);
+
+// ✅ Query MongoDB
+$filter = ['events' => ['$regex' => $event, '$options' => 'i']]; 
+$options = ['sort' => ['college_name' => 1]]; // ASC
+$result = $db->registrations->find($filter, $options);
+
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +29,6 @@ $result = $conn->query($sql);
         th { background-color: #0044ff; color: #fff; }
         tr:nth-child(even) { background-color: #f2f2f2; }
         .view-btn { padding: 5px 10px; background-color: #0044ff;border-radius: 5px; color: white; border: none; cursor: pointer; text-decoration: none; }
-        
     </style>
 </head>
 <body>
@@ -56,31 +58,59 @@ $result = $conn->query($sql);
         <th></th><th></th><th></th><th></th>
     </tr>
     <?php
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            echo "<tr>
-                <td>" . $row["college_name"] . "</td>
-                <td>" . $row["department"] . "</td>
-                <td>" . $row["events"] . "</td>
-                <td>" . $row["first_member_name"] . "</td>
-                <td>" . $row["first_member_rollno"] . "</td>
-                <td>" . (!empty($row["first_member_bonafide"]) ? "<a href='../" . htmlspecialchars($row["first_member_bonafide"]) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
-                <td>" . $row["second_member_name"] . "</td>
-                <td>" . $row["second_member_rollno"] . "</td>
-                <td>" . (!empty($row["second_member_bonafide"]) ? "<a href='../" . htmlspecialchars($row["second_member_bonafide"]) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
-                <td>" . (!empty($row["third_member_name"]) ? $row["third_member_name"] : "N/A") . "</td>
-                <td>" . (!empty($row["third_member_rollno"]) ? $row["third_member_rollno"] : "N/A") . "</td>
-                <td>" . (!empty($row["third_member_bonafide"]) ? "<a href='../" . htmlspecialchars($row["third_member_bonafide"]) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
-                <td>" . (!empty($row["fourth_member_name"]) ? $row["fourth_member_name"] : "N/A") . "</td>
-                <td>" . (!empty($row["fourth_member_rollno"]) ? $row["fourth_member_rollno"] : "N/A") . "</td>
-                <td>" . (!empty($row["fourth_member_bonafide"]) ? "<a href='../" . htmlspecialchars($row["fourth_member_bonafide"]) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
-                <td>" . $row["phone_no"] . "</td>
-                <td>" . $row["alt_phone_no"] . "</td>
-                <td>" . $row["email"] . "</td>
-                <td>" . $row["created_at"] . "</td>
-            </tr>";
+    $dataFound = false;
+    foreach ($result as $row) {
+    $dataFound = true;
+
+    // Helper function to safely handle BSONArray or null values
+    if (!function_exists('safeString')) {
+    function safeString($value) {
+        if (is_string($value)) {
+            return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+        } elseif (is_array($value) || $value instanceof MongoDB\Model\BSONArray) {
+            // Convert array to a comma-separated string
+            return htmlspecialchars(implode(", ", (array)$value), ENT_QUOTES, 'UTF-8');
+        } elseif ($value instanceof MongoDB\BSON\UTCDateTime) {
+            // Convert MongoDB date to string
+            return $value->toDateTime()->format("Y-m-d H:i:s");
+        } else {
+            return "N/A";
         }
-    } else {
+    }
+}
+
+
+
+    echo "<tr>
+        <td>" . safeString($row["college_name"]) . "</td>
+        <td>" . safeString($row["department"]) . "</td>
+        <td>" . safeString($row["events"]) . "</td>
+
+        <td>" . safeString($row["first_member_name"]) . "</td>
+        <td>" . safeString($row["first_member_rollno"]) . "</td>
+        <td>" . (!empty($row["first_member_bonafide"]) ? "<a href='../" . safeString($row["first_member_bonafide"]) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
+
+        <td>" . safeString($row["second_member_name"]) . "</td>
+        <td>" . safeString($row["second_member_rollno"]) . "</td>
+        <td>" . (!empty($row["second_member_bonafide"]) ? "<a href='../" . safeString($row["second_member_bonafide"]) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
+
+        <td>" . safeString($row["third_member_name"]) . "</td>
+        <td>" . safeString($row["third_member_rollno"]) . "</td>
+        <td>" . (!empty($row["third_member_bonafide"]) ? "<a href='../" . safeString($row["third_member_bonafide"]) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
+
+        <td>" . safeString($row["fourth_member_name"]) . "</td>
+        <td>" . safeString($row["fourth_member_rollno"]) . "</td>
+        <td>" . (!empty($row["fourth_member_bonafide"]) ? "<a href='../" . safeString($row["fourth_member_bonafide"]) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
+
+        <td>" . safeString($row["phone_no"]) . "</td>
+        <td>" . safeString($row["alt_phone_no"]) . "</td>
+        <td>" . safeString($row["email"]) . "</td>
+        <td>" . (isset($row["created_at"]) ? date("Y-m-d H:i:s", strtotime($row["created_at"])) : "N/A") . "</td>
+    </tr>";
+}
+
+
+    if (!$dataFound) {
         echo "<tr><td colspan='19'>No data found for this event</td></tr>";
     }
     ?>
@@ -88,7 +118,3 @@ $result = $conn->query($sql);
 </div>
 </body>
 </html>
-
-<?php
-$conn->close();
-?>

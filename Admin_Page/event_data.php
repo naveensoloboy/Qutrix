@@ -4,11 +4,26 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require 'db.php';
+require 'db.php'; // MongoDB connection file
 
 $event = isset($_GET['event']) ? $_GET['event'] : '';
-$sql = "SELECT * FROM registrations WHERE FIND_IN_SET('$event', events) ORDER BY college_name ASC";
-$result = $conn->query($sql);
+
+$collection = $db->registrations;
+
+// MongoDB equivalent of FIND_IN_SET → search inside events array or string match
+$filter = [
+    '$or' => [
+        ['events' => $event],            // if "events" stored as string
+        ['events' => ['$in' => [$event]]] // if "events" stored as array
+    ]
+];
+
+$options = [
+    'sort' => ['college_name' => 1] // ASC
+];
+
+$result = $collection->find($filter, $options);
+
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +41,6 @@ $result = $conn->query($sql);
         th { background-color: #0044ff; color: #fff; }
         tr:nth-child(even) { background-color: #f2f2f2; }
         .view-btn { padding: 5px 10px; background-color: #0044ff;border-radius: 5px; color: white; border: none; cursor: pointer; text-decoration: none; }
-        
     </style>
 </head>
 <body>
@@ -56,31 +70,38 @@ $result = $conn->query($sql);
         <th></th><th></th><th></th><th></th>
     </tr>
     <?php
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            echo "<tr>
-                <td>" . $row["college_name"] . "</td>
-                <td>" . $row["department"] . "</td>
-                <td>" . $row["events"] . "</td>
-                <td>" . $row["first_member_name"] . "</td>
-                <td>" . $row["first_member_rollno"] . "</td>
-                <td>" . (!empty($row["first_member_bonafide"]) ? "<a href='../" . htmlspecialchars($row["first_member_bonafide"]) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
-                <td>" . $row["second_member_name"] . "</td>
-                <td>" . $row["second_member_rollno"] . "</td>
-                <td>" . (!empty($row["second_member_bonafide"]) ? "<a href='../" . htmlspecialchars($row["second_member_bonafide"]) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
-                <td>" . (!empty($row["third_member_name"]) ? $row["third_member_name"] : "N/A") . "</td>
-                <td>" . (!empty($row["third_member_rollno"]) ? $row["third_member_rollno"] : "N/A") . "</td>
-                <td>" . (!empty($row["third_member_bonafide"]) ? "<a href='../" . htmlspecialchars($row["third_member_bonafide"]) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
-                <td>" . (!empty($row["fourth_member_name"]) ? $row["fourth_member_name"] : "N/A") . "</td>
-                <td>" . (!empty($row["fourth_member_rollno"]) ? $row["fourth_member_rollno"] : "N/A") . "</td>
-                <td>" . (!empty($row["fourth_member_bonafide"]) ? "<a href='../" . htmlspecialchars($row["fourth_member_bonafide"]) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
-                <td>" . $row["phone_no"] . "</td>
-                <td>" . $row["alt_phone_no"] . "</td>
-                <td>" . $row["email"] . "</td>
-                <td>" . $row["created_at"] . "</td>
-            </tr>";
-        }
-    } else {
+    $found = false;
+    foreach ($result as $row) {
+        $found = true;
+        echo "<tr>
+            <td>" . htmlspecialchars($row['college_name']) . "</td>
+            <td>" . htmlspecialchars($row['department']) . "</td>
+            <td>" . htmlspecialchars(is_array($row['events']) ? implode(', ', $row['events']) : $row['events']) . "</td>
+            
+            <td>" . htmlspecialchars($row['first_member_name']) . "</td>
+            <td>" . htmlspecialchars($row['first_member_rollno']) . "</td>
+            <td>" . (!empty($row['first_member_bonafide']) ? "<a href='../" . htmlspecialchars($row['first_member_bonafide']) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
+            
+            <td>" . htmlspecialchars($row['second_member_name']) . "</td>
+            <td>" . htmlspecialchars($row['second_member_rollno']) . "</td>
+            <td>" . (!empty($row['second_member_bonafide']) ? "<a href='../" . htmlspecialchars($row['second_member_bonafide']) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
+            
+            <td>" . (!empty($row['third_member_name']) ? htmlspecialchars($row['third_member_name']) : "N/A") . "</td>
+            <td>" . (!empty($row['third_member_rollno']) ? htmlspecialchars($row['third_member_rollno']) : "N/A") . "</td>
+            <td>" . (!empty($row['third_member_bonafide']) ? "<a href='../" . htmlspecialchars($row['third_member_bonafide']) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
+            
+            <td>" . (!empty($row['fourth_member_name']) ? htmlspecialchars($row['fourth_member_name']) : "N/A") . "</td>
+            <td>" . (!empty($row['fourth_member_rollno']) ? htmlspecialchars($row['fourth_member_rollno']) : "N/A") . "</td>
+            <td>" . (!empty($row['fourth_member_bonafide']) ? "<a href='../" . htmlspecialchars($row['fourth_member_bonafide']) . "' target='_blank' class='view-btn'>View</a>" : "N/A") . "</td>
+            
+            <td>" . htmlspecialchars($row['phone_no']) . "</td>
+            <td>" . htmlspecialchars($row['alt_phone_no']) . "</td>
+            <td>" . htmlspecialchars($row['email']) . "</td>
+            <td>" . htmlspecialchars($row['created_at']) . "</td>
+        </tr>";
+    }
+
+    if (!$found) {
         echo "<tr><td colspan='19'>No data found for this event</td></tr>";
     }
     ?>
@@ -88,7 +109,3 @@ $result = $conn->query($sql);
 </div>
 </body>
 </html>
-
-<?php
-$conn->close();
-?>

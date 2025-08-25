@@ -1,16 +1,13 @@
 <?php
-$servername = "database-1.czeem0wiahps.eu-north-1.rds.amazonaws.com";
-$username = "admin";
-$password = "awspass2025";
-$dbname = "mywebappdb";
+require 'vendor/autoload.php'; // load composer autoload
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Your MongoDB Atlas URI (replace <username>, <password>, <cluster> properly)
+$uri = "mongodb+srv://admin:qutrixpass2025@cluster1.duscp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1";
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    $client = new MongoDB\Client($uri);
+    $db = $client->Qutrix; // Database name
+    // echo "✅ Connected to MongoDB!";
+} catch (Exception $e) {
+    die("❌ Connection failed: " . $e->getMessage());
 }
-else
-{
-    echo " ";
-}
-

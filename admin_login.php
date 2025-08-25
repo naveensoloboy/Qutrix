@@ -1,35 +1,31 @@
 <?php
-
 session_start();
 
-include "db.php";
+require 'vendor/autoload.php'; // MongoDB PHP Library
+include "db.php"; // this will contain MongoDB connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $admin_username = trim($_POST['username']);
     $admin_password = $_POST['password'];
 
-    $sql = "SELECT id, password FROM admin WHERE username = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $admin_username);
-    $stmt->execute();
-    $stmt->store_result();
-    $stmt->bind_result($admin_id, $password);
+    // select collection
+    $collection = $client->Qutrix->admin;
 
-    if ($stmt->num_rows > 0) {
-        $stmt->fetch();
-        if ($admin_password==$password) { 
-            $_SESSION['admin_id'] = $admin_id;
+    // find admin by username
+    $admin = $collection->findOne(['username' => $admin_username]);
+
+    if ($admin) {
+        // check hashed password
+        if (password_verify($admin_password, $admin['password'])) {
+            $_SESSION['admin_id'] = (string)$admin['_id']; // using MongoDB _id
             $_SESSION['admin_username'] = $admin_username;
             echo "<script>alert('Login successful! Redirecting...');</script>";
-            header("refresh:1;url=registration_data.php"); // Redirect to the admin dashboard
+            header("refresh:1;url=registration_data.php");
         } else {
-            echo "<script>alert('Invalid password!');</script>";
+            echo "<script>alert('Invalid password!');window.location.href='admin_login_form.html';</script>";
         }
     } else {
         echo "<script>alert('Admin not found!');</script>";
     }
-
-    $stmt->close();
 }
-$conn->close();
 ?>

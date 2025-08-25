@@ -1,10 +1,23 @@
 <?php
+require 'db.php'; // MongoDB connection file
 
-include "db.php";
-
-// Query to fetch feedback data
-$sql = "SELECT name, college_name, opinion, experience, organization, comments FROM feedback ORDER BY submission_date DESC";
-$result = $conn->query($sql);
+// Fetch feedback data sorted by submission_date (descending)
+$collection = $db->feedback;
+$cursor = $collection->find(
+    [],
+    [
+        'sort' => ['submission_date' => -1],
+        'projection' => [
+            'name' => 1,
+            'college_name' => 1,
+            'opinion' => 1,
+            'experience' => 1,
+            'organization' => 1,
+            'comments' => 1,
+            'submission_date' => 1
+        ]
+    ]
+);
 ?>
 
 <!DOCTYPE html>
@@ -79,37 +92,39 @@ $result = $conn->query($sql);
 <h2>Feedback Responses</h2>
 
 <?php
-if ($result->num_rows > 0) {
-    echo "<table>
-            <tr>
-                <th>Name</th>
-                <th>College</th>
-                <th>Opinion</th>
-                <th>Experience</th>
-                <th>Organization</th>
-                <th>Comments</th>
-                <th>Submitted At</th>
-            </tr>";
+$hasData = false;
 
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>
-                <td>" . htmlspecialchars($row["name"]) . "</td>
-                <td>" . htmlspecialchars($row["college_name"]) . "</td>
-                <td>" . htmlspecialchars($row["opinion"]) . "</td>
-                <td>" . htmlspecialchars($row["experience"]) . "</td>
-                <td>" . htmlspecialchars($row["organization"]) . "</td>
-                <td>" . htmlspecialchars($row["comments"]) . "</td>
-                <td>" . htmlspecialchars($row["submission_date"]) . "</td>
-              </tr>";
+foreach ($cursor as $row) {
+    if (!$hasData) {
+        echo "<table>
+                <tr>
+                    <th>Name</th>
+                    <th>College</th>
+                    <th>Opinion</th>
+                    <th>Experience</th>
+                    <th>Organization</th>
+                    <th>Comments</th>
+                    <th>Submitted At</th>
+                </tr>";
+        $hasData = true;
     }
 
+    echo "<tr>
+            <td>" . htmlspecialchars($row['name'] ?? '') . "</td>
+            <td>" . htmlspecialchars($row['college_name'] ?? '') . "</td>
+            <td>" . htmlspecialchars($row['opinion'] ?? '') . "</td>
+            <td>" . htmlspecialchars($row['experience'] ?? '') . "</td>
+            <td>" . htmlspecialchars($row['organization'] ?? '') . "</td>
+            <td>" . htmlspecialchars($row['comments'] ?? '') . "</td>
+            <td>" . htmlspecialchars($row['submission_date'] ?? '') . "</td>
+          </tr>";
+}
+
+if ($hasData) {
     echo "</table>";
 } else {
     echo "<p class='no-feedback'>No feedback responses available.</p>";
 }
-
-// Close connection
-$conn->close();
 ?>
 
 </body>
