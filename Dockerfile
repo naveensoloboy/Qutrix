@@ -1,30 +1,28 @@
-# Use PHP official image
+# Use official PHP image with Apache
 FROM php:8.2-apache
+
+# Install system dependencies & unzip (needed for Composer)
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libzip-dev \
+    && docker-php-ext-install zip
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Enable MongoDB extension
+RUN pecl install mongodb \
+    && docker-php-ext-enable mongodb
+
+# Copy project files to container
+COPY . /var/www/html/
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy project files
-COPY . /var/www/html
-
-# Install dependencies for MongoDB & Composer
-RUN apt-get update && apt-get install -y \
-    unzip \
-    git \
-    && docker-php-ext-install mysqli \
-    && pecl install mongodb \
-    && docker-php-ext-enable mongodb
-
-# Install Composer
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
-    && php -r "unlink('composer-setup.php');"
-
-# Install PHP dependencies
+# Install PHP dependencies via Composer
 RUN composer install
 
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
-
+# Expose port 80
 EXPOSE 80
-CMD ["apache2-foreground"]
