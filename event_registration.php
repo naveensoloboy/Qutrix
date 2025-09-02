@@ -177,6 +177,14 @@ $collection->insertOne([
     "created_at"=>$currentDateTime
 ]);
 
+require 'vendor/autoload.php'; // MongoDB library + Dompdf
+
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
+// ---- YOUR EXISTING CODE (unchanged) ----
+// (everything you pasted stays the same up to your echo success messages)
+
 // WhatsApp links
 $whatsapp_links = [
     "PAPER PRESENTATION"=>"https://chat.whatsapp.com/H7m0gMxsiTSGwshDo7wt4q",
@@ -196,5 +204,55 @@ foreach (array_unique($events) as $event) {
         echo "<br>Join our WhatsApp group for the event <a href='".$whatsapp_links[$event]."' target='_blank'>$event</a><br>";
     }
 }
+
+// ---- PDF GENERATION ----
+
+
+
+// Build PDF content
+$pdfHtml = "
+<div style='text-align:center;'>
+    <img src='http://localhost:8080/Qutrix/images/College_logo.png' style='height:80px; margin-right:20px;' />
+    <img src='http://localhost:8080/Qutrix/images/College_name-whiite_bg.jpg' style='height:80px;' />
+</div>
+<hr>
+<h2 style='text-align:center;'>Qutrix Event Registration</h2>
+<p><b>College:</b> $college_name</p>
+<p><b>Department:</b> $department</p>
+<p><b>Team Members:</b></p>
+<ul>
+  <li>$first_member_name ($first_member_roll_no)</li>
+  " . ($second_member_name ? "<li>$second_member_name ($second_member_roll_no)</li>" : "") . "
+  " . ($third_member_name ? "<li>$third_member_name ($third_member_roll_no)</li>" : "") . "
+  " . ($fourth_member_name ? "<li>$fourth_member_name ($fourth_member_roll_no)</li>" : "") . "
+</ul>
+<p><b>Phone:</b> $phone_no</p>
+<p><b>Alt Phone:</b> $alt_phone_no</p>
+<p><b>Email:</b> $email</p>
+<p><b>Registered Events:</b></p>
+<ul>";
+foreach ($events as $ev) {
+    $pdfHtml .= "<li>$ev</li>";
+}
+$pdfHtml .= "</ul>";
+
+
+// Save PDF to file
+$options = new Options();
+$options->set('isRemoteEnabled', true);
+$dompdf = new Dompdf($options);
+$dompdf->loadHtml($pdfHtml);
+$dompdf->setPaper('A4', 'portrait');
+$dompdf->render();
+$pdfOutput = $dompdf->output();
+$pdfFilePath = "registration_" . time() . ".pdf";
+file_put_contents($pdfFilePath, $pdfOutput);
+
+// Show download button
+echo "<br><a href='$pdfFilePath' download>
+        <button style='padding:10px 20px;background:#103353;color:#fff;border:none;border-radius:5px;cursor:pointer'>
+            Download Registration PDF
+        </button>
+      </a>";
 
 ?>

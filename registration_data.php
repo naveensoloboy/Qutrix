@@ -178,9 +178,7 @@ if (count($rows) > 0) {
         $serial_no++;
     }
     echo "</table>";
-} else {
-    echo "<p style='text-align: center;'>No registrations found.</p>";
-}
+} 
 
 // Extra queries for ADMINISTRATOR
 if ($admin_event === "ADMINISTRATOR") {

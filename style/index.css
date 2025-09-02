@@ -300,7 +300,7 @@ body {
 
 /* Button Container */
 .btns {
-    margin: 100px 0 50px 0;
+    margin: 80px 0 50px 0;
     display: flex;
     justify-content: center;
     gap: 15px;

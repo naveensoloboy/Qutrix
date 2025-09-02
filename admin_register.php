@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ]);
 
     if ($insertResult->getInsertedCount() > 0) {
-        echo "<script>alert('Admin Registered Successfully!'); window.location.href='admin_login_form.html';</script>";
+        echo "<script>alert('Admin Registered Successfully!'); window.location.href='admin_register.html';</script>";
     } else {
         echo "<script>alert('Sorry, Unable to Register. Please Try Again!'); window.location.href='admin_register.html';</script>";
     }
