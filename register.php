@@ -313,7 +313,7 @@ function check_event_limit($collection, $roll_no, $college_name, $department) {
             "MARKETING" => "https://chat.whatsapp.com/ES8urKsnJB6IT7I1gAunfp",
             "SOFTWARE CONTEST" => "https://chat.whatsapp.com/B9XSJywZlzi3zdS1RieHoY",
             "WORD HUNT" => "https://chat.whatsapp.com/Iw739BFmakDHumBkdLNAUv",
-            "NON TECHNICAL ROUND DANCING" => "https://chat.whatsapp.com/HzQX1lKZLkM3iILgGw4Je"
+            
         ];
 
         // Create PDF directory if it doesn't exist
@@ -327,60 +327,89 @@ function check_event_limit($collection, $roll_no, $college_name, $department) {
         <!DOCTYPE html>
         <html>
         <head>
-            <meta charset='UTF-8'>
-            <title>Registration Confirmation</title>
-            <style>
-                body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
-                .header { text-align: center; margin-bottom: 30px; }
-                .section { margin-bottom: 20px; }
-                .section-title { font-weight: bold; font-size: 18px; border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 10px; }
-                .footer { text-align: center; margin-top: 40px; font-size: 12px; color: #666; }
-            </style>
+          <meta charset='UTF-8'>
+          <title>Registration Confirmation</title>
+          <style>
+            body { font-family: DejaVu Sans, sans-serif; margin:0; padding:0; }
+            .container { border:1px solid #ccc; border-radius:10px; padding:20px; margin:20px; }
+            .header { text-align:center; background:#6A0DAD; color:#fff; padding:15px; border-radius:10px 10px 0 0; }
+            .header h1 { margin:0; font-size:24px; }
+            .header h2 { margin:5px 0 0 0; font-size:16px; font-weight:normal; }
+
+            .section { padding:15px; border-bottom:1px solid #ddd; clear:both; }
+            .section:last-child { border-bottom:none; }
+
+            .section-title { font-weight:bold; font-size:16px; margin-bottom:10px; color:#6A0DAD; }
+
+            .details-table { width:100%; border-collapse:collapse; }
+            .details-table td { padding:6px 4px; vertical-align:top; }
+
+            .right-box {
+              float:right; width:160px; text-align:center; 
+              border:2px solid #6A0DAD; border-radius:10px; padding:10px; margin-top:-40px;
+            }
+            .date { font-size:20px; font-weight:bold; color:#6A0DAD; }
+            .id { margin-top:5px; font-size:14px; }
+
+            .footer { text-align:center; padding:15px; background:#f5f5f5; border-radius:0 0 10px 10px; font-size:12px; color:#333; }
+          </style>
         </head>
         <body>
+          <div class='container'>
             <div class='header'>
-                <h1>Event Registration Confirmation</h1>
-                <h2>Qutrix 2025</h2>
+                <h1>GOBI ARTS & SCIENCE COLLEGE</h1>
+                <h2>PG & RESEARCH DEPARTMENT OF COMPUTER SCIENCE</h2>
+                <h2>Qutrix 2025 </h2>
+                <h2>Registration Confirmation</h2>
             </div>
+
             
+
             <div class='section'>
-                <div class='section-title'>College Information</div>
-                <p><strong>College:</strong> $college_name</p>
-                <p><strong>Department:</strong> $department</p>
-                <p><strong>Event:</strong> $event</p>
+              <div class='section-title'>College Information</div>
+              <table class='details-table'>
+                <tr><td><strong>College:</strong></td><td>$college_name</td></tr>
+                <tr><td><strong>Department:</strong></td><td>$department</td></tr>
+                <tr><td><strong>Event:</strong></td><td>$event</td></tr>
+              </table>
             </div>
-            
+
             <div class='section'>
-                <div class='section-title'>Team Members</div>
-                <p><strong>First Member:</strong> $first_member_name ($first_member_roll_no) - $first_member_phone - $first_member_email</p>
-                <p><strong>Second Member:</strong> $second_member_name ($second_member_roll_no) - $second_member_phone - $second_member_email</p>";
-        
-        if ($third_member_name) {
-            $pdfHtml .= "<p><strong>Third Member:</strong> $third_member_name ($third_member_roll_no) - $third_member_phone - $third_member_email</p>";
+              <div class='section-title'>Team Members</div>
+              <table class='details-table'>
+                <tr><td><strong>First Member:</strong></td><td>$first_member_name ($first_member_roll_no) - $first_member_phone - $first_member_email</td></tr>
+                <tr><td><strong>Second Member:</strong></td><td>$second_member_name ($second_member_roll_no) - $second_member_phone - $second_member_email</td></tr>";
+
+        if (!empty($third_member_name)) {
+            $pdfHtml .= "<tr><td><strong>Third Member:</strong></td><td>$third_member_name ($third_member_roll_no) - $third_member_phone - $third_member_email</td></tr>";
         }
-        
-        if ($fourth_member_name) {
-            $pdfHtml .= "<p><strong>Fourth Member:</strong> $fourth_member_name ($fourth_member_roll_no) - $fourth_member_phone - $fourth_member_email</p>";
+        if (!empty($fourth_member_name)) {
+            $pdfHtml .= "<tr><td><strong>Fourth Member:</strong></td><td>$fourth_member_name ($fourth_member_roll_no) - $fourth_member_phone - $fourth_member_email</td></tr>";
+        }
+        if (!empty($fifth_member_name)) {
+            $pdfHtml .= "<tr><td><strong>Fifth Member:</strong></td><td>$fifth_member_name ($fifth_member_roll_no) - $fifth_member_phone - $fifth_member_email</td></tr>";
         }
 
-        if ($fifth_member_name) {
-            $pdfHtml .= "<p><strong>Fifth Member:</strong> $fifth_member_name ($fifth_member_roll_no) - $fifth_member_phone - $fifth_member_email</p>";
-        }
-        
-        $pdfHtml .= "</div>
-            
+        $pdfHtml .= "
+              </table>
+            </div>
+
             <div class='section'>
-                <div class='section-title'>Registration Details</div>
-                <p><strong>Registration ID:</strong> $registration_id</p>
-                <p><strong>Registration Date:</strong> " . date('Y-m-d H:i:s') . "</p>
+              <div class='section-title'>Registration Details</div>
+              <table class='details-table'>
+                <tr><td><strong>Registration ID:</strong></td><td>$registration_id</td></tr>
+                <tr><td><strong>Registration Date:</strong></td><td>" . date('Y-m-d H:i:s') . "</td></tr>
+              </table>
             </div>
-            
+
             <div class='footer'>
-                <p>This is an auto-generated confirmation. Please keep this for your records.</p>
-                <p>For any queries, contact the event organizers.</p>
+              <p>This is an auto-generated confirmation. Please keep this for your records.</p>
+              <p>For any queries, contact the event organizers.</p>
             </div>
+          </div>
         </body>
         </html>";
+
 
         // Generate and save PDF
         $options = new Options();
@@ -408,10 +437,17 @@ function check_event_limit($collection, $roll_no, $college_name, $department) {
         echo "<h2 style='color:#2c3e50;'>Registration Successful!</h2>";
         echo "<p style='font-size:18px;'>Thank you for registering for <strong>$event</strong></p>";
         
-        if (isset($whatsapp_links[$event])) {
+        if (isset($whatsapp_links[$event]) && $event !== "NON TECHNICAL ROUND DANCING") {
             echo "<script>alert('Please join the WhatsApp group for your event');</script>";
-            echo "<p>Join the WhatsApp group for your event: <a href='".$whatsapp_links[$event]."' target='_blank' style='color:#3498db; text-decoration:none; font-weight:bold;'>$event WhatsApp Group</a></p>";
+            echo "<p>Join the WhatsApp group for your event: 
+                    <a href='" . $whatsapp_links[$event] . "' target='_blank' 
+                       style='color:#3498db; text-decoration:none; font-weight:bold;'>
+                       $event WhatsApp Group</a>
+                  </p>";
+        } elseif ($event === "NON TECHNICAL ROUND DANCING") {
+            echo "<p><strong>Note:</strong> No WhatsApp group is required for Dance participants.</p>";
         }
+
         
         echo "<p>Download your registration confirmation: 
                 <a href='$pdf_filepath' download style='display:inline-block; padding:10px 20px; background:#3498db; color:white; text-decoration:none; border-radius:5px; margin-top:15px;'>

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Symposium Feedback Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
@@ -65,48 +67,10 @@
             color: #333;
         }
 
-        .feedback-form .form-group .radio-group {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .feedback-form .form-group .radio-group label {
-            flex: 1;
-            margin-right: 10px;
-            cursor: pointer;
-            color: #555;
-            font-weight: 500;
-        }
-
-        .feedback-form .form-group .radio-group label:last-child {
-            margin-right: 0;
-        }
-
-        .feedback-form .form-group .radio-group input {
-            margin-right: 8px;
-            cursor: pointer;
-        }
-
-        .feedback-form .form-group textarea {
-            width: 95%;
-            padding: 14px;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            resize: vertical;
-            height: 120px;
-            font-size: 14px;
-            color: #555;
-            transition: border 0.3s ease;
-        }
-
-        .feedback-form .form-group textarea:focus {
-            border-color: #4CAF50;
-            outline: none;
-            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-        }
-
-        .feedback-form select, .feedback-form input[type="text"], .feedback-form button {
+        .feedback-form .form-group textarea,
+        .feedback-form select,
+        .feedback-form input[type="text"],
+        .feedback-form button {
             width: 95%;
             padding: 14px;
             margin-bottom: 20px;
@@ -116,7 +80,9 @@
             transition: border 0.3s ease;
         }
 
-        .feedback-form select:focus, .feedback-form input[type="text"]:focus {
+        .feedback-form textarea:focus,
+        .feedback-form select:focus,
+        .feedback-form input[type="text"]:focus {
             border-color: #4CAF50;
             outline: none;
             box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
@@ -136,29 +102,19 @@
             background-color: #45a049;
         }
 
-        @media (max-width: 768px) {
-            .feedback-form {
-                padding: 20px;
-            }
-
-            .feedback-form h2, .feedback-form h3 {
-                font-size: 22px;
-            }
+        /* Make Select2 match form style */
+        .select2-container--default .select2-selection--single {
+            height: 48px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 16px;
         }
 
-        @media (max-width: 500px) {
-            .feedback-form .form-group .radio-group label {
-                flex-basis: 100%;
-                margin-bottom: 10px;
-            }
-
-            .feedback-form .form-group label {
-                font-size: 14px;
-            }
-
-            .feedback-form button {
-                font-size: 16px;
-            }
+        .select2-container--default .select2-selection--single:focus {
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
         }
     </style>
 </head>
@@ -166,93 +122,145 @@
 
     <form class="feedback-form" action="feedback.php" method="post">
         <h2>Symposium Feedback</h2>
-
         <h3>We Would Be Thankful If You Could Provide Feedback About This Symposium</h3>
 
-        <!--Participant and College-->
+        <!-- Participant -->
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" id="name" placeholder="Enter your Name">
+            <input type="text" id="name" placeholder="Enter your Name" name="name">
         </div>
 
+        <!-- College Name with Search -->
         <div class="form-group">
             <label for="collegename">College Name<span style="color:red;">*</span></label>
             <select id="collegename" name="collegename" required>
                 <option value="">Select College</option>
-                    <option value="NANDHA COLLEGE OF TECHNOLOGY">NANDHA COLLEGE OF TECHNOLOGY</option>
-                    <option value="KPR COLLEGE OF ARTS SCIENCE AND RESEARCH">KPR COLLEGE OF ARTS SCIENCE AND RESEARCH</option>
-                    <option value="K.S.R. COLLEGE OF ARTS AND SCIENCE">K.S.R. COLLEGE OF ARTS AND SCIENCE</option>
-                    <option value="K.S.R. COLLEGE OF ENGINEERING">K.S.R. COLLEGE OF ENGINEERING</option>
-                    <option value="PSG COLLEGE OF TECHNOLOGY">PSG COLLEGE OF TECHNOLOGY</option>
-                    <option value="PSG COLLEGE OF ARTS AND SCIENCE">PSG COLLEGE OF ARTS AND SCIENCE</option>
-                    <option value="P.K.R ARTS COLLEGE FOR WOMEN">P.K.R ARTS COLLEGE FOR WOMEN</option>
-                    <option value="Dr.N.G.P. ARTS AND SCIENCE COLLEGE">Dr.N.G.P. ARTS AND SCIENCE COLLEGE</option>
-                    <option value="Dr. GRD COLLEGE OF ARTS AND  SCIENCE">Dr. GRD COLLEGE OF ARTS AND  SCIENCE</option>
-                    <option value="RVS COLLEGE OF ARTS AND SCIENCE">RVS COLLEGE OF ARTS AND SCIENCE</option>
-                    <option value="EXCEL COLLEGE FOR COMMERCE AND SCIENCE">EXCEL COLLEGE FOR COMMERCE AND SCIENCE</option>
-                    <option value="EXCEL ENGINEERING COLLEGE - AUTONOMOUS">EXCEL ENGINEERING COLLEGE - AUTONOMOUS</option>
-                    <option value="J.J. COLLEGE OF  ENGINEERING AND TECHNOLOGY">J.J. COLLEGE OF  ENGINEERING AND TECHNOLOGY</option>
-                    <option value="SHREE VENKATESHWARA ARTS AND SCIENCE (CO-EDUCATION) COLLEGE">SHREE VENKATESHWARA ARTS AND SCIENCE (CO-EDUCATION) COLLEGE</option>
-                    <option value="VET INSTITUTE OF ARTS AND SCIENCE">VET INSTITUTE OF ARTS AND SCIENCE</option>
-                    <option value="HINDUSTHAN COLLEGE OF ARTS & SCIENCE">HINDUSTHAN COLLEGE OF ARTS & SCIENCE</option>
-                    <option value="KONGU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)">KONGU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)</option>
-                    <option value="AYYAN THIRUVALLUVAR COLLEGE OF ARTS & SCIENCE">AYYAN THIRUVALLUVAR COLLEGE OF ARTS & SCIENCE</option>
-                    <option value="KONGU ENGINEERING COLLEGE">KONGU ENGINEERING COLLEGE</option>
-                    <option value="SNS COLLEGE OF TECHNOLOGY">SNS COLLEGE OF TECHNOLOGY</option>
-                    <option value="VINAYAKA MISSION'S KIRUPANANDA VARIYAR ENGINEERING COLLEGE">VINAYAKA MISSION'S KIRUPANANDA VARIYAR ENGINEERING COLLEGE</option>
-                    <option value="MAHENDRA COLLEGE OF ENGINEERING">MAHENDRA COLLEGE OF ENGINEERING</option>
-                    <option value="PSGR KRISHNAMMAL COLLEGE FOR WOMEN">PSGR KRISHNAMMAL COLLEGE FOR WOMEN</option>
-                    <option value="GOVERNMENT ARTS AND SCIENCE COLLEGE, THITTAMALAI">GOVERNMENT ARTS AND SCIENCE COLLEGE, THITTAMALAI</option>
-                    <option value="KALASALINGAM ACADEMY OF RESEARCH AND EDUCATION">KALASALINGAM ACADEMY OF RESEARCH AND EDUCATION</option>
-                    <option value="AVINASHI GOVERNMENT ARTS & SCIENCE COLLEGE">AVINASHI GOVERNMENT ARTS & SCIENCE COLLEGE</option>
-                    <option value="VELLALAR COLLEGE FOR WOMEN">VELLALAR COLLEGE FOR WOMEN</option>
-                    <option value="SREE AMMAN ARTS & SCIENCE COLLEGE, ERODE">SREE AMMAN ARTS & SCIENCE COLLEGE, ERODE</option>
-                    <option value="NANDHA ARTS AND SCIENCE COLLEGE">NANDHA ARTS AND SCIENCE COLLEGE</option>
-                    <option value="GOBI ARTS & SCIENCE COLLEGE">GOBI ARTS & SCIENCE COLLEGE</option>
+                <option value="DR. SNS RAJALAKSHMI COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">DR. SNS RAJALAKSHMI COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="NANDHA ARTS AND SCIENCE COLLEGE">NANDHA ARTS AND SCIENCE COLLEGE</option>
+                <option value="KONGU NADU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)">KONGU NADU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)</option>
+                <option value="VELLALAR COLLEGE FOR WOMEN (AUTONOMOUS)">VELLALAR COLLEGE FOR WOMEN (AUTONOMOUS)</option>
+                <option value="BHARATHIAR UNIVERSITY">BHARATHIAR UNIVERSITY</option>
+                <option value="VIVEKANANDHA ARTS AND SCIENCE COLLEGE FOR WOMEN">VIVEKANANDHA ARTS AND SCIENCE COLLEGE FOR WOMEN</option>
+                <option value="KONGUNADU COLLEGE OF ENGINEERING AND TECHNOLOGY (AUTONOMOUS)">KONGUNADU COLLEGE OF ENGINEERING AND TECHNOLOGY (AUTONOMOUS)</option>
+                <option value="SELVAM COLLEGE OF TECHNOLOGY">SELVAM COLLEGE OF TECHNOLOGY</option>
+                <option value="NANDHA ENGINEERING COLLEGE (AUTONOMOUS)">NANDHA ENGINEERING COLLEGE (AUTONOMOUS)</option>
+                <option value="VIVEKANANDHA COLLEGE OF ARTS AND SCIENCES FOR WOMEN (AUTONOMOUS)">VIVEKANANDHA COLLEGE OF ARTS AND SCIENCES FOR WOMEN (AUTONOMOUS)</option>
+                <option value="KONGU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)">KONGU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)</option>
+                <option value="SRI VASAVI COLLEGE (AUTONOMOUS)">SRI VASAVI COLLEGE (AUTONOMOUS)</option>
+                <option value="K.S.R. COLLEGE OF ENGINEERING">K.S.R. COLLEGE OF ENGINEERING</option>
+                <option value="KSR INSTITUTE FOR ENGINEERING AND TECHNOLOGY">KSR INSTITUTE FOR ENGINEERING AND TECHNOLOGY</option>
+                <option value="VIVEKANANDHA COLLEGE OF ENGINEERING FOR WOMEN">VIVEKANANDHA COLLEGE OF ENGINEERING FOR WOMEN</option>
+                <option value="SRI RAMAKRISHNA COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">SRI RAMAKRISHNA COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="ST. JOSEPH'S COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">ST. JOSEPH'S COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="SRI KRISHNA ARTS AND SCIENCE COLLEGE (AUTONOMOUS)">SRI KRISHNA ARTS AND SCIENCE COLLEGE (AUTONOMOUS)</option>
+                <option value="MUTHAYAMMAL COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">MUTHAYAMMAL COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="HINDUSTHAN INSTITUTE OF TECHNOLOGY">HINDUSTHAN INSTITUTE OF TECHNOLOGY</option>
+                <option value="KONGU ENGINEERING COLLEGE">KONGU ENGINEERING COLLEGE</option>
+                <option value="NEHRU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)">NEHRU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)</option>
+                <option value="VELLALAR COLLEGE OF EDUCATION FOR WOMEN">VELLALAR COLLEGE OF EDUCATION FOR WOMEN</option>
+                <option value="SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE OF ARTS AND SCIENCE">SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="GOBI ARTS AND SCIENCE COLLEGE (AUTONOMOUS)">GOBI ARTS AND SCIENCE COLLEGE (AUTONOMOUS)</option>
+                <option value="RATHINAM COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">RATHINAM COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="CMS COLLEGE OF SCIENCE AND COMMERCE (AUTONOMOUS)">CMS COLLEGE OF SCIENCE AND COMMERCE (AUTONOMOUS)</option>
+                <option value="SRI RAMAKRISHNA COLLEGE OF ARTS AND SCIENCE FOR WOMEN">SRI RAMAKRISHNA COLLEGE OF ARTS AND SCIENCE FOR WOMEN</option>
+                <option value="NIRMALA COLLEGE FOR WOMEN (AUTONOMOUS)">NIRMALA COLLEGE FOR WOMEN (AUTONOMOUS)</option>
+                <option value="PSG COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">PSG COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="SRI RAMAKRISHNA MISSION VIDYALAYA MARUTHI COLLEGE OF PHYSICAL EDUCATION">SRI RAMAKRISHNA MISSION VIDYALAYA MARUTHI COLLEGE OF PHYSICAL EDUCATION</option>
+                <option value="VIVEKANANDHA INSTITUTE OF ENGINEERING AND TECHNOLOGY FOR WOMEN">VIVEKANANDHA INSTITUTE OF ENGINEERING AND TECHNOLOGY FOR WOMEN</option>
+                <option value="SASURIE COLLEGE OF ARTS AND SCIENCE">SASURIE COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="AVINASHILINGAM INSTITUTE FOR HOME SCIENCE AND HIGHER EDUCATION FOR WOMEN (DEEMED TO BE UNIVERSITY)">AVINASHILINGAM INSTITUTE FOR HOME SCIENCE AND HIGHER EDUCATION FOR WOMEN (DEEMED TO BE UNIVERSITY)</option>
+                <option value="SANKARA COLLEGE OF SCIENCE AND COMMERCE">SANKARA COLLEGE OF SCIENCE AND COMMERCE</option>
+                <option value="SRI VASAVI COLLEGE OF EDUCATION">SRI VASAVI COLLEGE OF EDUCATION</option>
+                <option value="COIMBATORE INSTITUTE OF TECHNOLOGY (AUTONOMOUS)">COIMBATORE INSTITUTE OF TECHNOLOGY (AUTONOMOUS)</option>
+                <option value="GOVERNMENT ARTS COLLEGE (AUTONOMOUS), COIMBATORE">GOVERNMENT ARTS COLLEGE (AUTONOMOUS), COIMBATORE</option>
+                <option value="CHIKKANNA GOVERNMENT ARTS COLLEGE, TIRUPPUR">CHIKKANNA GOVERNMENT ARTS COLLEGE, TIRUPPUR</option>
+                <option value="NEHRU INSTITUTE OF INFORMATION TECHNOLOGY AND MANAGEMENT">NEHRU INSTITUTE OF INFORMATION TECHNOLOGY AND MANAGEMENT</option>
+                <option value="SRI RAMAKRISHNA INSTITUTE OF TECHNOLOGY">SRI RAMAKRISHNA INSTITUTE OF TECHNOLOGY</option>
+                <option value="SNMV COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">SNMV COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="SRI VASAVI COLLEGE OF ARTS AND SCIENCE">SRI VASAVI COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE OF EDUCATION">SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE OF EDUCATION</option>
+                <option value="DR. N.G.P. INSTITUTE OF TECHNOLOGY">DR. N.G.P. INSTITUTE OF TECHNOLOGY</option>
+                <option value="SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="SREE SARASWATHI THYAGARAJA COLLEGE (AUTONOMOUS)">SREE SARASWATHI THYAGARAJA COLLEGE (AUTONOMOUS)</option>
+                <option value="PARK COLLEGE (AUTONOMOUS)">PARK COLLEGE (AUTONOMOUS)</option>
+                <option value="SNS COLLEGE OF TECHNOLOGY">SNS COLLEGE OF TECHNOLOGY</option>
+                <option value="NANDHA COLLEGE OF TECHNOLOGY">NANDHA COLLEGE OF TECHNOLOGY</option>
+                <option value="P.K.R. ARTS COLLEGE FOR WOMEN">P.K.R. ARTS COLLEGE FOR WOMEN</option>
+                <option value="J.J. COLLEGE OF ENGINEERING AND TECHNOLOGY">J.J. COLLEGE OF ENGINEERING AND TECHNOLOGY</option>
+                <option value="K.S.R. COLLEGE OF ARTS AND SCIENCE">K.S.R. COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="SHREE VENKATESHWARA ARTS AND SCIENCE (CO-EDUCATION) COLLEGE">SHREE VENKATESHWARA ARTS AND SCIENCE (CO-EDUCATION) COLLEGE</option>
+                <option value="KPR COLLEGE OF ARTS, SCIENCE AND RESEARCH">KPR COLLEGE OF ARTS, SCIENCE AND RESEARCH</option>
+                <option value="AYYAN THIRUVALLUVAR COLLEGE OF ARTS AND SCIENCE">AYYAN THIRUVALLUVAR COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="PSG COLLEGE OF TECHNOLOGY">PSG COLLEGE OF TECHNOLOGY</option>
+                <option value="VET INSTITUTE OF ARTS AND SCIENCE">VET INSTITUTE OF ARTS AND SCIENCE</option>
+                <option value="DR. N.G.P. ARTS AND SCIENCE COLLEGE (AUTONOMOUS)">DR. N.G.P. ARTS AND SCIENCE COLLEGE (AUTONOMOUS)</option>
+                <option value="EXCEL COLLEGE FOR COMMERCE AND SCIENCE">EXCEL COLLEGE FOR COMMERCE AND SCIENCE</option>
+                <option value="EXCEL ENGINEERING COLLEGE (AUTONOMOUS)">EXCEL ENGINEERING COLLEGE (AUTONOMOUS)</option>
+                <option value="RVS COLLEGE OF ARTS AND SCIENCE">RVS COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="VINAYAKA MISSION'S KIRUPANANDA VARIYAR ENGINEERING COLLEGE">VINAYAKA MISSION'S KIRUPANANDA VARIYAR ENGINEERING COLLEGE</option>
+                <option value="KALASALINGAM ACADEMY OF RESEARCH AND EDUCATION">KALASALINGAM ACADEMY OF RESEARCH AND EDUCATION</option>
+                <option value="GOVERNMENT ARTS AND SCIENCE COLLEGE, THITTAMALAI">GOVERNMENT ARTS AND SCIENCE COLLEGE, THITTAMALAI</option>
+                <option value="MAHENDRA COLLEGE OF ENGINEERING">MAHENDRA COLLEGE OF ENGINEERING</option>
+                <option value="HINDUSTHAN COLLEGE OF ARTS AND SCIENCE">HINDUSTHAN COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="K.S. RANGASAMY COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">K.S. RANGASAMY COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="DR. GRD COLLEGE OF ARTS AND SCIENCE">DR. GRD COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="PSGR KRISHNAMMAL COLLEGE FOR WOMEN">PSGR KRISHNAMMAL COLLEGE FOR WOMEN</option>
+                <option value="AVINASHI GOVERNMENT ARTS AND SCIENCE COLLEGE">AVINASHI GOVERNMENT ARTS AND SCIENCE COLLEGE</option>
+                <option value="SREE AMMAN ARTS AND SCIENCE COLLEGE, ERODE">SREE AMMAN ARTS AND SCIENCE COLLEGE, ERODE</option>
             </select>
         </div>
 
-        <!-- Overall Opinion -->
+        <br><br>
+        <!-- Questions -->
         <div class="form-group">
-            <label for="opinion">1. What is your overall opinion about the symposium?<span style="color:red;">*</span></label>
-            <div class="radio-group">
+            <label>1. What is your overall opinion about the symposium?</label>
+            <div>
                 <label><input type="radio" name="opinion" value="Very Good" required> Very Good</label>
-                <label><input type="radio" name="opinion" value="Good" required> Good</label>
-                <label><input type="radio" name="opinion" value="Satisfactory" required> Satisfactory</label>
-                <label><input type="radio" name="opinion" value="Poor" required> Poor</label>
+                <label><input type="radio" name="opinion" value="Good"> Good</label>
+                <label><input type="radio" name="opinion" value="Satisfactory"> Satisfactory</label>
+                <label><input type="radio" name="opinion" value="Poor"> Poor</label>
             </div>
         </div>
 
-        <!-- Overall Experience -->
         <div class="form-group">
-            <label for="experience">2. How would you rate the overall experience of the symposium?<span style="color:red;">*</span></label>
-            <div class="radio-group">
+            <label>2. How would you rate the overall experience of the symposium?</label>
+            <div>
                 <label><input type="radio" name="experience" value="Very Good" required> Very Good</label>
-                <label><input type="radio" name="experience" value="Good" required> Good</label>
-                <label><input type="radio" name="experience" value="Satisfactory" required> Satisfactory</label>
-                <label><input type="radio" name="experience" value="Poor" required> Poor</label>
+                <label><input type="radio" name="experience" value="Good"> Good</label>
+                <label><input type="radio" name="experience" value="Satisfactory"> Satisfactory</label>
+                <label><input type="radio" name="experience" value="Poor"> Poor</label>
             </div>
         </div>
 
-        <!-- Overall Organization -->
         <div class="form-group">
-            <label for="organization">3. How would you rate the overall organization of the symposium?<span style="color:red;">*</span></label>
-            <div class="radio-group">
+            <label>3. How would you rate the overall organization of the symposium?</label>
+            <div>
                 <label><input type="radio" name="organization" value="Very Good" required> Very Good</label>
-                <label><input type="radio" name="organization" value="Good" required> Good</label>
-                <label><input type="radio" name="organization" value="Satisfactory" required> Satisfactory</label>
-                <label><input type="radio" name="organization" value="Poor" required> Poor</label>
+                <label><input type="radio" name="organization" value="Good"> Good</label>
+                <label><input type="radio" name="organization" value="Satisfactory"> Satisfactory</label>
+                <label><input type="radio" name="organization" value="Poor"> Poor</label>
             </div>
         </div>
 
-        <!-- Suggestions or Comments -->
         <div class="form-group">
-            <label for="comments">4. Any other suggestions or comments?<span style="color:red;">*</span></label>
+            <label for="comments">4. Any other suggestions or comments?</label>
             <textarea id="comments" name="comments" placeholder="Enter your suggestions or comments here..." required></textarea>
         </div>
 
         <button type="submit">Submit</button>
     </form>
+
+    <!-- Select2 JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#collegename').select2({
+                placeholder: "Search College",
+                allowClear: true
+            });
+        });
+    </script>
 
 </body>
 </html>

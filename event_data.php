@@ -437,17 +437,17 @@ th, td {
                             <td>" . (!empty($row["second_member_bonafide"]) ? "<a href='../" . safeString($row["second_member_bonafide"]) . "' target='_blank' class='view-btn'><i class='fas fa-eye'></i> View</a>" : "N/A") . "</td>
 
                             <!-- Third Member -->
-                            <td>" . safeString($row["third_member_name"]) . "</td>
-                            <td>" . safeString($row["third_member_rollno"]) . "</td>
-                            <td class='contact-info'>" . safeString($row["third_member_phone"]) . "</td>
-                            <td class='contact-info'><a href='mailto:" . safeString($row["third_member_email"]) . "' class='email-link'>" . safeString($row["third_member_email"]) . "</a></td>
+                            <td>" . safeString($row["third_member_name"] ?? "") . "</td>
+                            <td>" . safeString($row["third_member_rollno"] ?? "") . "</td>
+                            <td class='contact-info'>" . safeString($row["third_member_phone"] ?? "") . "</td>
+                            <td class='contact-info'><a href='mailto:" . safeString($row["third_member_email"] ?? "") . "' class='email-link'>" . safeString($row["third_member_email"] ?? "") . "</a></td>
                             <td>" . (!empty($row["third_member_bonafide"]) ? "<a href='../" . safeString($row["third_member_bonafide"]) . "' target='_blank' class='view-btn'><i class='fas fa-eye'></i> View</a>" : "N/A") . "</td>
 
                             <!-- Fourth Member -->
-                            <td>" . safeString($row["fourth_member_name"]) . "</td>
-                            <td>" . safeString($row["fourth_member_rollno"]) . "</td>
-                            <td class='contact-info'>" . safeString($row["fourth_member_phone"]) . "</td>
-                            <td class='contact-info'><a href='mailto:" . safeString($row["fourth_member_email"]) . "' class='email-link'>" . safeString($row["fourth_member_email"]) . "</a></td>
+                            <td>" . safeString($row["fourth_member_name"] ?? "") . "</td>
+                            <td>" . safeString($row["fourth_member_rollno"] ?? "") . "</td>
+                            <td class='contact-info'>" . safeString($row["fourth_member_phone"] ?? "") . "</td>
+                            <td class='contact-info'><a href='mailto:" . safeString($row["fourth_member_email"] ?? "") . "' class='email-link'>" . safeString($row["fourth_member_email"] ?? "") . "</a></td>
                             <td>" . (!empty($row["fourth_member_bonafide"]) ? "<a href='../" . safeString($row["fourth_member_bonafide"]) . "' target='_blank' class='view-btn'><i class='fas fa-eye'></i> View</a>" : "N/A") . "</td>
 
                             <!-- Fifth Member -->
