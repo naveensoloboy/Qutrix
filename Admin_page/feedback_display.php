@@ -1,5 +1,6 @@
 <?php
-require 'db.php'; // MongoDB connection file
+
+include __DIR__ . '/../db.php'; // MongoDB connection
 
 // Fetch all feedback documents sorted by submission_date
 $collection = $db->feedback;

@@ -1,8 +1,9 @@
 <?php
 session_start();
 
-require 'vendor/autoload.php'; // MongoDB PHP Library
-include "db.php"; // this will contain MongoDB connection
+require __DIR__ . '/../vendor/autoload.php'; // MongoDB PHP Library
+include __DIR__ . '/../db.php'; // MongoDB connection
+// this will contain MongoDB connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $admin_username = trim($_POST['username']);

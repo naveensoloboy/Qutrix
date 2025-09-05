@@ -1,5 +1,7 @@
 <?php
-require 'db.php'; // MongoDB connection
+
+include __DIR__ . '/../db.php'; // MongoDB connection
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST['username']);
