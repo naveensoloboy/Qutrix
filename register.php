@@ -307,13 +307,13 @@ function check_event_limit($collection, $roll_no, $college_name, $department) {
 
         // WhatsApp links
         $whatsapp_links = [
-            "PAPER PRESENTATION" => "https://chat.whatsapp.com/H7m0gMxsiTSGwshDo7wt4q",
-            "QUIZ" => "https://chat.whatsapp.com/HG12g7tu72l7Hg0NMEQkP1",
-            "WEB DESIGN" => "https://chat.whatsapp.com/K62TaS736mOJvWHpR7OTXd",
-            "MARKETING" => "https://chat.whatsapp.com/EvLsT7oeohUC6x25QY6dI3",
-            "SOFTWARE CONTEST" => "https://chat.whatsapp.com/KIVg2FPShbhHO8Iyhp6tIu",
-            "WORD HUNT" => "https://chat.whatsapp.com/I9kzki1o8Js2CHKH1d2v6j",
-            "NON TECHNICAL ROUND DANCING" => "https://chat.whatsapp.com/HzQX1lKZLkM3iILgGw4Jep"
+            "PAPER PRESENTATION" => "https://chat.whatsapp.com/EUHI8RzFKDAKiXJYdkI14c",
+            "QUIZ" => "https://chat.whatsapp.com/KGOW9QlC6DYAm8hXVc32Xd",
+            "WEB DESIGN" => "https://chat.whatsapp.com/LxzcVPsbIMrCa7fuIMraFO",
+            "MARKETING" => "https://chat.whatsapp.com/ES8urKsnJB6IT7I1gAunfp",
+            "SOFTWARE CONTEST" => "https://chat.whatsapp.com/B9XSJywZlzi3zdS1RieHoY",
+            "WORD HUNT" => "https://chat.whatsapp.com/Iw739BFmakDHumBkdLNAUv",
+            "NON TECHNICAL ROUND DANCING" => "https://chat.whatsapp.com/HzQX1lKZLkM3iILgGw4Je"
         ];
 
         // Create PDF directory if it doesn't exist
