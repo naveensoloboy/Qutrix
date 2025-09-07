@@ -97,7 +97,7 @@ if (!function_exists('safeString')) {
         .event-name {
             font-size: 1.8rem;
             font-weight: 700;
-            color: #ffdd00;
+            color: #3a0ca3;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
         
@@ -354,8 +354,8 @@ th, td {
 </head>
 <body>
     <div class="container">
-        <header>
-            <!-- <h1>Event Registration Data</h1> -->
+        <!-- <header>
+            <h1>Event Registration Data</h1>
             <p class="event-name"><?php echo htmlspecialchars($event); ?></p>
             
             <div class="stats">
@@ -369,14 +369,23 @@ th, td {
                 </div>
                 
             </div>
-        </header>
+        </header> -->
         
         <div class="controls">
             <div class="search-box">
-                <!-- <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search registrations..."> -->
+                <p class="event-name"><?php echo htmlspecialchars($event); ?></p>
             </div> 
             
+            <div class="stat-card">
+                    <div class="stat-number"><?php echo $totalRegistrations; ?></div>
+                    <div class="stat-label">Total Registrations</div>
+            </div>
+
+            <div class="stat-card">
+                    <div class="stat-number"><?php echo $collegeCount; ?></div>
+                    <div class="stat-label">Participating Colleges</div>
+            </div>
+
             <div class="action-buttons">
                 <button class="btn btn-primary" onclick="window.print()">
                     <i class="fas fa-print"></i> Print Report

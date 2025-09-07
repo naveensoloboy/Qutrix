@@ -10,6 +10,9 @@ use MongoDB\Client;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
+  use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 // Check if form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
@@ -455,6 +458,64 @@ function check_event_limit($collection, $roll_no, $college_name, $department) {
                 </a>
              </p>";
         echo "</div>";
+
+      
+
+// Collect all member emails
+$emails = [];
+if (!empty($first_member_email)) $emails[] = $first_member_email;
+if (!empty($second_member_email)) $emails[] = $second_member_email;
+if (!empty($third_member_email)) $emails[] = $third_member_email;
+if (!empty($fourth_member_email)) $emails[] = $fourth_member_email;
+if (!empty($fifth_member_email)) $emails[] = $fifth_member_email;
+
+try {
+    $mail = new PHPMailer(true);
+
+    // Server settings (use Gmail SMTP or other provider)
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.gmail.com';   // Gmail SMTP server
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'naveen9222777@gmail.com'; // Your Gmail
+    $mail->Password   = 'lpyu sgqm qedr fqit';   // Gmail App Password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port       = 587;
+
+    // Sender info
+    $mail->setFrom('yourgmail@gmail.com', 'Qutrix 2025 Registration');
+
+    // Add all recipients
+    foreach ($emails as $email) {
+        $mail->addAddress($email);
+    }
+
+    // Attach the PDF
+    $mail->addAttachment($pdf_filepath);
+
+    // Email content
+    $mail->isHTML(true);
+    $mail->Subject = "Qutrix 2025 Registration Confirmation - $event";
+    $mail->Body    = "
+        <div style='font-family:Arial,sans-serif;'>
+            <h2 style='color:#6A0DAD;'>Qutrix 2025 - Registration Confirmation</h2>
+            <p>Dear Team,</p>
+            <p>Your registration for the event <b>$event</b> has been successfully completed.</p>
+            <p>Please find attached confirmation slip (PDF) and download it for conformation.</p>
+            <br>
+            <p>📍 <b>Venue:</b> Gobi Arts & Science College</p>
+            <p>📅 <b>Date:</b> 19-09-2025</p>
+            <p>🕒 <b>Time:</b> 9:00 AM</p>
+            <br>
+            <p>Regards,<br>Registration Committee<br>Qutrix 2025</p>
+        </div>
+    ";
+
+    $mail->send();
+    // echo "<p style='color:green; font-weight:bold;'>Confirmation email sent to all team members.</p>";
+
+} catch (Exception $e) {
+    // echo "<p style='color:red;'>Email could not be sent. Error: {$mail->ErrorInfo}</p>";
+}
 
     } catch(Exception $e) {
         echo "<div style='text-align:center; padding:20px; background:#ffebee; border-radius:10px; margin:20px;'>";
