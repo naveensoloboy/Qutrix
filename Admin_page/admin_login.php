@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "<script>alert('Invalid password!');window.location.href='admin_login_form.html';</script>";
         }
     } else {
-        echo "<script>alert('Admin not found!');</script>";
+        echo "<script>alert('Admin not found!');window.location.href='admin_login_form.html';</script>";
     }
 }
 ?>
