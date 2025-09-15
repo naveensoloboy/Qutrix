@@ -160,8 +160,8 @@ $count = $collection->countDocuments([
     "event" => $event
 ]);
 
-if ($count >= 5) {
-    die("<br><br><b>Your department has already registered 5 teams for event: $event. Maximum limit reached.</b>");
+if ($count >= 3) {
+    die("<br><br><b>Your department has already registered 3 teams for event: $event. Maximum limit reached.</b>");
 }
 
 
