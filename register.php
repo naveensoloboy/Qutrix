@@ -153,16 +153,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("<br><br><b>Please select an event.</b>");
         }
 
-        // Check duplicate registration (same dept, same college, same event)
-        $exists = $collection->findOne([
-            "college_name" => $college_name,
-            "department" => $department,
-            "event" => $event
-        ]);
-        
-        if ($exists) {
-            die("<br><br><b>A team from your department has already registered for event: $event. Only one team per department is allowed per event.</b>");
-        }
+        // Check duplicate registration (max 5 teams per dept, per college, per event)
+$count = $collection->countDocuments([
+    "college_name" => $college_name,
+    "department" => $department,
+    "event" => $event
+]);
+
+if ($count >= 5) {
+    die("<br><br><b>Your department has already registered 5 teams for event: $event. Maximum limit reached.</b>");
+}
+
 
         // Handle file uploads
         $first_member_bonafide = uploadFile($_FILES["first_member_bonafide"]);
