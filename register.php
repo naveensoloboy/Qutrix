@@ -6,6 +6,8 @@ error_reporting(E_ALL);
 
 // MongoDB and Dompdf namespaces at the top
 require 'vendor/autoload.php';
+require 'db.php';
+
 use MongoDB\Client;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -184,8 +186,7 @@ function show_department_error($dept, $evt) {
 // Check if form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
-        // Connect to MongoDB
-        $client = new MongoDB\Client($uri);
+        
         $collection = $client->Qutrix->registrations;
 
         // Maximum file size limit (900 KB)
@@ -838,7 +839,7 @@ echo "
             <a href='$pdf_filepath' download class='btn btn-pdf'>
                 <i class='fa-solid fa-file-pdf'></i> DOWNLOAD CONFIRMATION SLIP
             </a>
-            <a href='index.html' style='color: var(--text-gray); font-size: 13px; text-decoration: none; margin-top: 10px;'>Return to Home</a>
+            <a href='card.html' style='color: var(--text-gray); font-size: 13px; text-decoration: none; margin-top: 10px;'>Return to Home</a>
         </div>
 
         <div class='footer-note'>
@@ -867,10 +868,10 @@ try {
 
     // SMTP CONFIG
     $mail->isSMTP();
-    $mail->Host       = 'smtp.gmail.com';
+    $mail->Host       = $_ENV['SMTP_HOST'];
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'naveen9222777@gmail.com';
-    $mail->Password   = 'bzze mlve sqsw hivl';
+    $mail->Username   = $_ENV['SMTP_USER'];
+    $mail->Password   = $_ENV['SMTP_PASS'];
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
 

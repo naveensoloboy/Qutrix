@@ -1,13 +1,15 @@
 <?php
-require 'vendor/autoload.php'; // load composer autoload
-date_default_timezone_set('Asia/Kolkata');
-// Your MongoDB Atlas URI (replace <username>, <password>, <cluster> properly)
-$uri = "mongodb+srv://admin:qutrixpass2025@cluster1.duscp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1";
+require __DIR__ . '/vendor/autoload.php';
 
-try {
-    $client = new MongoDB\Client($uri);
-    $db = $client->Qutrix; // Database name
-    // echo "✅ Connected to MongoDB!";
-} catch (Exception $e) {
-    die("❌ Connection failed: " . $e->getMessage());
+use Dotenv\Dotenv;
+use MongoDB\Client;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+if (!isset($_ENV['MONGO_URI'])) {
+    die("❌ MONGO_URI missing in .env");
 }
+
+$client = new Client($_ENV['MONGO_URI']);
+$db = $client->Qutrix;

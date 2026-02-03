@@ -6,13 +6,13 @@ error_reporting(E_ALL);
 
 // Required libraries
 require 'vendor/autoload.php';
+require 'db.php';
 use MongoDB\Client;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
 try {
     // Connect to MongoDB
-    $client = new MongoDB\Client($uri);
     $collection = $client->Qutrix->registrations;
 
     // Sample data
