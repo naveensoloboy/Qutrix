@@ -185,7 +185,7 @@ function show_department_error($dept, $evt) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         // Connect to MongoDB
-        $client = new Client("mongodb+srv://admin:qutrixpass2025@cluster1.duscp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1");
+        $client = new MongoDB\Client($uri);
         $collection = $client->Qutrix->registrations;
 
         // Maximum file size limit (900 KB)

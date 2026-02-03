@@ -12,7 +12,7 @@ use Dompdf\Options;
 
 try {
     // Connect to MongoDB
-    $client = new Client("mongodb+srv://admin:qutrixpass2025@cluster1.duscp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1");
+    $client = new MongoDB\Client($uri);
     $collection = $client->Qutrix->registrations;
 
     // Sample data
