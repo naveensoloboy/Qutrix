@@ -3,203 +3,323 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Gobi Arts & Science College</title>
-    <link rel="stylesheet" href="style/about.css">
+    <title>About Us | QUTRIX 2026</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        :root {
+            --accent: #fbbf24;
+            --accent-glow: rgba(251, 191, 36, 0.4);
+            --bg-dark: #070707;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border-white: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Smooth scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #cbd5e1;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        #systemCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            z-index: -1;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        .header-container {
+            padding: 100px 20px 40px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 0;
+            background: linear-gradient(to bottom, #fff 40%, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+        }
+
+        /* --- CARDS --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        .about-card {
+            background: var(--glass);
+            border: 1px solid var(--border-white);
+            border-radius: 32px;
+            padding: clamp(25px, 5vw, 50px);
+            margin-bottom: 40px;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(251, 191, 36, 0.1);
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .about-card h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.4rem, 4vw, 2rem);
+            color: white;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .about-card h2 i { color: var(--accent); font-size: 1.5rem; }
+
+        /* --- CONTENT STYLING --- */
+        .about-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .about-card li {
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .about-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-family: 'JetBrains Mono';
+        }
+
+        .highlight-box {
+            background: rgba(255,255,255,0.02);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px dashed var(--border-white);
+            margin-top: 20px;
+        }
+
+        /* --- FACULTY DIRECTORY --- */
+        .faculty-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .faculty-node {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--border-white);
+            padding: 15px 20px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+        }
+
+        .faculty-node:hover {
+            background: rgba(251, 191, 36, 0.05);
+            border-color: var(--accent);
+        }
+
+        .faculty-node i { color: var(--accent); font-size: 1.1rem; }
+
+        /* --- ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            filter: blur(15px);
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        /* --- BUTTONS --- */
+        .read-more-btn {
+            background: white;
+            color: black;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-family: 'Space Grotesk';
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        .read-more-btn:hover {
+            background: var(--accent);
+            box-shadow: 0 0 25px var(--accent-glow);
+        }
+
+        #more, #moreFaculty { display: none; }
+
+        @media (max-width: 768px) {
+            .about-card { padding: 30px; }
+            .page-title { font-size: 3rem; }
+        }
+    </style>
 </head>
 <body>
-<h1 align="center" style="font-weight: bold;color: #001427;">ABOUT - US </h1>
 
-<div class="about-us">
-    <h2 align="center">GOBI ARTS & SCIENCE COLLEGE</h2>
-    <ul>
-        <li>The seeds for establishing Gobi Arts College (now known as Gobi Arts & Science College) were sown by Amarar Sri K.M. Ramasamy Gounder, a distinguished educationist and Member of the Legislative Assembly, who had served as Headmaster of Diamond Jubilee High School, Gobichettipalayam. Subsequently, an educational body named the Gobi Arts College Council was formed in 1967.</li>
-        </ul>
-    <span id="dots">...</span>
-    <span id="more">
-        <ul>
-            <li>Initial funding for the college came from a generous donation of land worth Rs. 2 lakhs from the philanthropic brothers Sri S.N. Anantharaman and Sri S.N. Devarajan, sons of the benevolent landlord Amarar Sri S.D. Narayanaswamy Iyer.</li>
-            <li>The institution commenced its journey on the premises of Diamond Jubilee Higher Secondary School under the careful guidance of the erudite duo Amarar Sri K.M. Ramasamy Gounder and Amarar Sri A.R. Somasundaram, a prominent advocate and Correspondent of DJHS.</li>
-            <li>While searching for a permanent location, the Founder Secretary of the Gobi Arts College Council, Amarar Sri K.A. Muthuswamy, generously donated 10 acres of land adjoining the Silver Hills near Karattadipalayam. Persistent efforts by the founding members secured an additional 30 acres from the Government and other landowners, resulting in a sprawling new campus of 46.5 acres.</li>
-            <li>Under the effective and dynamic leadership of Amarar Sri K.M. Ramasamy Gounder and Amarar Sri A.R. Somasundaram, with commendable support from numerous donors and the Secretary, Amarar Sri K.A. Muthuswamy, the college commenced operations on 11th July 1968 with Pre-University classes. The formal inauguration of the college was conducted by the then Minister for Education, Dr. Navalar V.R. Nedunchezhiyan, on 30th July 1968.</li>
-        </ul>
-    </span>
-    <button onclick="toggleReadMore()" class="read-more-button" id="readMoreBtn">Read More</button>
-</div>
+    <canvas id="systemCanvas"></canvas>
 
-<div class="about-us-gait" style="margin-top: 20px;">
-    <h2 align="center">PG & Research Department of Computer Science</h2>
-    <p>
-        B.Sc. (Computer Science) was introduced in 1985 - 1986, and M.C.A. was introduced in 1988 - 1989.
-        <h3>Vision</h3>
-        <h4><blockquote> To inculcate better programming skills among rural area students.</blockquote></h4>
-        <h3>Mission</h3>
-        <h4><blockquote> To impart value based technical education and educate students towards the design and development of software products for the benefit of computer industry and society.</blockquote></h4>
-    </p>
-    <span id="dotsGait">...</span>
-    <span id="moreGait">
-        <h3>Faculty Profile</h3>
+    <div class="header-container reveal">
+        <h1 class="page-title">Legacy & <br>Technical Vision</h1>
+    </div>
+
+    <div class="container">
+        
+        <div class="about-card reveal">
+            <h2><i class="fas fa-users-gear"></i> GAIT</h2>
+            <p style="color: var(--accent); font-family: 'JetBrains Mono'; font-size: 0.8rem; text-transform: uppercase;">GobiArts Association of Information Technology</p>
             <ul>
-                <li>Dr. D. VENUGOPAL, M.Sc., M.Sc.,M.Phil.,PGDCA.,Ph.D. – Principal</li>
-                <li>Dr. S. Meenakshi, M.C.A., M.Phil., Ph.D. – Associate Professor & Head</li>
-                <li>Dr. B. Srinivasan, M.C.A., M.Phil., Ph.D., M.B.A. – Associate Professor</li>
-                <li>Dr. G.T. Prabavathi, M.C.A., M.Phil., Ph.D. – Associate Professor</li>
-                <li>Dr. A. Dhanalakshmi, M.C.A., M.Phil., Ph.D. – Associate Professor</li>
-                <li>Dr. P. Prabhusundhar, M.C.A., Ph.D. – Associate Professor</li>
-                <li>Dr. G.A. Mylavathi, M.Sc.(CS)., M.Phil., Ph.D. – Associate Professor</li>
-                <li>Dr.S.Annapoorani, MCA.,Ph.D. – Assistant Professor</li>
-                <li>Mr. P.SathishKumar, M.C.A., M.Phil. – Assistant Professor</li>
-                
+                <li>GAIT is a premier association formed by the Department of Computer Science to bridge the gap between academia and industry.</li>
+                <li>It serves as a professional forum through which students enhance their leadership qualities and organizational abilities.</li>
             </ul>
-        <!-- <div>
-        <center>
-            <h3>Faculty Profile</h3>
-           </center>
-           
             
-                        <ul class="list-group">
-                            <li class="list-group-item">    
-                         
-                                   <div class="row" >
-                                        <div class="col-sm-2 col-md-2 col-lg-2" >
-                                            <img src="images/img1.jpg" alt="Professor" height="200" width="150" >
-                                        </div>
-                                        <div class="col-sm-10 col-md-10 col-lg-10" style="background-color: tile;">
-                                            <br>
-                                            <font color=teal>Dr.S.MEENAKSHI</font>
-                                                <br><font size=2 face=>M.C.A.,M.Phil.,Ph.D.,</font>
-                                                <br/> <font size=3>ASSOCIATE PROFESSOR & HEAD</font>
-                                                <br/>
-                                            <font size=3> Email &nbsp;&nbsp;:&nbsp;meenakshics@gascgobi.ac.in</font><br>
+            <div id="more">
+                <ul>
+                    <li>The association regularly organizes Guest Lectures, Workshops, and Seminars featuring industry experts.</li>
+                    <li>GAIT is the driving force behind two major annual events: <strong>QUTRIX</strong> (Intercollegiate) and <strong>GAITFEST</strong> (Intracollegiate).</li>
+                </ul>
+            </div>
+            <button onclick="toggleReadMore('more', 'readMoreBtn')" class="read-more-btn" id="readMoreBtn">Read More About GAIT</button>
+        </div>
 
-                         
-                                         </div>
-                        
-                                    </div>
-                            </li>
-                        </ul>
+        <div class="about-card reveal">
+            <h2><i class="fas fa-bolt"></i> Intercollegiate meet (QUTRIX)</h2>
+            <p>It is the annual technical extravaganza and state-level technical symposium conducted every year during the month of September.</p>
+            
+            <div class="highlight-box">
+                <p style="margin: 0;">QUTRIX invites Computer Science students from various Institutions and Universities across <strong>Tamil Nadu and Pondicherry</strong>. This platform empowers participants to improve communication, demonstrate spirit of teamwork, and master organizational skills through high-stakes competition.</p>
+            </div>
+        </div>
 
-                           <ul class="list-group">
-                            <li class="list-group-item">    
-                           
-                                     <div class="row" >
-                                         <div class="col-sm-2 col-md-2 col-lg-2" >
-                          <img src="images/img2.jpg" alt="Professor" height="200" width="150" >
-                                       </div>
-                                         <div class="col-sm-10 col-md-10 col-lg-10" style="background-color: tile;">
-             <br>
-                             <font color=teal>Dr.B.SRINIVASAN</font>
-                                             <br><font size=2 face=>M.C.A.,M.Phil.,M.B.A.,Ph.D.,</font>
-                                             <br/> <font size=3>ASSOCIATE PROFESSOR</font>
-                                             <br/>
-                                 <font size=3> Email &nbsp;&nbsp;:&nbsp;srinivasanb@gascgobi.ac.in</font><br> 
-                                               
-                         
-                              </div>
-                          
-                              </div>
-                          </li>
-                             </ul>
+        <div class="about-card reveal">
+            <h2><i class="fas fa-fire"></i> Intra Collegiate meet (GAITFEST)</h2>
+            <p>A vibrant internal platform designed for students to demonstrate their technical powers and engage in IT-related knowledge sharing.</p>
+            <ul>
+                <li><strong>Core Focus:</strong> Paper Presentation, Technical Quiz, and Word Hunt.</li>
+                <li><strong>Skill Development:</strong> Web Design, Software Contests, and Tech Marketing.</li>
+                <li><strong>Community:</strong> Encourages project showcases and tech talks within the department.</li>
+            </ul>
+        </div>
 
-                             <ul class="list-group">
-                                <li class="list-group-item">    
-                               
-                                         <div class="row" >
-                                             <div class="col-sm-2 col-md-2 col-lg-2" >
-                              <img src="images/img3.jpg" alt="Professor" height="200" width="150" >
-                                           </div>
-                                             <div class="col-sm-10 col-md-10 col-lg-10" style="background-color: tile;">
-                 <br>
-                                 <font color=teal>Dr.G.T.PRABAVATHI</font>
-                                                 <br><font size=2 face=>M.C.A.,M.Phil.,Ph.D.,</font>
-                                                 <br/> <font size=3>ASSOCIATE PROFESSOR</font>
-                                                 <br/>
-                                     <font size=3> Email &nbsp;&nbsp;:&nbsp;gtpraba@gascgobi.ac.in</font><br> 
-                                                   
-                             
-                                  </div>
-                              
-                                  </div>
-                              </li>
-                                 </ul>
+        <div class="about-card reveal">
+            <h2><i class="fas fa-user-tie"></i> Faculty Board</h2>
+            <p>Guided by a team of distinguished educators and research scholars dedicated to student success.</p>
+            
+            <div class="faculty-grid">
+                <div class="faculty-node"><i class="fas fa-user-shield"></i> Dr. D. VENUGOPAL (Principal)</div>
+                <div class="faculty-node"><i class="fas fa-award"></i> Dr. S. Meenakshi (Head)</div>
+                <div class="faculty-node"><i class="fas fa-user-graduate"></i> Dr. B. Srinivasan</div>
+            </div>
+            
+            <div id="moreFaculty">
+                <div class="faculty-grid">
+                    <div class="faculty-node"><i class="fas fa-user-graduate"></i> Dr. G.T. Prabavathi</div>
+                    <div class="faculty-node"><i class="fas fa-user-graduate"></i> Dr. A. Dhanalakshmi</div>
+                    <div class="faculty-node"><i class="fas fa-user-graduate"></i> Dr. P. Prabhusundhar</div>
+                    <div class="faculty-node"><i class="fas fa-user-graduate"></i> Dr. G.A. Mylavathi</div>
+                    <div class="faculty-node"><i class="fas fa-user-graduate"></i> Dr. S. Annapoorani</div>
+                    <div class="faculty-node"><i class="fas fa-user-graduate"></i> Mr. P. Sathishkumar</div>
+                </div>
+            </div>
+            <button onclick="toggleReadMore('moreFaculty', 'readMoreFacultyBtn')" class="read-more-btn" id="readMoreFacultyBtn">View Full Board</button>
+        </div>
 
-                                <ul class="list-group">
-                                    <li class="list-group-item">    
-                                        <div class="row" >
-                                            <div class="col-sm-2 col-md-2 col-lg-2" >
-                                            <img src="images/img4.jpg" alt="Professor" height="200" width="150" >
-                                        </div>
-                                        <div class="col-sm-10 col-md-10 col-lg-10" style="background-color: tile;">
-                                            <br>   
-                                            <font color=teal>Dr.A.DHANALAKSHMI</font>
-                                                <br><font size=2 face=>M.C.A.,M.Phil.,Ph.D.,</font>
-                                                <br/> <font size=3>ASSOCIATE PROFESSOR</font>
-                                                    <br/>
-                                            <font size=3> Email &nbsp;&nbsp;:&nbsp;dradhanalakshmi@gascgobi.ac.in</font><br> 
-                                                       
-                                 
-                                      </div>
-                                  
-                                      </div>
-                                  </li>
-                                    </ul>
+    </div>
 
-                                    <ul class="list-group">
-                                        <li class="list-group-item">    
-                                       
-                                            <div class="row" >
-                                                <div class="col-sm-2 col-md-2 col-lg-2" >
-                                                <img src="images/img5.jpg" alt="Professor" height="200" width="150" >
-                                                </div>
-                                                    <div class="col-sm-10 col-md-10 col-lg-10" style="background-color: tile;">
-                                                    <br>
-                                                    <font color=teal>Dr.P.PRABHUSUNDHAR</font>
-                                                         <br><font size=2 face=>M.C.A.,Ph.D.,</font>
-                                                         <br/> <font size=3>ASSISTANT PROFESSOR</font>
-                                                         <br/>
-                                                    <font size=3> Email &nbsp;&nbsp;:&nbsp;drprabhusundhar@gascgobi.ac.in</font><br>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul> 
-        </div> -->
-        <p></p>
-    </span>
-    <button onclick="toggleReadMoreGait()" class="read-more-button" id="readMoreGaitBtn">Read More</button>
-</div>
+    <script>
+        // --- Intersection Observer (Replayable) ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+                else entry.target.classList.remove('active');
+            });
+        }, { threshold: 0.1 });
 
-<script>
-    function toggleReadMore() {
-        var dots = document.getElementById("dots");
-        var moreText = document.getElementById("more");
-        var btnText = document.getElementById("readMoreBtn");
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        if (dots.style.display === "none") {
-            dots.style.display = "inline";
-            btnText.textContent = "Read More";
-            moreText.style.display = "none";
-        } else {
-            dots.style.display = "none";
-            btnText.textContent = "Read Less";
-            moreText.style.display = "inline";
+        // --- Toggle Logic ---
+        function toggleReadMore(contentId, btnId) {
+            const content = document.getElementById(contentId);
+            const btn = document.getElementById(btnId);
+            
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                btn.textContent = contentId === 'more' ? "Read More About GAIT" : "View Full Board";
+            } else {
+                content.style.display = "block";
+                btn.textContent = "Show Less";
+            }
         }
-    }
 
-    function toggleReadMoreGait() {
-        var dotsg = document.getElementById("dotsGait");
-        var moreTextg = document.getElementById("moreGait");
-        var btnTextg = document.getElementById("readMoreGaitBtn");
-
-        if (dotsg.style.display === "none") {
-            dotsg.style.display = "inline";
-            btnTextg.textContent = "Read More";
-            moreTextg.style.display = "none";
-        } else {
-            dotsg.style.display = "none";
-            btnTextg.textContent = "Read Less";
-            moreTextg.style.display = "inline";
+        // --- Neural Background ---
+        const canvas = document.getElementById('systemCanvas');
+        const ctx = canvas.getContext('2d');
+        let points = [];
+        function init() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            points = [];
+            for (let i = 0; i < 50; i++) {
+                points.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3 });
+            }
         }
-    }
-</script>
-
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(251, 191, 36, 0.2)"; ctx.strokeStyle = "rgba(255, 255, 255, 0.02)";
+            points.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1; if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath(); ctx.arc(p.x, p.y, 1, 0, Math.PI * 2); ctx.fill();
+                for (let j = i + 1; j < points.length; j++) {
+                    const dist = Math.hypot(p.x - points[j].x, p.y - points[j].y);
+                    if (dist < 200) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(points[j].x, points[j].y); ctx.stroke(); }
+                }
+            });
+            requestAnimationFrame(draw);
+        }
+        init(); draw(); window.onresize = init;
+    </script>
 </body>
 </html>

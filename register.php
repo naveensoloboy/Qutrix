@@ -13,6 +13,174 @@ use Dompdf\Options;
   use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+date_default_timezone_set('Asia/Kolkata');
+
+
+function show_error_page($message) {
+    die("
+    <!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css'>
+        <style>
+            :root {
+                --primary: #020617;
+                --error: #ef4444;
+                --accent: #fbbf24;
+                --glass: rgba(255, 255, 255, 0.03);
+                --glass-border: rgba(255, 255, 255, 0.1);
+            }
+            body {
+                background-color: var(--primary);
+                color: #fff;
+                font-family: 'Segoe UI', sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                padding: 20px;
+            }
+            .error-card {
+                background: var(--glass);
+                backdrop-filter: blur(15px);
+                border: 1px solid var(--glass-border);
+                border-radius: 24px;
+                padding: 40px;
+                width: 100%;
+                max-width: 500px;
+                text-align: center;
+                box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+                border-top: 4px solid var(--error);
+            }
+            .icon-box {
+                font-size: 50px;
+                color: var(--error);
+                margin-bottom: 20px;
+                filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.3));
+            }
+            h2 { font-size: 24px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+            p { color: #94a3b8; line-height: 1.6; font-size: 16px; margin-bottom: 30px; }
+            .btn-back {
+                display: inline-block;
+                padding: 12px 30px;
+                background: var(--accent);
+                color: var(--primary);
+                text-decoration: none;
+                border-radius: 12px;
+                font-weight: 800;
+                text-transform: uppercase;
+                transition: 0.3s;
+            }
+            .btn-back:hover { transform: translateY(-3px); filter: brightness(1.1); }
+            .sys-log { margin-top: 30px; font-family: monospace; font-size: 11px; color: rgba(255,255,255,0.1); }
+        </style>
+    </head>
+    <body>
+        <div class='error-card'>
+            <div class='icon-box'><i class='fa-solid fa-triangle-exclamation'></i></div>
+            <h2>Registration Protocol Halted</h2>
+            <p>$message</p>
+            <a href='javascript:history.back()' class='btn-back'>Return to Form</a>
+            <div class='sys-log'>ERR_REJECTED_BY_CORE_SYNC</div>
+        </div>
+    </body>
+    </html>
+    ");
+}
+
+
+function show_department_error($dept, $evt) {
+    die("
+    <!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css'>
+        <style>
+            :root {
+                --primary: #020617;
+                --error: #ef4444;
+                --accent: #fbbf24;
+                --glass: rgba(255, 255, 255, 0.03);
+                --glass-border: rgba(255, 255, 255, 0.1);
+            }
+            body {
+                background-color: var(--primary);
+                color: #fff;
+                font-family: 'Segoe UI', sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                padding: 20px;
+                overflow: hidden;
+            }
+            .error-card {
+                background: var(--glass);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid var(--glass-border);
+                border-radius: 30px;
+                padding: 50px 30px;
+                width: 100%;
+                max-width: 550px;
+                text-align: center;
+                box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+                border-top: 4px solid var(--error);
+                animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+            }
+            @keyframes shake {
+                10%, 90% { transform: translate3d(-1px, 0, 0); }
+                20%, 80% { transform: translate3d(2px, 0, 0); }
+                30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+                40%, 60% { transform: translate3d(4px, 0, 0); }
+            }
+            .icon-box {
+                font-size: 60px;
+                color: var(--error);
+                margin-bottom: 25px;
+                filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.4));
+            }
+            h2 { font-size: 22px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
+            p { color: #94a3b8; line-height: 1.8; font-size: 16px; margin-bottom: 35px; }
+            .dept-name { color: var(--accent); font-weight: 800; }
+            .btn-return {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                padding: 15px 35px;
+                background: var(--accent);
+                color: var(--primary);
+                text-decoration: none;
+                border-radius: 12px;
+                font-weight: 900;
+                text-transform: uppercase;
+                transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+            .btn-return:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(251, 191, 36, 0.3); }
+        </style>
+    </head>
+    <body>
+        <div class='error-card'>
+            <div class='icon-box'><i class='fa-solid fa-users-slash'></i></div>
+            <h2>Duplicate Entry Detected</h2>
+            <p>Access denied. A team from the <span class='dept-name'>$dept</span> department has already been initialized for <b>$evt</b>. 
+            <br><br>Policy: Only one squad per department per event is permitted.</p>
+            <a href='javascript:history.back()' class='btn-return'>
+                <i class='fa-solid fa-arrow-left'></i> Back to Form
+            </a>
+        </div>
+    </body>
+    </html>
+    ");
+}
+
+
 // Check if form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
@@ -161,8 +329,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ]);
         
         if ($exists) {
-            die("<br><br><b>A team from your department has already registered for event: $event. Only one team per department is allowed per event.</b>");
-        }
+    show_department_error($department, $event);
+}
 
         // Handle file uploads
         $first_member_bonafide = uploadFile($_FILES["first_member_bonafide"]);
@@ -254,21 +422,21 @@ function check_event_limit($collection, $roll_no, $college_name, $department) {
     ]);
     
     if ($exists) {
-        die("<br><br><b>Roll number $roll_no has already registered for the event: $event.</b>");
+    show_error_page("Roll number <b>$roll_no</b> has already registered for the event: <b>$event</b>.");
+}
+
+// Check for conflicting events
+if (isset($conflicting_event_pairs[$event])) {
+    $conflict = get_conflicting_event($collection, $roll_no, $conflicting_event_pairs[$event], $college_name, $department);
+    if ($conflict) {
+        show_error_page("Roll number <b>$roll_no</b> cannot register for <b>$event</b> because they are already registered for <b>$conflict</b>. These events happen simultaneously.");
     }
-    
-    // Check for conflicting events
-    if (isset($conflicting_event_pairs[$event])) {
-        $conflict = get_conflicting_event($collection, $roll_no, $conflicting_event_pairs[$event], $college_name, $department);
-        if ($conflict) {
-            die("<br><br><b>Roll number $roll_no cannot register for $event because already registered for $conflict.</b>");
-        }
-    }
-    
-    // Check event limit
-    if (check_event_limit($collection, $roll_no, $college_name, $department)) {
-        die("<br><br><b>Roll number $roll_no from $college_name ($department) has already registered for two events.</b>");
-    }
+}
+
+// Check event limit
+if (check_event_limit($collection, $roll_no, $college_name, $department)) {
+    show_error_page("Roll number <b>$roll_no</b> from $college_name ($department) has reached the maximum limit of <b>two events</b> per person.");
+}
 }
 
 
@@ -327,91 +495,171 @@ function check_event_limit($collection, $roll_no, $college_name, $department) {
 
         // Build PDF content
         $pdfHtml = "
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset='UTF-8'>
-          <title>Registration Confirmation</title>
-          <style>
-            body { font-family: DejaVu Sans, sans-serif; margin:0; padding:0; }
-            .container { border:1px solid #ccc; border-radius:10px; padding:20px; margin:20px; }
-            .header { text-align:center; background:#6A0DAD; color:#fff; padding:15px; border-radius:10px 10px 0 0; }
-            .header h1 { margin:0; font-size:24px; }
-            .header h2 { margin:5px 0 0 0; font-size:16px; font-weight:normal; }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>Registration Confirmation</title>
+    <style>
+        @page { margin: 0px; }
+        body { 
+            font-family: 'Helvetica', 'Arial', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #ffffff;
+            color: #333;
+        }
+        .container { 
+            margin: 40px;
+            border: 2px solid #020617;
+            position: relative;
+            min-height: 900px;
+        }
+        /* Top Accent Bar */
+        .top-bar {
+            height: 10px;
+            background: #fbbf24;
+            width: 100%;
+        }
+        .header { 
+            text-align: center; 
+            background: #020617; 
+            color: #ffffff; 
+            padding: 30px 20px;
+        }
+        .header h1 { 
+            margin: 0; 
+            font-size: 26px; 
+            letter-spacing: 1px;
+            color: #fbbf24; 
+        }
+        .header h2 { 
+            margin: 8px 0 0 0; 
+            font-size: 14px; 
+            font-weight: normal; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #71e4e4;
+        }
+        .header .sub-title {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+        }
 
-            .section { padding:15px; border-bottom:1px solid #ddd; clear:both; }
-            .section:last-child { border-bottom:none; }
+        .section { 
+            padding: 20px 40px; 
+            border-bottom: 1px solid #eeeeee;
+        }
+        .section:last-child { border-bottom: none; }
 
-            .section-title { font-weight:bold; font-size:16px; margin-bottom:10px; color:#6A0DAD; }
+        .section-title { 
+            font-weight: bold; 
+            font-size: 14px; 
+            margin-bottom: 12px; 
+            color: #020617; 
+            text-transform: uppercase;
+            border-left: 4px solid #fbbf24;
+            padding-left: 10px;
+        }
 
-            .details-table { width:100%; border-collapse:collapse; }
-            .details-table td { padding:6px 4px; vertical-align:top; }
+        .details-table { width: 100%; border-collapse: collapse; }
+        .details-table td { 
+            padding: 8px 0; 
+            vertical-align: top; 
+            font-size: 13px;
+        }
+        .label { color: #64748b; width: 150px; font-weight: bold; }
+        
+        .member-row {
+            margin-bottom: 5px;
+            padding: 5px 0;
+        }
 
-            .right-box {
-              float:right; width:160px; text-align:center; 
-              border:2px solid #6A0DAD; border-radius:10px; padding:10px; margin-top:-40px;
-            }
-            .date { font-size:20px; font-weight:bold; color:#6A0DAD; }
-            .id { margin-top:5px; font-size:14px; }
+        .footer { 
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center; 
+            padding: 20px 0; 
+            background: #f8fafc; 
+            font-size: 11px; 
+            color: #64748b;
+            border-top: 1px solid #eeeeee;
+        }
+        .watermark {
+            position: absolute;
+            top: 400px;
+            left: 150px;
+            font-size: 80px;
+            color: #f1f1f1;
+            transform: rotate(-45deg);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='top-bar'></div>
+        <div class='header'>
+            <h1>GOBI ARTS & SCIENCE COLLEGE</h1>
+            <h2>PG & Research Department of Computer Science</h2>
+            <div class='sub-title'>QUTRIX 2026 - Entry Pass</div>
+        </div>
 
-            .footer { text-align:center; padding:15px; background:#f5f5f5; border-radius:0 0 10px 10px; font-size:12px; color:#333; }
-          </style>
-        </head>
-        <body>
-          <div class='container'>
-            <div class='header'>
-                <h1>GOBI ARTS & SCIENCE COLLEGE</h1>
-                <h2>PG & RESEARCH DEPARTMENT OF COMPUTER SCIENCE</h2>
-                <h2>Qutrix 2025 </h2>
-                <h2>Registration Confirmation</h2>
-            </div>
+        <div class='watermark'>CONFIRMED</div>
 
-            
+        <div class='section'>
+            <div class='section-title'>Institution & Event</div>
+            <table class='details-table'>
+                <tr><td class='label'>College:</td><td>$college_name</td></tr>
+                <tr><td class='label'>Department:</td><td>$department</td></tr>
+                <tr><td class='label'>Event Registered:</td><td><strong style='color:#020617;'>$event</strong></td></tr>
+            </table>
+        </div>
 
-            <div class='section'>
-              <div class='section-title'>College Information</div>
-              <table class='details-table'>
-                <tr><td><strong>College:</strong></td><td>$college_name</td></tr>
-                <tr><td><strong>Department:</strong></td><td>$department</td></tr>
-                <tr><td><strong>Event:</strong></td><td>$event</td></tr>
-              </table>
-            </div>
-
-            <div class='section'>
-              <div class='section-title'>Team Members</div>
-              <table class='details-table'>
-                <tr><td><strong>First Member:</strong></td><td>$first_member_name ($first_member_roll_no) - $first_member_phone - $first_member_email</td></tr>
-                <tr><td><strong>Second Member:</strong></td><td>$second_member_name ($second_member_roll_no) - $second_member_phone - $second_member_email</td></tr>";
+        <div class='section'>
+            <div class='section-title'>Squad Members</div>
+            <table class='details-table'>
+                <tr>
+                    <td class='label'>Lead Member:</td>
+                    <td><strong>$first_member_name</strong><br><small>$first_member_roll_no | $first_member_phone | $first_member_email</small></td>
+                </tr>
+                <tr>
+                    <td class='label'>Second Member:</td>
+                    <td><strong>$second_member_name</strong><br><small>$second_member_roll_no | $second_member_phone | $second_member_email</small></td>
+                </tr>";
 
         if (!empty($third_member_name)) {
-            $pdfHtml .= "<tr><td><strong>Third Member:</strong></td><td>$third_member_name ($third_member_roll_no) - $third_member_phone - $third_member_email</td></tr>";
+            $pdfHtml .= "<tr><td class='label'>Third Member:</td><td><strong>$third_member_name</strong><br><small>$third_member_roll_no</small></td></tr>";
         }
         if (!empty($fourth_member_name)) {
-            $pdfHtml .= "<tr><td><strong>Fourth Member:</strong></td><td>$fourth_member_name ($fourth_member_roll_no) - $fourth_member_phone - $fourth_member_email</td></tr>";
+            $pdfHtml .= "<tr><td class='label'>Fourth Member:</td><td><strong>$fourth_member_name</strong><br><small>$fourth_member_roll_no</small></td></tr>";
         }
         if (!empty($fifth_member_name)) {
-            $pdfHtml .= "<tr><td><strong>Fifth Member:</strong></td><td>$fifth_member_name ($fifth_member_roll_no) - $fifth_member_phone - $fifth_member_email</td></tr>";
+            $pdfHtml .= "<tr><td class='label'>Fifth Member:</td><td><strong>$fifth_member_name</strong><br><small>$fifth_member_roll_no</small></td></tr>";
         }
 
         $pdfHtml .= "
-              </table>
-            </div>
+            </table>
+        </div>
 
-            <div class='section'>
-              <div class='section-title'>Registration Details</div>
-              <table class='details-table'>
-                <tr><td><strong>Registration ID:</strong></td><td>$registration_id</td></tr>
-                <tr><td><strong>Registration Date:</strong></td><td>" . date('Y-m-d H:i:s') . "</td></tr>
-              </table>
-            </div>
+        <div class='section'>
+            <div class='section-title'>Registration Metadata</div>
+            <table class='details-table'>
+                <tr><td class='label'>Pass ID:</td><td><code>$registration_id</code></td></tr>
+                <tr><td class='label'>Issued On:</td><td>" . date('Y-m-d H:i:s') . "</td></tr>
+            </table>
+        </div>
 
-            <div class='footer'>
-              <p>This is an auto-generated confirmation. Please keep this for your records.</p>
-              <p>For any queries, contact the event organizers.</p>
-            </div>
-          </div>
-        </body>
-        </html>";
+        <div class='footer'>
+            <p>This is a digitally generated confirmation. Presentation of this slip is mandatory at the venue.</p>
+            <p><strong>Venue:</strong> Gobi Arts & Science College (Autonomous) | <strong>Contact:</strong> Organizers Team</p>
+        </div>
+    </div>
+</body>
+</html>";
 
 
         // Generate and save PDF
@@ -435,29 +683,170 @@ function check_event_limit($collection, $roll_no, $college_name, $department) {
             ['$set' => ['pdf_path' => $pdf_filepath]]
         );
 
-        // Success message
-        echo "<div style='text-align:center; padding:20px; background:#f0f8ff; border-radius:10px; margin:20px;'>";
-        echo "<h2 style='color:#2c3e50;'>Registration Successful!</h2>";
-        echo "<p style='font-size:18px;'>Thank you for registering for <strong>$event</strong></p>";
-        
-        if (isset($whatsapp_links[$event]) && $event !== "NON TECHNICAL ROUND DANCING") {
-            echo "<script>alert('Please join the WhatsApp group for your event');</script>";
-            echo "<p>Join the WhatsApp group for your event: 
-                    <a href='" . $whatsapp_links[$event] . "' target='_blank' 
-                       style='color:#3498db; text-decoration:none; font-weight:bold;'>
-                       $event WhatsApp Group</a>
-                  </p>";
-        } elseif ($event === "NON TECHNICAL ROUND DANCING") {
-            echo "<p><strong>Note:</strong> No WhatsApp group is required for Dance participants.</p>";
+        // --- Styled Success Message ---
+echo "
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css'>
+    <style>
+        :root {
+            --primary: #020617; 
+            --accent: #fbbf24;  
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --white: #ffffff;
+            --skyblu: #71e4e4;
         }
 
-        
-        echo "<p>Download your registration confirmation: 
-                <a href='$pdf_filepath' download style='display:inline-block; padding:10px 20px; background:#3498db; color:white; text-decoration:none; border-radius:5px; margin-top:15px;'>
-                    Download PDF
-                </a>
-             </p>";
-        echo "</div>";
+        body {
+            background-color: var(--primary);
+            color: var(--white);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .success-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            background: rgba(113, 228, 228, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 1px solid var(--skyblu);
+        }
+
+        .icon-box i {
+            font-size: 40px;
+            color: var(--skyblu);
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--white);
+            letter-spacing: 1px;
+        }
+
+        .event-name {
+            color: var(--accent);
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        p {
+            color: #94a3b8;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .btn-pdf {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        .btn-wa {
+            background: #25d366;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.2);
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class='success-card'>
+        <div class='icon-box'>
+            <i class='fa-solid fa-circle-check'></i>
+        </div>
+        <h2>Registration Successful!</h2>
+        <p>You have successfully registered for <br><span class='event-name'>$event</span></p>
+
+        <div class='btn-container'>";
+
+        // Conditional WhatsApp Button
+        if (isset($whatsapp_links[$event]) && $event !== "NON TECHNICAL ROUND DANCING") {
+            echo "
+            <script>alert('Please join the WhatsApp group for your event!');</script>
+            <a href='" . $whatsapp_links[$event] . "' target='_blank' class='btn btn-wa'>
+                <i class='fa-brands fa-whatsapp'></i> JOIN EVENT WHATSAPP GROUP
+            </a>";
+        } elseif ($event === "NON TECHNICAL ROUND DANCING") {
+            echo "<p style='font-size: 12px; margin-bottom: 10px;'>Note: No WhatsApp group required for Dance.</p>";
+        }
+
+        // PDF Download Button
+        echo "
+            <a href='$pdf_filepath' download class='btn btn-pdf'>
+                <i class='fa-solid fa-file-pdf'></i> DOWNLOAD CONFIRMATION SLIP
+            </a>
+            <a href='index.html' style='color: var(--text-gray); font-size: 13px; text-decoration: none; margin-top: 10px;'>Return to Home</a>
+        </div>
+
+        <div class='footer-note'>
+            SYSTEM_PROTOCOL: REG_COMPLETE_2026
+        </div>
+    </div>
+</body>
+</html>";
 
       
 
@@ -469,53 +858,55 @@ if (!empty($third_member_email)) $emails[] = $third_member_email;
 if (!empty($fourth_member_email)) $emails[] = $fourth_member_email;
 if (!empty($fifth_member_email)) $emails[] = $fifth_member_email;
 
+
 try {
     $mail = new PHPMailer(true);
 
-    // Server settings (use Gmail SMTP or other provider)
+    // DEBUG (remove after testing)
+    $mail->SMTPDebug = 0;
+
+    // SMTP CONFIG
     $mail->isSMTP();
-    $mail->Host       = 'smtp.gmail.com';   // Gmail SMTP server
+    $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'naveen9222777@gmail.com'; // Your Gmail
-    $mail->Password   = 'lpyu sgqm qedr fqit';   // Gmail App Password
+    $mail->Username   = 'naveen9222777@gmail.com';
+    $mail->Password   = 'bzze mlve sqsw hivl';
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
 
-    // Sender info
-    $mail->setFrom('yourgmail@gmail.com', 'Qutrix 2025 Registration');
+    // IMPORTANT: SAME AS USERNAME
+    $mail->setFrom('naveen9222777@gmail.com', 'Qutrix 2026 Registration');
 
-    // Add all recipients
+    // ADD RECIPIENTS SAFELY
     foreach ($emails as $email) {
-        $mail->addAddress($email);
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $mail->addAddress($email);
+        }
     }
 
-    // Attach the PDF
+    // ATTACH PDF
     $mail->addAttachment($pdf_filepath);
 
-    // Email content
+    // EMAIL CONTENT
     $mail->isHTML(true);
-    $mail->Subject = "Qutrix 2025 Registration Confirmation - $event";
-    $mail->Body    = "
-        <div style='font-family:Arial,sans-serif;'>
-            <h2 style='color:#6A0DAD;'>Qutrix 2025 - Registration Confirmation</h2>
-            <p>Dear Team,</p>
-            <p>Your registration for the event <b>$event</b> has been successfully completed.</p>
-            <p>Please find attached confirmation slip (PDF) and download it for conformation.</p>
-            <br>
-            <p>📍 <b>Venue:</b> Gobi Arts & Science College</p>
-            <p>📅 <b>Date:</b> 19-09-2025</p>
-            <p>🕒 <b>Time:</b> 9:00 AM</p>
-            <br>
-            <p>Regards,<br>Registration Committee<br>Qutrix 2025</p>
-        </div>
+    $mail->Subject = "Qutrix 2026 Registration Confirmation - $event";
+    $mail->Body = "
+        <h2>Qutrix 2026 - Registration Confirmed</h2>
+        <p>You have successfully registered for <b>$event</b>.</p>
+        <p>Please find the attached confirmation slip.</p>
+        <p><b>Date:</b> 19-09-2026<br>
+           <b>Time:</b> 9:00 AM<br>
+           <b>Venue:</b> Gobi Arts & Science College</p>
+        <br>
+        <p>— Qutrix Registration Team</p>
     ";
 
     $mail->send();
-    // echo "<p style='color:green; font-weight:bold;'>Confirmation email sent to all team members.</p>";
 
 } catch (Exception $e) {
-    // echo "<p style='color:red;'>Email could not be sent. Error: {$mail->ErrorInfo}</p>";
+    // show_error_page("Mailer Error: " . $mail->ErrorInfo);
 }
+
 
     } catch(Exception $e) {
         echo "<div style='text-align:center; padding:20px; background:#ffebee; border-radius:10px; margin:20px;'>";

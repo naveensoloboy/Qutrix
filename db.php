@@ -1,6 +1,6 @@
 <?php
 require 'vendor/autoload.php'; // load composer autoload
-
+date_default_timezone_set('Asia/Kolkata');
 // Your MongoDB Atlas URI (replace <username>, <password>, <cluster> properly)
 $uri = "mongodb+srv://admin:qutrixpass2025@cluster1.duscp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1";
 

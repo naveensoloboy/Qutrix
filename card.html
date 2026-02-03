@@ -1,359 +1,563 @@
+<!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1.0">
-      <title>Qutrix Events</title>
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity=" sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="  anonymous" referrerpolicy="no-referrer" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
-      <!--=============== CSS ===============-->
-      <link rel="stylesheet" href="style/cardstyle.css">
-      <link rel="stylesheet" href="style/rulesstyle.css">
-      <link rel="stylesheet" href="style/timeshedule.css">
-      <style>
-         .general-div{
-            color: #002147;
-            border: 3px solid #002147;
-            border-radius: 20px;
-            width: fit-content;
-            margin:30px 15%;
-            box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-         }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Qutrix 2k26 | Gobi Arts & Science College</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-        
-      </style>
-   </head>
-   <body>
-
-      <!--College Name-->
-      <div class="main">
-         <img class="clg-logo" src="images/College_logo.png">
-         <img class="clg-name" src="images/College_name-whiite_bg.jpg">
-     </div>
-
-      <!-- Department Name -->
-        <div class="department-name">PG & Research Department of Computer Science</div>
-
-        <!-- GAIT -->
-        <div class="gait">GAIT (GobiArts Association of Information Technology)</div>
-
-<!-- Navigation Bar -->
-<nav class="navbar">
-    <a href="Admin_page/admin_login_form.html" class="logo">QUTRIX</a>
-
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-
-    <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="card_about.html">About Us</a></li>
-        <li><a href="#" onclick="showTimeSchedule()">Time Schedule</a></li>
-    </ul>
-</nav>
-      
-      <!-- Time Schedule Popup -->
-<div class="timesheduleoverlay" id="timesheduleoverlay" onclick="tclose()"></div>
-<div class="timeshedulepopup" id="timeshedulepopup">
-    <img class="timeshedule" src="images/TS2025.png">
-    <button class="tclosebtn" onclick="tclose()">Close</button>
-</div>
-
-      <div class="general-div">
-         <ul>
-            <h2>GENERAL RULES</h2>
-            <li>No Registration Fee.</li>
-            <li>Participant certificate will be provided.</li>
-            <li>Participants should bring their Student Id Card (Must) or Bonafide-Certificate.</li>
-            <!-- <li>Spot registration is also allowed up to 9:00a.m.</li> -->
-            <li>Electronic devices are strictly prohibited inside the Event area.</li>
-            <li>Judges decision will be final and binding.</li>
-            <li>The participating members may vary depend upon the Events.</li>
-            
-            <li>Each Participant should participate in only <strong>two</strong> events.</li>
-            <li><strong>Web Design Prelims, Quiz Prelims</strong> will take place <strong>simultaneously.</strong> </li>
-            <li><strong>Word Hunt Prelims, Software Contest Prelims</strong> will takes place <strong>simultaneously.</strong></li>
-            <li><strong> Dance</strong> participants should participate only in <strong> dance and paper presentation</strong>.They will not be allowed to participate in any other events.</li>
-            <li>After registration, participants will be redirected to their respective event WhatsApp group link page. They are instructed to join the group for further details and queries, except for Dance event participants.</li>
-            <li>If you face any difficulties while registering , kindly contact us <strong>Mr. M. Gokula Kannan - <a style="text-decoration: none;color: black" href="tel:+919688657903">+91 96886 57903</a> (GAIT President),  Mr. S.Amirthalingam - <a style="text-decoration: none;color: black" href="tel:+916382919606">+91 63829 19606</a> (GAIT Treasurer), Mr. S. Naveen - <a style="text-decoration: none;color: black" href="tel:+919952655591">+91 99526 55591</a> (Registration Committee).</strong></li>
-            <ul>
-               <h3>PAPER PRESENTATION TOPICS</h3>
-               <li>Cyber Security</li>
-               <li>AI Evolution(future)</li>
-               <li>IoT</li>
-               <li>Industry 5.O</li>
-               <li>Deep Learning</li>
-               
-            </ul>
-         </ul>
-      </div>
-
-      
-
-
-
-
-
-      <div id=main>
-   
-         <div class="rules">
-            <div class="pprule" id="pprule">
-               <div class="poverlay"></div>
-               <div class="ppopup">
-                     <u>PAPER PRESENTATION :</u>
-                     <ul>
-                       <li>One Team Per Department.</li>
-                       <li>Maximum of Three Participants per team (Equal participation is must).</li>
-                       <li>The paper must be IEEE format.</li>
-                       <li>Full paper of minimum 6 pages with an abstract, not exceeding 250 words along with Hard 
-                           Copies and One Soft copy through mail <strong>(qutrix2k25ppt@gmail.com)</strong> should be sent.</li>
-                       <li>Title, Participants Name, Mobile Number, E-mail id, College name (for further communication) Abstract in a separate sheet.</li>
-                       <li>Paper Size :A4, Font Name: Times New Roman, Font Size: Heading-14, Sub Heading: 12+BOLD, 
-                           Paragraph -12, Line spacing -1.5</li>
-                       <li> Paper should reach us on or before 5<sup>th</sup> September, 2025 along with a Bonafide Certificate</li>
-                       <li>Selected teams will be informed through e-mail on 9<sup>th</sup> September 2025. Selected team should 
-                           participate in the event and should give a Power Point Presentation at allocated time</li>
-                       <li>For Queries : Mr. Gowthaman <a style="text-decoration: none;color: black" href="tel:+919360516722">+91 93605 16722</a></li>
-                        <ul >
-                           <h3>TOPICS</h3>
-                           <li>Cyber Security</li>
-               <li>AI Evolution(future)</li>
-               <li>IoT</li>
-               <li>Industry 5.O</li>
-               <li>Deep Learning</li>
-                        </ul>
-                     </ul>
-                     <a href="new_form.html"><button class="registerbtn" onclick="showRegister()">Register</button></a>
-                     <button class="closerulebtn" onclick="pcloserule()">Close</button>
-                     
-               </div>
-            </div>
-      
-            <div class="qrule">
-               <div class="qoverlay"></div>
-               <div class="qpopup">
-                   <u>Quiz :</u>
-                   <ul>
-                       <li>One team per Department.</li>
-                       <li>Two members per team.</li>
-                       <li>Prelims will be conducted.</li>
-                       <li>Five Teams will be selected for finals.</li>
-                       <li>FINALS: Technical Rounds.</li>
-                       <li>For Queries : Mr. K. Dharani Dharan <a style="text-decoration: none;color: black" href="tel:+919443869516">+91 94438 69516</a></li>
-                   </ul>
-                   <a href="new_form.html"><button class="registerbtn">Register</button></a>
-                   <button class="closerulebtn" onclick="qcloserule()">Close</button>
-               </div>
-            </div>
-      
-            <div class="whrule">
-             <div class="whoverlay"></div>
-             <div class="whpopup">
-                <u>WORD HUNT</u>
-                <ul>
-                    <li>One team per Department.</li>
-                    <li>Two members per team.</li>
-                    <li>Prelims will be conducted.</li>
-                    <li>5 Teams will be Selected to Finals.</li>
-                    <li>FINALS: Technical and Non-Technical Rounds.</li>
-                    <li>For Queries : Ms.Kavi Priya <a style="text-decoration: none;color: black" href="tel:+919345241957">+91 93452 41957</a></li>
-                </ul>
-                <a href="new_form.html"><button class="registerbtn">Register</button></a>
-                <button class="closerulebtn" onclick="whcloserule()">Close</button>
-             </div>
-            </div>
-      
-            <div class="wdrule">
-             <div class="wdoverlay"></div>
-             <div class="wdpopup">
-                <u>WEB DESIGN</u>
-                <ul>
-                    <li>One team per Department.</li>
-                    <li>Two Members per team.</li>
-                    <li>Prelims will be conducted.</li>
-                    <li>5 Teams will be Selected to Finals.</li>
-                    <li>FINALS: Participants need to design a web page(designing tools). The best web page designers within allocated time will be declared as winner.</li>
-                    <li>For Queries : Ms. D .Srimathi joice <a style="text-decoration: none;color: black" href="tel:+916383753022">+91 63837 53022</a></li>
-                </ul>
-                <a href="new_form.html"><button class="registerbtn">Register</button></a>
-                <button class="closerulebtn" onclick="wdcloserule()">Close</button>
-             </div>
-            </div>
-
-            <div class="scrule">
-               <div class="scoverlay"></div>
-               <div class="scpopup">
-                  <u>SOFTWARE CONTEST</u>
-                  <ul>
-                     <li>One team per Department.</li>
-                     <li>Two Members per team.</li>
-                     <li>Prelims will be conducted. </li>
-                     <li>5 Teams will be Selected to Finals.</li>
-                     <li>FINALS: Participants need to debug the code for the given set of problems in 
-                         Any Programming Language. The one who solves maximum number of 
-                         problems correctly in the allotted time shall be declared as winner.</li>
-                    <li>For Queries : Mr. Godson <a style="text-decoration: none;color: black" href="tel:+919444138938">+91 94441 38938</a></li>
-                  </ul>
-                  <a href="new_form.html"><button class="registerbtn">Register</button></a>
-                  <button class="closerulebtn" onclick="sccloserule()">Close</button>
-               </div>
-            </div>
-      
-            <div class="mrule">
-               <div class="moverlay"></div>
-               <div class="mpopup">
-                  <u>MARKETING</u>
-                  <ul>
-                    <li>One team per Department.</li>
-                    <li>Three members per team.</li>
-                    <li>Prelims will be conducted.</li>
-                    <li>5 Teams will be Selected to Finals.</li>
-                    <li>5 Minutes for Presentation.</li>
-                    <li>Explore your hidden Talent other than dance.</li>
-                    <li>FINALS: Non-techenical Rounds</li>
-                    <li>For Queries : Ms. s. Keerthana <a style="text-decoration: none;color: black" href="tel:+919677401939">+91 96774 01939</a></li>
-                  </ul>
-                  <a href="new_form.html"><button class="registerbtn">Register</button></a>
-                  <button class="closerulebtn" onclick="mcloserule()">Close</button>
-               </div>
-            </div>
-         
-
-            <div class="dancerule">
-             <div class="danceoverlay"></div>
-             <div class="dancepopup">
-                <u>DANCE (NON-TECHNICAL ROUND)</u>
-                <ul>
-                    <li>Maximum of 5 members per team.</li>
-                    <li>Solo Dance is also Permitted.</li>
-                    <li>Songs must follow a <b>karaoke</b> theme.</li>
-                    <li>Boys and girls cannot be on the same dance team. Each team must have only boys or only girls.</li>
-                    <li>Proper dress code must be followed and Dance should be decent</li>
-                    <li>Karaoke performance should be appropriate and non-offensive.</li>
-                    <li>The maximum duration of the dance is 5 minutes per team.</li>                    
-                    <li>All participants are required to complete their registration through the official website and submit a soft copy of their Dress Code and Song through email to <strong>qutrix2k25dance@gmail.com</strong> on or before <strong>September 15, 2025.</strong></li>
-                    <li>Seleced teams will be informed on or before September 17,2025.</li>
-                    <li>For Queries : Ms. J. Kamala : <a style="text-decoration: none;color: black" href="tel:+919344760726">+91 9344760726</a></li>
-                    
-                </ul>
-                <a href="new_form.html"><button class="registerbtn">Register</button></a>
-                <button class="closerulebtn" onclick="dancecloserule()">Close</button>
-             </div>
-            </div>
-         </div>
-      
-         <div class="container">
-          <div class="card__container">
-             <article class="card__article">
-                <img src="images/ppimage.jpg" alt="image" class="card__img">
-
-                <div class="card__data">
-                   <span class="card__description">Innovative research showcase</span>
-                   <h2 class="card__title">PAPER PRESENTATION</h2>
-                   <a href="#pprule" onclick="pshow()" class="card__button rlink">Register</a>
-                </div>
-             </article>
-         
-             <article class="card__article">
-                <img src="images/quizimage.jpg" alt="image" class="card__img">
-
-                <div class="card__data">
-                   <span class="card__description">Challenging, engaging, informative</span>
-                   <h2 class="card__title">Quiz</h2>
-                   <a href="#qrule" onclick="qshow()" class="card__button rlink">Register</a>
-                </div>
-             </article>
-         
-             <article class="card__article">
-                <img src="images/wordhunt.jpg" alt="image" class="card__img">
-
-                <div class="card__data">
-                   <span class="card__description">Linguistic treasure hunt</span>
-                   <h2 class="card__title">Word Hunt</h2>
-                   <a href="#whrule" onclick="whshow()" class="card__button rlink">Register</a>
-                </div>
-             </article>
-         
-             <article class="card__article">
-                <img src="images/wdimage.avif" alt="image" class="card__img">
-
-                <div class="card__data">
-                   <span class="card__description">Creative, responsive, intuitive.</span>
-                   <h2 class="card__title">Web Design</h2>
-                   <a href="#wdrule" onclick="wdshow()" class="card__button rlink">Register</a>
-                </div>
-             </article>
-         
-             <article class="card__article">
-                <img src="images/software-contest.png" alt="image" class="card__img">
-
-                <div class="card__data">
-                   <span class="card__description">Code. Compete. Conquer.</span>
-                   <h2 class="card__title">Software Contest</h2>
-                   <a href="#scrule" onclick="scshow()" class="card__button rlink">Register</a>
-                </div>
-             </article>
-         
-             <article class="card__article" style=>
-                <img src="images/marketingimage.jpg" alt="image" class="card__img">
-
-                <div class="card__data">
-                   <span class="card__description">Innovative, impactful, engaging.</span>
-                   <h2 class="card__title">Marketing</h2>
-                   <a href="#mrule" onclick="mshow()" class="card__button rlink">Register</a>
-                </div>
-             </article>
-
-            <article class="card__article">
-               <img src="images/lets-dance-neon-signs-style-text-free-vector.jpg" alt="image" class="card__img">
-
-               <div class="card__data">
-                  <span class="card__description">Rhythmic, Expressive, Graceful</span>
-                  <h2 class="card__title">NON-TECHNICAL ROUND DANCING</h2>
-                  <a href="#dancerule" onclick="danceshow()" class="card__button rlink">Register</a>
-               </div>
-            </article>
-          </div>
-         </div>
-
-      </div>
-
-      <marquee><b>Website Designed By Mr. S.Naveen (2504022)</b></marquee>
-
-      <!--Footer-->
-<footer class="footer" id="footer">
-   <div class="contact">
-       <h3>Contact Us</h3>
-       <p>Dr. P. Prabhusundhar, Assistant Professor</p>
-       <p>GAIT Co-ordinator, Department of Computer Science</p>
-       <p>Gobi Arts & Science College (Autonomous)</p>
-       <p>Karattadipalayam (PO), Gobichettipalayam - 638 453</p>
-       <p><strong>Contact No:</strong><a href="tel:+919600877997">+91 96008 77997</a></p>
-       <p><strong>Email:</strong> <a href="mailto:qutrix2k25@gmail.com">qutrix2k25@gmail.com</a></p>
-   </div>
-
-   <!-- Social Media Icons -->
-   <div class="social-icons">
-    <a href="https://www.facebook.com/share/16hiMYKC1q/" target="_blank"><i class="fab fa-facebook"></i></a>
-    <a href="https://x.com/GASCgobi36?t=fX_j8WUqzWYnQ1LG-jPoaA&s=09" target="_blank"><i class="fab fa-twitter"></i></a>
-    <a href="https://www.instagram.com/gobiartsandsciencecollege?igsh=aXJvd3UwcTN5anFw" target="_blank"><i class="fab fa-instagram"></i></a> <!-- Add Insta link here when ready -->
-    <a href="https://www.linkedin.com/in/gobi-arts-and-science-college-304b3a273?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><i class="fab fa-linkedin"></i></a>
-</div>
-
-
-   <div class="copyright">
-       <p>&copy; 2025 Qutrix. All rights reserved.</p>
-   </div>
-</footer>
-<!-- End of Footer -->
- 
-
-      <script src="script/rulesscript.js"></script>
-      <script>
-         function toggleMenu() {
-            document.querySelector(".nav-links").classList.toggle("active");
+    <style>
+        :root {
+            --primary: #020617; 
+            --accent: #fbbf24;  
+            --accent-glow: rgba(251, 191, 36, 0.4);
+            --text-gray: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --white: #ffffff;
+            --skyblu: #71e4e4;
         }
-      </script>
-   
-   </body>
+
+        /* --- Reset & Base --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--white);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- REPEATABLE SCROLL ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            filter: blur(10px);
+            transition: all 0.8s cubic-bezier(0.17, 0.85, 0.43, 1.01);
+            will-change: transform, opacity;
+        }
+
+        /* Initial States */
+        .reveal-left { transform: translateX(-100px); }
+        .reveal-right { transform: translateX(100px); }
+        .reveal-up { transform: translateY(60px); }
+
+        /* Active (Visible) State */
+        .reveal.active {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateX(0) translateY(0);
+        }
+
+        /* --- Global Modals --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background: var(--white);
+            color: var(--primary);
+            width: 100%;
+            max-width: 600px;
+            padding: clamp(20px, 5vw, 40px);
+            border-radius: 25px;
+            position: relative;
+            transform: translateY(30px);
+            transition: 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+            /* Fixes the screen size increase bug */
+            word-wrap: break-word;
+            overflow-x: hidden;
+        }
+
+        .modal-content.schedule-size { max-width: 900px; background: #000; padding: 10px; }
+        .schedule-img { width: 100%; border-radius: 12px; display: block; }
+
+        .modal-overlay.active { display: flex; }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+
+        .modal-close {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #64748b;
+            z-index: 10;
+        }
+        
+        .modal-close.white-btn { color: white; top: -45px; right: 0; font-size: 1rem; text-transform: uppercase; }
+
+        /* --- Header Branding --- */
+        .header-branding {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            margin: 20px auto;
+            width: 95%;
+            max-width: 1100px;
+            border-radius: 50px;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .clg-logo { height: clamp(35px, 8vw, 60px); width: auto; filter: brightness(0) invert(1); flex-shrink: 0; }
+        .v-line { width: 1px; height: 40px; background: rgba(255, 255, 255, 0.2); flex-shrink: 0; }
+
+        .clg-text h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(0.75rem, 3.8vw, 1.6rem); font-weight: 800; line-height: 1.1; white-space: nowrap; color: var(--skyblu);}
+        .clg-text p { font-size: clamp(0.5rem, 1.8vw, 0.8rem); color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- Navigation --- */
+        .navbar {
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(2, 6, 23, 0.98);
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-logo { font-size: 1.6rem; font-weight: 800; color: var(--skyblu); text-decoration: none; }
+        .nav-logo span { color: var(--accent); }
+
+        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-gray); font-weight: 600; font-size: 0.85rem; transition: 0.3s; text-transform: uppercase; cursor: pointer; }
+
+        .menu-btn { display: none; color: var(--white); font-size: 1.5rem; cursor: pointer; }
+
+        /* --- Banner --- */
+        .organizer-banner { padding: 40px 5%; text-align: center; }
+        .organizer-banner h2 { color: var(--accent); font-size: clamp(1.1rem, 5vw, 2.2rem); margin-bottom: 10px; font-family: 'Space Grotesk'; font-weight: 700; }
+        .organizer-banner h2 span{ color: var(--skyblu); font-size: clamp(1.1rem, 5vw, 2.2rem);}
+        .organizer-banner span { color: var(--text-gray); text-transform: uppercase; letter-spacing: 4px; font-size: 0.75rem; }
+        .organizer-banner h4 { color: var(--skyblu); margin-top: 10px; font-size: clamp(0.9rem, 3.5vw, 1.4rem); opacity: 0.9; }
+
+        /* --- SQUARE CARDS --- */
+        .section-container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+        
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            padding-bottom: 60px;
+            justify-items: center;
+        }
+
+        .card-frame {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            border-radius: 35px;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .card-frame::before {
+            content: "";
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: conic-gradient(transparent, transparent, transparent, var(--skyblu));
+            animation: rotateBeam 4s linear infinite;
+        }
+
+        @keyframes rotateBeam {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .card-main {
+            position: absolute;
+            inset: 3px;
+            background: #000;
+            border-radius: 32px;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            filter: brightness(0.9);
+        }
+
+        .card-hover-box {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            z-index: 3;
+            border-radius: 32px;
+            transform: scale(0.95);
+        }
+
+        .card-frame:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 20px var(--accent-glow);
+        }
+
+        .card-frame:hover .card-img { transform: scale(0.9); }
+        .card-frame:hover .card-hover-box { opacity: 1; transform: scale(1); }
+
+        .card-hover-box h3 {
+            font-family: 'Space Grotesk';
+            color: var(--accent);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .card-hover-box p {
+            font-size: 0.85rem;
+            color: #ccc;
+            margin-bottom: 25px;
+        }
+
+        .btn-reg {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 85%;
+            font-size: 0.8rem;
+        }
+
+        .btn-reg:hover { background: white; transform: scale(1.05); }
+
+        /* --- Footer --- */
+        .footer-main { background: rgba(0, 0, 0, 0.7); border-top: 1px solid var(--glass-border); padding: 100px 5% 40px; margin-top: 100px; }
+        .footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.5fr 1fr; gap: 40px; }
+        .footer-section { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); padding: 25px; border-radius: 20px; }
+        .footer-section h4 { color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .footer-section h4::after { content: ''; height: 1px; flex-grow: 1; background: linear-gradient(to right, var(--accent-glow), transparent); }
+        .support-card { background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(251, 191, 36, 0.02)); border: 1px solid rgba(251, 191, 36, 0.3); transform: translateY(-70px); box-shadow: 0 10px 40px rgba(0,0,0,0.4); z-index: 5; }
+        .contact-pill { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 18px; border-radius: 15px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px; transition: 0.3s; text-decoration: none; color: white; }
+        .contact-pill:hover { border-color: var(--accent); transform: translateX(8px); }
+        .pill-icon { width: 38px; height: 38px; background: var(--accent); color: #000; border-radius: 10px; display: flex; justify-content: center; align-items: center; }
+        .pill-text span { font-size: 0.65rem; color: var(--accent); text-transform: uppercase; font-weight: 700; display: block; }
+        .pill-text p { color: var(--skyblu); font-size: 0.9rem !important; margin: 0 !important; font-weight: 600; }
+        .authorized-badge { margin-top: 15px; padding: 8px; border-radius: 8px; background: rgba(251, 191, 36, 0.1); color: #fbbf24; font-size: 0.7rem; font-weight: 700; text-align: center; }
+        .bottom-bar { text-align: center; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 40px; }
+        .credit-text { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-gray); letter-spacing: 1.5px; line-height: 1.8; }
+        .credit-text strong { color: var(--accent); font-weight: 800; }
+        .social-icons { display: flex; gap: 12px; margin-top: 15px; }
+        .social-icons a { width: 35px; height: 35px; background: var(--glass); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: seashell; transition: 0.3s; }
+        .social-icons a:hover { background: var(--accent); color: #000; }
+
+        @media (max-width: 992px) { .footer-container { grid-template-columns: 1fr; gap: 20px; } .support-card { transform: translateY(0); margin-bottom: 20px; } }
+        @media (max-width: 768px) { .menu-btn { display: block; } .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: #020617; padding: 20px; border-bottom: 2px solid var(--accent); gap: 20px; } .nav-links.active { display: flex; } .card-frame { width: 290px; height: 290px; } }
+
+        /* --- Back to Top Button --- */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--accent);
+    color: var(--primary);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    box-shadow: 0 0 15px var(--accent-glow);
+    z-index: 2500;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.17, 0.85, 0.43, 1.01);
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: var(--white);
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="scheduleOverlay">
+        <div class="modal-content schedule-size">
+            <span class="modal-close white-btn" onclick="closeSchedule()">&times; Close Schedule</span>
+            <img src="images/TS2025.png" class="schedule-img">
+        </div>
+    </div>
+
+    <header class="header-branding reveal reveal-up">
+        <img class="clg-logo" src="images/College_logo.png">
+        <div class="v-line"></div>
+        <div class="clg-text">
+            <h2>GOBI ARTS & SCIENCE COLLEGE</h2>
+            <p>Karattadipalayam, Gobichettipalayam</p>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <a href="#" class="nav-logo">QU<span>TRIX</span></a>
+        <div class="menu-btn" onclick="document.getElementById('nav-list').classList.toggle('active')"><i class="fas fa-bars"></i></div>
+        <ul class="nav-links" id="nav-list">
+            <li><a href="#">Home</a></li>
+            <li><a onclick="openSchedule()">Time Schedule</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="organizer-banner reveal reveal-left">
+        <h2>QUTRIX <span>2K26</span></h2>
+        <span style="font-size: 0.55rem;letter-spacing: 2px;">An Intercollegiate Technical Symposium</span> <br>
+        <span>Organized By</span>
+        <h2>GAIT : GobiArts Association of Information Technology</h2>
+        <h4>PG & RESEARCH DEPARTMENT OF COMPUTER SCIENCE</h4>
+    </div>
+
+    <div class="section-container">
+        <div class="events-grid">
+            <div id="paperpresentation" class="card-frame reveal">
+                <div class="card-main">
+                    <img src="images/Gemini/paperpresentation.png" class="card-img">
+                    <div class="card-hover-box">
+                        <h3>Paper Presentation</h3>
+                        <p>Innovative research talks & technical future trends.</p>
+                        <button class="btn-reg" onclick="openEvent('ppt')">Rules & Register</button>
+                    </div>
+                </div>
+            </div>
+            <div id="quiz" class="card-frame reveal">
+                <div class="card-main">
+                    <img src="images/Gemini/quiz.png" class="card-img">
+                    <div class="card-hover-box">
+                        <h3>Technical Quiz</h3>
+                        <p>The ultimate tech-knowledge battle.</p>
+                        <button class="btn-reg" onclick="openEvent('quiz')">Rules & Register</button>
+                    </div>
+                </div>
+            </div>
+            <div id="wordhunt" class="card-frame reveal">
+                <div class="card-main">
+                    <img src="images/Gemini/wordhunt.png" class="card-img">
+                    <div class="card-hover-box">
+                        <h3>Word Hunt</h3>
+                        <p>Linguistic treasure hunt and word puzzles.</p>
+                        <button class="btn-reg" onclick="openEvent('wordhunt')">Rules & Register</button>
+                    </div>
+                </div>
+            </div>
+            <div id="webdesign" class="card-frame reveal">
+                <div class="card-main">
+                    <img src="images/Gemini/webdesign.png" class="card-img">
+                    <div class="card-hover-box">
+                        <h3>Web Design</h3>
+                        <p>Design stunning UI/UX and responsive layouts.</p>
+                        <button class="btn-reg" onclick="openEvent('web')">Rules & Register</button>
+                    </div>
+                </div>
+            </div>
+            <div id="softwarecontest" class="card-frame reveal">
+                <div class="card-main">
+                    <img src="images/Gemini/softwarecontest.png" class="card-img">
+                    <div class="card-hover-box">
+                        <h3>Software Contest</h3>
+                        <p>Solve code challenges and debug errors.</p>
+                        <button class="btn-reg" onclick="openEvent('software')">Rules & Register</button>
+                    </div>
+                </div>
+            </div>
+            <div id="marketing" class="card-frame reveal">
+                <div class="card-main">
+                    <img src="images/Gemini/marketing.png" class="card-img">
+                    <div class="card-hover-box">
+                        <h3>Marketing</h3>
+                        <p>Pitch innovative products and marketing strategies.</p>
+                        <button class="btn-reg" onclick="openEvent('marketing')">Rules & Register</button>
+                    </div>
+                </div>
+            </div>
+            <div id="dance" class="card-frame reveal">
+                <div class="card-main">
+                    <img src="images/Gemini/dance.png" class="card-img">
+                    <div class="card-hover-box">
+                        <h3>Non-Tech Dance</h3>
+                        <p>Rhythmic and graceful dance performances.</p>
+                        <button class="btn-reg" onclick="openEvent('dance')">Rules & Register</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-main" id="contact">
+        <div class="footer-container">
+            <div class="footer-section reveal reveal-left">
+                <h4><i class="fas fa-university"></i> Institution</h4>
+                <p style="color: var(--skyblu);"><strong>Gobi Arts & Science College</strong> (Autonomous)</p>
+                <p  style="color: seashell;">Karattadipalayam, Erode - 638 453</p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/share/16hiMYKC1q/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/gobiartsandsciencecollege" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://x.com/GASCgobi36" target="_blank"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section support-card reveal reveal-up">
+                <h4>Support Network</h4>
+                <a href="tel:+919952655591" class="contact-pill"><div class="pill-icon"><i class="fas fa-phone-alt"></i></div><div class="pill-text"><span>Registration Head</span><p >Naveen S</p></div></a>
+                <a href="tel:+917010520104" class="contact-pill"><div class="pill-icon"><i class="fas fa-wallet"></i></div><div class="pill-text"><span>GAIT Treasurer</span><p >Vignesh P</p></div></a>
+                <a href="mailto:qutrix2k25@gmail.com" class="contact-pill"><div class="pill-icon"><i class="fas fa-envelope"></i></div><div class="pill-text"><span>Official Inquiry</span><p >qutrix2k25@gmail.com</p></div></a>
+            </div>
+
+            <div class="footer-section reveal reveal-right">
+                <h4><i class="fas fa-user-tie"></i> Symposium Chair</h4>
+                <p style="color: var(--skyblu);"><strong>Dr. P. Prabhusundhar</strong></p>
+                <p style="color: seashell;">Assistant Professor & GAIT Coordinator</p>
+                <p class="authorized-badge"><i class="fas fa-shield-alt"></i> AUTHORIZED GAIT COORDINATOR</p>
+            </div>
+        </div>
+        <div class="bottom-bar">
+            <div class="credit-text reveal reveal-up">
+                <p style="margin-bottom: 8px;">&copy; 2026 QUTRIX Official. All Rights Reserved.</p>
+                <p>Designed by <strong>Mr. S. Naveen (22CS048)</strong><br>PG & Research Department of Computer Science</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const eventData = {
+            ppt: { title: "PAPER PRESENTATION", rules: ["One Team Per Dept (Max 3 members).", "IEEE Format required.", "Submit soft copy to: qutrix2k25ppt@gmail.com.", "Topics: AI, IoT, Cyber Security, Deep Learning."], link: "new_form.html" },
+            quiz: { title: "TECHNICAL QUIZ", rules: ["Two members per team.", "Prelims select top 5 teams.", "Technical rounds in finals."], link: "new_form.html" },
+            wordhunt: { title: "WORD HUNT", rules: ["Two members per team.", "Prelims and Final rounds."], link: "new_form.html" },
+            web: { title: "WEB DESIGN", rules: ["Two members per team.", "Design tools: HTML, CSS, JS.", "Judging based on UI/UX and creativity."], link: "new_form.html" },
+            software: { title: "SOFTWARE CONTEST", rules: ["Two members per team.", "Debug code challenges."], link: "new_form.html" },
+            marketing: { title: "MARKETING", rules: ["Three members per team.", "5 minutes for the pitch."], link: "new_form.html" },
+            dance: { title: "DANCE (NON-TECH)", rules: ["Max 5 members per team.", "Karaoke theme required."], link: "new_form.html" }
+        };
+
+        const overlay = document.getElementById('modalOverlay');
+        const schedOverlay = document.getElementById('scheduleOverlay');
+        const body = document.getElementById('modalBody');
+
+        function openEvent(type) {
+            const data = eventData[type];
+            body.innerHTML = `<h2>${data.title}</h2><ul style="list-style:none; padding:0;">${data.rules.map(r => `<li style="margin-bottom:10px;"><i class="fas fa-arrow-right" style="color:#fbbf24; margin-right:10px;"></i>${r}</li>`).join('')}</ul><a href="${data.link}" class="btn-reg" style="text-align:center; display:block; text-decoration:none; margin-top:20px;">Proceed to Register</a>`;
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() { overlay.classList.remove('active'); document.body.style.overflow = 'auto'; }
+        function openSchedule() { schedOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeSchedule() { schedOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; }
+        overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
+        schedOverlay.addEventListener('click', (e) => { if(e.target === schedOverlay) closeSchedule(); });
+
+        /* --- REPEATABLE INTERSECTION OBSERVER --- */
+        const observerOptions = { threshold: 0.1, rootMargin: '0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                } else {
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Observe manually tagged sections
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // 2. Automatically assign and observe Event Cards with alternating directions
+            const cards = document.querySelectorAll('.card-frame');
+            cards.forEach((card, index) => {
+                if (index % 2 === 0) {
+                    card.classList.add('reveal-left');
+                } else {
+                    card.classList.add('reveal-right');
+                }
+                observer.observe(card);
+            });
+        });
+
+
+        const backToTopBtn = document.getElementById('backToTop');
+
+// Handle Visibility on Scroll
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 400) {
+        backToTopBtn.classList.add('show');
+    } else {
+        backToTopBtn.classList.remove('show');
+    }
+});
+
+// Smooth Scroll to Top
+backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+    </script>
+
+    <button id="backToTop" class="back-to-top" title="Go to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+</body>
 </html>
