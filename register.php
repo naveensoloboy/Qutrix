@@ -12,8 +12,8 @@ use MongoDB\Client;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-  use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+//use PHPMailer\PHPMailer\PHPMailer;
+//use PHPMailer\PHPMailer\Exception;
 
 date_default_timezone_set('Asia/Kolkata');
 
@@ -852,7 +852,7 @@ echo "
       
 
 // Collect all member emails
-$emails = [];
+/*$emails = [];
 if (!empty($first_member_email)) $emails[] = $first_member_email;
 if (!empty($second_member_email)) $emails[] = $second_member_email;
 if (!empty($third_member_email)) $emails[] = $third_member_email;
@@ -905,9 +905,9 @@ try {
     $mail->send();
 
 } catch (Exception $e) {
-    // show_error_page("Mailer Error: " . $mail->ErrorInfo);
+     show_error_page("Mailer Error: " . $mail->ErrorInfo);
 }
-
+*/
 
     } catch(Exception $e) {
         echo "<div style='text-align:center; padding:20px; background:#ffebee; border-radius:10px; margin:20px;'>";
