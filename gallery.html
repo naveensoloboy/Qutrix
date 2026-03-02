@@ -3,190 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>QUTRIX Gallery | GASC</title>
+    <title>QUTRIX | Executive Showcase</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
         :root {
             --accent: #fbbf24;
-            --accent-glow: rgba(251, 191, 36, 0.4);
-            --bg-dark: #0a0a0a;
+            --bg: #050505;
             --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
-        * { 
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
         
         body {
-            background-color: var(--bg-dark);
-            color: #e2e8f0;
+            background-color: var(--bg);
+            color: #ffffff;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.6;
             overflow-x: hidden;
-            min-height: 100vh;
+        }
+
+        #systemCanvas { position: fixed; top: 0; left: 0; z-index: -1; }
+
+        /* --- RESPONSIVE NAVIGATION --- */
+        .top-nav {
+            position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
+            z-index: 1000; background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px);
+            padding: 10px 20px; border-radius: 50px; border: 1px solid var(--border);
+            display: flex; gap: 15px; width: fit-content; max-width: 95%;
+        }
+
+        .top-nav a {
+            color: #aaa; text-decoration: none; font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; transition: 0.4s; letter-spacing: 1px; white-space: nowrap;
+        }
+
+        .top-nav a:hover { color: var(--accent); }
+
+        /* --- RESPONSIVE HERO --- */
+        .hero { 
+            padding: 140px 20px 60px; 
+            text-align: center; 
+            width: 100%;
+        }
+        
+        .hero p { 
+            font-family: 'JetBrains Mono'; 
+            color: var(--accent); 
+            font-size: clamp(10px, 2vw, 12px); 
+            letter-spacing: 4px; 
+            margin-bottom: 15px; 
+            text-transform: uppercase; 
+        }
+
+        .hero h1 { 
+            font-family: 'Space Grotesk'; 
+            /* Scalable font size: Minimum 2.5rem, Scales with width, Max 7.5rem */
+            font-size: clamp(2.5rem, 10vw, 7.5rem); 
+            font-weight: 800; 
+            letter-spacing: -2px; 
+            text-transform: uppercase; 
+            line-height: 1; 
+            word-wrap: break-word;
+        }
+
+        /* --- YEAR SECTIONS --- */
+        .year-block { max-width: 1400px; margin: 0 auto 60px; padding: 0 5%; }
+        
+        .sticky-year {
+            position: relative; top: 50px; z-index: 100; padding: 20px 0;
+            background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--border); margin-bottom: 40px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .year-label { 
+            font-family: 'Space Grotesk'; 
+            font-size: clamp(1.8rem, 5vw, 3.2rem); 
+            font-weight: 700; 
+            letter-spacing: -1px; 
+        }
+
+        .year-label span { 
+            color: var(--accent); 
+            font-size: 0.4em; 
+            font-family: 'JetBrains Mono'; 
+            margin-left: 10px; 
+            text-transform: uppercase; 
+            vertical-align: middle;
+        }
+
+        /* --- UPDATED GRID (LEFT-TO-RIGHT) --- */
+        .masonry { 
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
-        /* Neural Background Canvas */
-        #systemCanvas {
-            position: fixed;
-            top: 0; left: 0; z-index: -1;
-        }
-
-        /* Header Styling */
-        .header {
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .department-name {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 10px;
-        }
-
-        .qutrix {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 800;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-        }
-
-        /* Slideshow container */
-        .slideshow-container {
-            max-width: 900px;
-            width: 100%;
-            height: 500px;
-            position: relative;
-            margin: auto;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .card {
+            flex: 1 1 calc(33.333% - 20px); 
+            min-width: 280px;
+            background: var(--glass);
+            border: 1px solid var(--border); 
+            border-radius: 20px; 
             overflow: hidden;
-            background: #000;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 20px rgba(251, 191, 36, 0.1);
+            cursor: pointer; 
+            transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            height: fit-content;
         }
 
-        .mySlides {
-            display: none;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+        .card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .card img { width: 100%; display: block; transition: 0.8s; }
+        .card:hover img { transform: scale(1.05); }
+        .card-info { padding: 20px; background: rgba(12, 12, 12, 0.98); }
+        .card-info h4 { font-size: 15px; font-weight: 700; color: #fff; }
+
+        /* --- LIGHTBOX --- */
+        #lightbox {
+            display: none; position: fixed; inset: 0; background: #000; z-index: 2000;
+            justify-content: center; align-items: center; animation: fadeIn 0.4s ease;
         }
+        .lb-bg-blur { position: absolute; inset: -50px; background-size: cover; background-position: center; filter: blur(60px) brightness(0.3); z-index: -1; opacity: 0.7; }
+        #lightbox img { max-width: 85%; max-height: 75vh; border-radius: 8px; box-shadow: 0 50px 100px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.15); }
+        .lb-controls { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 30px; border-radius: 100px; display: flex; align-items: center; gap: 20px; z-index: 2001; }
+        #lbCap { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; }
+        .close-lb { position: absolute; top: 20px; right: 20px; font-family: 'JetBrains Mono'; font-size: 10px; color: #fff; background: rgba(255,255,255,0.1); padding: 10px 18px; border-radius: 4px; cursor: pointer; z-index: 2002; }
+        .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.05); border: none; color: #fff; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; }
+        .lb-prev { left: 20px; } .lb-next { right: 20px; }
 
-        /* Ken Burns Effect (Subtle Zoom) */
-        .mySlides img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 4s ease-out;
-            filter: brightness(0.8);
-        }
-
-        .active-slide img {
-            transform: scale(1.1);
-        }
-
-        /* Caption text */
-        .text {
-            color: white;
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 600;
-            font-size: 20px;
-            padding: 20px;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            text-align: left;
-            background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            border-bottom: 4px solid var(--accent);
-        }
-
-        /* Number text */
-        .numbertext {
-            color: var(--accent);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            padding: 12px 20px;
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(0,0,0,0.7);
-            border: 1px solid var(--accent);
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-        }
-
-        /* Buttons */
-        .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 20px;
-            transition: 0.3s;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(5px);
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.1);
-            z-index: 10;
-        }
-
-        .prev { left: 20px; }
-        .next { right: 20px; }
-
-        .prev:hover, .next:hover {
-            background: var(--accent);
-            color: black;
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        /* Dots */
-        .dot-container {
-            text-align: center;
-            margin-top: 25px;
-        }
-
-        .dot {
-            height: 6px;
-            width: 30px;
-            margin: 0 5px;
-            background-color: rgba(255,255,255,0.2);
-            border-radius: 10px;
-            display: inline-block;
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
-
-        .active {
-            background-color: var(--accent);
-            width: 50px;
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        @media (max-width: 768px) {
-            .slideshow-container { height: 300px; }
-            .qutrix { font-size: 1.8rem; }
-            .prev, .next { width: 40px; height: 40px; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @media (max-width: 1000px) { .card { flex: 1 1 calc(50% - 20px); } .lb-nav { display: none; } }
+        @media (max-width: 600px) { 
+            .card { flex: 1 1 100%; } 
+            .hero { padding-top: 100px; }
+            .year-label span { display: none; } /* Hide meta tag on very small screens to save space */
         }
     </style>
 </head>
@@ -194,167 +148,186 @@
 
     <canvas id="systemCanvas"></canvas>
 
-    <div class="header">
-        <div class="department-name">PG & Research Department of Computer Science</div>
-        <div class="qutrix">Event Gallery</div>
+    <nav class="top-nav">
+        <a href="#y2026">2026_EDITION</a>
+        <a href="#y2025">2025_EDITION</a>
+        <a href="#y2024">2024_EDITION</a>
+    </nav>
+
+    <div class="hero">
+        <p>GASC • Department of Computer Science</p>
+        <h1>QUTRIX<br><span style="color: var(--accent);">EXHIBITION</span></h1>
     </div>
 
-    <div class="slideshow-container">
+    <div id="gallery-root"></div>
 
-        <div class="mySlides">
-            <div class="numbertext">01 / 06</div>
-            <img src="images/gallery/DSC_7805.JPG" alt="Inaugural Function">
-            <div class="text">Inaugural Ceremony</div>
-        </div>
-
-        <div class="mySlides">
-            <div class="numbertext">02 / 06</div>
-            <img src="images/gallery/DSC_7811.JPG" alt="Inaugural Function">
-            <div class="text">Lamp Lighting Ceremony</div>
-        </div>
-
-        <div class="mySlides">
-            <div class="numbertext">03 / 06</div>
-            <img src="images/gallery/DSC_8119.JPG" alt="Software Contest">
-            <div class="text">Software Development Contest</div>
-        </div>
-
-        <div class="mySlides">
-            <div class="numbertext">04 / 06</div>
-            <img src="images/gallery/DSC_8199.JPG" alt="Honor the Judge">
-            <div class="text">Felicitation of Distinguished Judges</div>
-        </div>
-
-        <div class="mySlides">
-            <div class="numbertext">05 / 06</div>
-            <img src="images/gallery/DSC_8104.JPG" alt="Honor the Judge">
-            <div class="text">Expert Panel Review</div>
-        </div>
-
-        <div class="mySlides">
-            <div class="numbertext">06 / 06</div>
-            <img src="images/gallery/DSC_8324.JPG" alt="Valedictory Function">
-            <div class="text">Valedictory & Prize Distribution</div>
-        </div>
-
-        <a class="prev" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></a>
-        <a class="next" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></a>
-
-    </div>
-
-    <div class="dot-container">
-        <span class="dot" onclick="currentSlide(1)"></span> 
-        <span class="dot" onclick="currentSlide(2)"></span> 
-        <span class="dot" onclick="currentSlide(3)"></span> 
-        <span class="dot" onclick="currentSlide(4)"></span> 
-        <span class="dot" onclick="currentSlide(5)"></span> 
-        <span class="dot" onclick="currentSlide(6)"></span> 
+    <div id="lightbox">
+        <div class="lb-bg-blur" id="lbBg"></div>
+        <span class="close-lb" onclick="closeLightbox()">EXIT_VIEW</span>
+        <button class="lb-nav lb-prev" onclick="changeLightbox(-1, event)"><i class="fas fa-chevron-left"></i></button>
+        <img id="lbImg" src="" onclick="event.stopPropagation()">
+        <button class="lb-nav lb-next" onclick="changeLightbox(1, event)"><i class="fas fa-chevron-right"></i></button>
+        <div class="lb-controls"><p id="lbCap"></p></div>
     </div>
 
     <script>
-        let slideIndex = 1;
-let autoSlideTimeout;
+        const galleryItems = [
+            // --- GAIT COORDINATORS SECTION ---
+            { year: '', src: 'images/gallery/coordinator/DSC_7800.JPG', title: 'Gait Coordinator', meta: 'EXECUTIVE', isCoordinator: true },
+            { year: '', src: 'images/gallery/coordinator/DSC_8288.JPG', title: 'Gait Coordinator', meta: 'EXECUTIVE', isCoordinator: true },
+            { year: '', src: 'images/gallery/coordinator/DSC_8289.JPG', title: 'Gait Coordinator', meta: 'EXECUTIVE', isCoordinator: true },
 
-function showSlides(n) {
-    let i;
-    let slides = document.getElementsByClassName("mySlides");
-    let dots = document.getElementsByClassName("dot");
+            // --- 2026 SECTION ---
+            { year: 2026, src: 'images/gallery/DSC_8324.JPG', title: 'Excellence Awards', meta: 'CURRENT' },
 
-    if (n > slides.length) { slideIndex = 1 }
-    if (n < 1) { slideIndex = slides.length }
+            // --- 2025 SECTION ---
+            { year: 2025, src: 'images/gallery/DSC_8119.JPG', title: 'Technical Symposium', meta: 'EVOLUTION' },
 
-    // 1. Reset all slides
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-        slides[i].classList.remove("active-slide");
-    }
+            // --- 2024 SECTION ---
+            { year: 2024, src: 'images/gallery/2024/DSC_7885.JPG', title: 'Onspot Registration', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_7805.JPG', title: 'Inaugural Ceremony', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_7811.JPG', title: 'Ceremonial Lighting', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_7786.JPG', title: 'Grand Inaugural', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_7823.JPG', title: 'Paper Presentation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8077.JPG', title: 'Quiz', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8070.JPG', title: 'Web Design', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8104.JPG', title: 'Web Design Judge', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8119.JPG', title: 'Software Contest', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8199.JPG', title: 'Software Contest Judge', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8165.JPG', title: 'Dance', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8194.JPG', title: 'Marketing', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8242.JPG', title: 'Marketing Judge', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8262.JPG', title: 'Insightful Observation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8310.JPG', title: 'Insightful Observation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8291.JPG', title: 'Valedictory Function', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8324.JPG', title: 'Chief Guest Momentum', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/principal-momentum.JPG', title: 'Principal Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8381.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8383.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8397.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8384.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8382.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8386.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8387.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8388.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' }
+            
+            
+        ];
 
-    // 2. Reset all dots
-    for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-    }
+        const root = document.getElementById('gallery-root');
+        const years = [...new Set(galleryItems.filter(item => !item.isCoordinator).map(item => item.year))].sort((a, b) => b - a);
 
-    // 3. Target the current slide and its image
-    let currentSlideElem = slides[slideIndex - 1];
-    let img = currentSlideElem.getElementsByTagName('img')[0];
-
-    // 4. DISPLAY LOGIC: Wait for image to load
-    currentSlideElem.style.display = "block";
-    dots[slideIndex - 1].className += " active";
-
-    const startAnimation = () => {
-        currentSlideElem.classList.add("active-slide");
-        // Start the timer ONLY after the image is ready and animation begins
-        clearTimeout(autoSlideTimeout);
-        autoSlideTimeout = setTimeout(() => changeSlide(1), 5000); 
-    };
-
-    if (img.complete) {
-        // If image is already cached/loaded
-        startAnimation();
-    } else {
-        // If image is still downloading, wait for it
-        img.onload = startAnimation;
-    }
-}
-
-function changeSlide(n) {
-    // Clear timeout immediately on manual click to prevent double jumping
-    clearTimeout(autoSlideTimeout);
-    showSlides(slideIndex += n);
-}
-
-function currentSlide(n) {
-    clearTimeout(autoSlideTimeout);
-    showSlides(slideIndex = n);
-}
-
-// --- Background Canvas (Neural Network) ---
-const canvas = document.getElementById('systemCanvas');
-const ctx = canvas.getContext('2d');
-let points = [];
-
-function initCanvas() {
-    canvas.width = window.innerWidth; 
-    canvas.height = window.innerHeight;
-    points = [];
-    for (let i = 0; i < 40; i++) {
-        points.push({ 
-            x: Math.random() * canvas.width, 
-            y: Math.random() * canvas.height, 
-            vx: (Math.random() - 0.5) * 0.3, 
-            vy: (Math.random() - 0.5) * 0.3 
-        });
-    }
-}
-
-function drawCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "rgba(251, 191, 36, 0.2)"; 
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.02)";
-    points.forEach((p, i) => {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1; 
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-        ctx.beginPath(); ctx.arc(p.x, p.y, 1, 0, Math.PI * 2); ctx.fill();
-        for (let j = i + 1; j < points.length; j++) {
-            const d = Math.hypot(p.x - points[j].x, p.y - points[j].y);
-            if (d < 180) { 
-                ctx.beginPath(); ctx.moveTo(p.x, p.y); 
-                ctx.lineTo(points[j].x, points[j].y); ctx.stroke(); 
-            }
+        const coordinators = galleryItems.filter(item => item.isCoordinator);
+        if (coordinators.length > 0) {
+            const coordSection = document.createElement('section');
+            coordSection.className = 'year-block';
+            coordSection.style.marginBottom = "100px"; // Extra spacing
+            coordSection.innerHTML = `
+                <div class="sticky-year">
+                    <div class="year-label">GAIT COORDINATOR <span></span></div>
+                    <div style="font-family: 'JetBrains Mono'; font-size: 10px; color: var(--accent);">CORE_SYSTEM_V.1</div>
+                </div>
+                <div class="masonry" id="grid-coordinators"></div>
+            `;
+            root.appendChild(coordSection);
+            
+            const coordGrid = document.getElementById('grid-coordinators');
+            coordinators.forEach(item => {
+                const globalIndex = galleryItems.indexOf(item);
+                const card = document.createElement('div');
+                card.className = 'card';
+                // Make coordinator cards slightly more prominent if desired
+                card.style.borderColor = "rgba(251, 191, 36, 0.3)"; 
+                card.onclick = () => openLightbox(globalIndex);
+                card.innerHTML = `
+                    <img src="${item.src}" alt="${item.title}">
+                    <div class="card-info">
+                        <p style="font-family: 'JetBrains Mono'; font-size: 9px; color: var(--accent); margin-bottom: 5px;">OFFICIAL_REPRESENTATIVE</p>
+                        <h4>${item.title}</h4>
+                    </div>
+                `;
+                coordGrid.appendChild(card);
+            });
         }
-    });
-    requestAnimationFrame(drawCanvas);
-}
 
-initCanvas(); 
-drawCanvas(); 
-window.onresize = initCanvas;
+        years.forEach(year => {
+            const yearData = galleryItems.filter(item => item.year === year && !item.isCoordinator);
+            const section = document.createElement('section');
+            section.className = 'year-block';
+            section.id = `y${year}`;
+            section.innerHTML = `
+                <div class="sticky-year">
+                    <div class="year-label">${year} <span> ${yearData[0].meta}</span></div>
+                    <div style="font-family: 'JetBrains Mono'; font-size: 10px; color: #444;">V.${year-2023}</div>
+                </div>
+                <div class="masonry" id="grid-${year}"></div>
+            `;
+            root.appendChild(section);
 
-// Initial call
-window.onload = () => showSlides(slideIndex);
+            const grid = document.getElementById(`grid-${year}`);
+            yearData.forEach(item => {
+                const globalIndex = galleryItems.indexOf(item);
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => openLightbox(globalIndex);
+                card.innerHTML = `
+                    <img src="${item.src}" alt="${item.title}">
+                    <div class="card-info"><h4>${item.title}</h4></div>
+                `;
+                grid.appendChild(card);
+            });
+        });
+
+        let currentImgIndex = 0;
+        function openLightbox(index) {
+            currentImgIndex = index;
+            updateLightbox();
+            document.getElementById('lightbox').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function updateLightbox() {
+            const item = galleryItems[currentImgIndex];
+            document.getElementById('lbImg').src = item.src;
+            document.getElementById('lbBg').style.backgroundImage = `url(${item.src})`;
+            document.getElementById('lbCap').innerText = `${item.year}  ${item.title}`;
+        }
+        function changeLightbox(dir, event) {
+            event.stopPropagation();
+            currentImgIndex = (currentImgIndex + dir + galleryItems.length) % galleryItems.length;
+            updateLightbox();
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        const canvas = document.getElementById('systemCanvas');
+        const ctx = canvas.getContext('2d');
+        let points = [];
+        function init() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            points = Array.from({length: 30}, () => ({
+                x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3
+            }));
+        }
+        function animate() {
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            ctx.strokeStyle = "rgba(251, 191, 36, 0.05)";
+            ctx.fillStyle = "rgba(255, 255, 255, 0.05)";
+            points.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy;
+                if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath(); ctx.arc(p.x, p.y, 1, 0, Math.PI*2); ctx.fill();
+                for(let j=i+1; j<points.length; j++) {
+                    let d = Math.hypot(p.x-points[j].x, p.y-points[j].y);
+                    if(d < 180) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(points[j].x, points[j].y); ctx.stroke(); }
+                }
+            });
+            requestAnimationFrame(animate);
+        }
+        window.onresize = init; init(); animate();
     </script>
-
 </body>
 </html>

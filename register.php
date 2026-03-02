@@ -8,6 +8,17 @@ error_reporting(E_ALL);
 require 'vendor/autoload.php';
 require 'db.php';
 
+use Cloudinary\Cloudinary; 
+
+// Cloudinary configuration
+$cloudinary = new Cloudinary([
+    'cloud' => [
+        'cloud_name' => $_ENV['CLOUDINARY_CLOUD_NAME'],
+        'api_key'    => $_ENV['CLOUDINARY_API_KEY'],
+        'api_secret' => $_ENV['CLOUDINARY_API_SECRET']
+    ],
+]);
+
 use MongoDB\Client;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -182,6 +193,18 @@ function show_department_error($dept, $evt) {
     ");
 }
 
+function uploadToCloudinary($file, $cloudinary) {
+    if (!isset($file) || $file['error'] === UPLOAD_ERR_NO_FILE) {
+        return null;
+    }
+
+    $upload = $cloudinary->uploadApi()->upload(
+        $file['tmp_name'],
+        ["resource_type" => "auto"]
+    );
+
+    return $upload['secure_url'];
+}
 
 // Check if form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -334,11 +357,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
         // Handle file uploads
-        $first_member_bonafide = uploadFile($_FILES["first_member_bonafide"]);
-        $second_member_bonafide = uploadFile($_FILES["second_member_bonafide"]);
-        $third_member_bonafide = uploadFile($_FILES["third_member_bonafide"]);
-        $fourth_member_bonafide = uploadFile($_FILES["fourth_member_bonafide"]);
-        $fifth_member_bonafide = uploadFile($_FILES["fifth_member_bonafide"]);
+        $first_member_bonafide = uploadToCloudinary($_FILES["first_member_bonafide"], $cloudinary);
+        $second_member_bonafide = uploadToCloudinary($_FILES["second_member_bonafide"], $cloudinary);
+        $third_member_bonafide = uploadToCloudinary($_FILES["third_member_bonafide"], $cloudinary);
+        $fourth_member_bonafide = uploadToCloudinary($_FILES["fourth_member_bonafide"], $cloudinary);
+        $fifth_member_bonafide = uploadToCloudinary($_FILES["fifth_member_bonafide"], $cloudinary);
 
         // Conflict pairs
         $conflicting_event_pairs = [
@@ -876,7 +899,7 @@ try {
     $mail->Port       = 587;
 
     // IMPORTANT: SAME AS USERNAME
-    $mail->setFrom('naveen9222777@gmail.com', 'Qutrix 2026 Registration');
+    $mail->setFrom('', 'Qutrix 2026 Registration');
 
     // ADD RECIPIENTS SAFELY
     foreach ($emails as $email) {
