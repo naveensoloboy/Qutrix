@@ -212,8 +212,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $collection = $client->Qutrix->registrations;
 
-        // Maximum file size limit (900 KB)
-        $maxFileSize = 900 * 1024;
+        // Maximum file size limit (300 KB)
+        $maxFileSize = 300 * 1024;
 
         // Function to validate file size
         function validateFileSize($file, $maxFileSize) {
@@ -263,7 +263,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $fileErrors = [];
         
         if (!validateFileSize($_FILES["first_member_bonafide"], $maxFileSize)) {
-            $fileErrors[] = "The first member's bonafide file exceeds the size limit of 900 KB.";
+            $fileErrors[] = "The first member's bonafide file exceeds the size limit of 300 KB.";
         }
         
         if (!validateFileType($_FILES["first_member_bonafide"])) {
@@ -271,7 +271,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         
         if (isset($_FILES["second_member_bonafide"]) && !validateFileSize($_FILES["second_member_bonafide"], $maxFileSize)) {
-            $fileErrors[] = "The second member's bonafide file exceeds the size limit of 900 KB.";
+            $fileErrors[] = "The second member's bonafide file exceeds the size limit of 300 KB.";
         }
         
         if (isset($_FILES["second_member_bonafide"]) && !validateFileType($_FILES["second_member_bonafide"])) {
@@ -279,7 +279,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         
         if (isset($_FILES["third_member_bonafide"]) && !validateFileSize($_FILES["third_member_bonafide"], $maxFileSize)) {
-            $fileErrors[] = "The third member's bonafide file exceeds the size limit of 900 KB.";
+            $fileErrors[] = "The third member's bonafide file exceeds the size limit of 300 KB.";
         }
         
         if (isset($_FILES["third_member_bonafide"]) && !validateFileType($_FILES["third_member_bonafide"])) {
@@ -287,7 +287,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         
         if (isset($_FILES["fourth_member_bonafide"]) && !validateFileSize($_FILES["fourth_member_bonafide"], $maxFileSize)) {
-            $fileErrors[] = "The fourth member's bonafide file exceeds the size limit of 900 KB.";
+            $fileErrors[] = "The fourth member's bonafide file exceeds the size limit of 300 KB.";
         }
         
         if (isset($_FILES["fourth_member_bonafide"]) && !validateFileType($_FILES["fourth_member_bonafide"])) {
@@ -295,7 +295,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if (isset($_FILES["fifth_member_bonafide"]) && !validateFileSize($_FILES["fifth_member_bonafide"], $maxFileSize)) {
-            $fileErrors[] = "The fifth member's bonafide file exceeds the size limit of 900 KB.";
+            $fileErrors[] = "The fifth member's bonafide file exceeds the size limit of 300 KB.";
         }
         if (isset($_FILES["fifth_member_bonafide"]) && !validateFileType($_FILES["fifth_member_bonafide"])) {
             $fileErrors[] = "The fifth member's bonafide file must be a JPG, JPEG, PNG, or GIF image.";

@@ -149,9 +149,11 @@
     <canvas id="systemCanvas"></canvas>
 
     <nav class="top-nav">
-        <a href="#y2026">2026_EDITION</a>
+        <!-- <a href="#y2026">2026_EDITION</a> -->
         <a href="#y2025">2025_EDITION</a>
         <a href="#y2024">2024_EDITION</a>
+        <a href="#y2023">2023_EDITION</a>
+        <a href="#y2018">2018_EDITION</a>
     </nav>
 
     <div class="hero">
@@ -173,15 +175,20 @@
     <script>
         const galleryItems = [
             // --- GAIT COORDINATORS SECTION ---
-            { year: '', src: 'images/gallery/coordinator/DSC_7800.JPG', title: 'Gait Coordinator', meta: 'EXECUTIVE', isCoordinator: true },
+            { year: '', src: 'images/gallery/coordinator/ps_sir.png', title: 'Gait Coordinator', meta: 'EXECUTIVE', isCoordinator: true },
+            { year: '', src: 'images/gallery/coordinator/DSC_9209.JPG', title: 'Gait Coordinator', meta: 'EXECUTIVE', isCoordinator: true },
             { year: '', src: 'images/gallery/coordinator/DSC_8288.JPG', title: 'Gait Coordinator', meta: 'EXECUTIVE', isCoordinator: true },
             { year: '', src: 'images/gallery/coordinator/DSC_8289.JPG', title: 'Gait Coordinator', meta: 'EXECUTIVE', isCoordinator: true },
+            { year: '', src: 'images/gallery/coordinator/DSC_7800.JPG', title: 'Gait Coordinator', meta: 'EXECUTIVE', isCoordinator: true },
 
             // --- 2026 SECTION ---
-            { year: 2026, src: 'images/gallery/DSC_8324.JPG', title: 'Excellence Awards', meta: 'CURRENT' },
+            // { year: 2026, src: 'images/gallery/DSC_8324.JPG', title: 'Excellence Awards', meta: 'CURRENT' },
 
             // --- 2025 SECTION ---
-            { year: 2025, src: 'images/gallery/DSC_8119.JPG', title: 'Technical Symposium', meta: 'EVOLUTION' },
+            { year: 2025, src: 'images/gallery/2025/DSC_8864.JPG', title: 'Ceremonial Lighting', meta: 'EVOLUTION' },
+            { year: 2025, src: 'images/gallery/2025/DSC_8896.JPG', title: 'Quiz', meta: 'EVOLUTION' },
+            { year: 2025, src: 'images/gallery/2025/DSC_7947.JPG', title: 'Software Contest Prelims', meta: 'EVOLUTION' },
+            { year: 2025, src: 'images/gallery/2025/DSC_7964.JPG', title: '', meta: 'EVOLUTION' },
 
             // --- 2024 SECTION ---
             { year: 2024, src: 'images/gallery/2024/DSC_7885.JPG', title: 'Onspot Registration', meta: 'LEGACY' },
@@ -209,9 +216,15 @@
             { year: 2024, src: 'images/gallery/2024/momento/DSC_8382.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
             { year: 2024, src: 'images/gallery/2024/momento/DSC_8386.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
             { year: 2024, src: 'images/gallery/2024/momento/DSC_8387.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
-            { year: 2024, src: 'images/gallery/2024/momento/DSC_8388.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' }
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8388.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
             
-            
+            // --- 2023 SECTION ---
+            { year: 2023, src: 'images/gallery/2023.jpg', title: '', meta: 'LEGACY' },
+
+            // --- 2018 SECTION ---
+            { year: 2018, src: 'images/gallery/2018.jpg', title: '', meta: 'LEGACY' }
+
+
         ];
 
         const root = document.getElementById('gallery-root');
@@ -258,7 +271,7 @@
             section.innerHTML = `
                 <div class="sticky-year">
                     <div class="year-label">${year} <span> ${yearData[0].meta}</span></div>
-                    <div style="font-family: 'JetBrains Mono'; font-size: 10px; color: #444;">V.${year-2023}</div>
+                    <div style="font-family: 'JetBrains Mono'; font-size: 10px; color: #444;">V.${year-2017}</div>
                 </div>
                 <div class="masonry" id="grid-${year}"></div>
             `;

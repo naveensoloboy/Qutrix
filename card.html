@@ -148,6 +148,62 @@
         .organizer-banner span { color: var(--text-gray); text-transform: uppercase; letter-spacing: 4px; font-size: 0.75rem; }
         .organizer-banner h4 { color: var(--skyblu); margin-top: 10px; font-size: clamp(0.9rem, 3.5vw, 1.4rem); opacity: 0.9; }
 
+        
+/* --- GENERAL RULES --- */
+.general-rules{ max-width: 1100px; margin: 30px auto 50px; padding: 35px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 28px; backdrop-filter: blur(10px); text-align: left; /* added */ }
+
+.general-rules h3{ color: var(--accent); font-family: 'Space Grotesk', sans-serif; margin-bottom: 20px; text-align: left; /* changed from center */ font-size: clamp(1.4rem, 4vw, 2rem); }
+
+.rules-list{ list-style: none; padding: 0; text-align: left; } .rules-list li{ margin-bottom: 15px; color: #e2e8f0; padding-left: 30px; position: relative; text-align: left; }
+
+.rules-list li::before{
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.contact-rules{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.contact-box{
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.contact-box i{
+    font-size: 1.5rem;
+    color: var(--accent);
+}
+
+.contact-box span{
+    color: var(--skyblu);
+    font-size: 0.75rem;
+}
+
+.contact-box a{
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.contact-box:hover{
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    transition: 0.3s ease;
+}
+
+
         /* --- SQUARE CARDS --- */
         .section-container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
         
@@ -367,6 +423,48 @@
         <span>Organized By</span>
         <h2>GAIT : GobiArts Association of Information Technology</h2>
         <h4>PG & RESEARCH DEPARTMENT OF COMPUTER SCIENCE</h4>
+        
+<!-- General Rules Section -->
+<div class="general-rules reveal reveal-up">
+    <h3><i class="fas fa-gavel"></i> General Rules</h3>
+
+    <ul class="rules-list">
+        <li>No Registration Fee.</li>
+        <li>Participant certificate will be provided.</li>
+        <li>Participants should bring their Student ID Card (Must) and Bonafide Certificate(Optional).</li>
+        <li>Electronic devices are strictly prohibited inside the event area.</li>
+        <li>Judges' decision will be final and binding.</li>
+        <li>The participating members may vary depending upon the events.</li>
+        <li>Each participant should participate in only <strong>TWO</strong> events.</li>
+        <li>Word Hunt Prelims and Software Contest Prelims will take place simultaneously.</li>
+        <li>Web Design Prelims and Quiz Prelims will take place simultaneously.</li>
+        <li>Dance participants should participate only in Dance and Paper Presentation. They are not allowed to participate in any other events.</li>
+        <li>After registration, participants will be redirected to a WhatsApp group link page. Participants are instructed to join their respective event WhatsApp group for further details and queries.</li>
+        <li>If you face any difficulties while registering, kindly contact us:</li>
+    </ul>
+
+    <div class="contact-rules">
+        <div class="contact-box">
+            <i class="fas fa-user"></i>
+            <div>
+                <strong>Mr. S. Naveen</strong><br>
+                <span>Registration Committee</span><br>
+                <a href="tel:+919952655591">9952655591</a>
+            </div>
+        </div>
+
+        <div class="contact-box">
+            <i class="fas fa-user"></i>
+            <div>
+                <strong>Mr. K. Javakarbharathi</strong><br>
+                <span>Registration Committee</span><br>
+                <a href="tel:+916379979364">6379979364</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
     </div>
 
     <div class="section-container">
@@ -459,8 +557,8 @@
 
             <div class="footer-section support-card reveal reveal-up">
                 <h4>Support Network</h4>
-                <a href="tel:+919952655591" class="contact-pill"><div class="pill-icon"><i class="fas fa-phone-alt"></i></div><div class="pill-text"><span>Registration Committee</span><p >Naveen S</p></div></a>
-                <a href="tel:+916379979364" class="contact-pill"><div class="pill-icon"><i class="fas fa-phone-alt"></i></div><div class="pill-text"><span>Registration Committee</span><p >Javakarbharathi K</p></div></a>
+                <a href="tel:+919952655591" class="contact-pill"><div class="pill-icon"><i class="fas fa-phone"></i></div><div class="pill-text"><span>Registration Committee</span><p >Naveen S</p></div></a>
+                <a href="tel:+916379979364" class="contact-pill"><div class="pill-icon"><i class="fas fa-phone"></i></div><div class="pill-text"><span>Registration Committee</span><p >Javakarbharathi K</p></div></a>
                 <a href="tel:+917010520104" class="contact-pill"><div class="pill-icon"><i class="fas fa-wallet"></i></div><div class="pill-text"><span>GAIT Treasurer</span><p >Vignesh P</p></div></a>
                 <a href="mailto:qutrix2k26@gmail.com" class="contact-pill"><div class="pill-icon"><i class="fas fa-envelope"></i></div><div class="pill-text"><span>Official Inquiry</span><p >qutrix2k26@gmail.com</p></div></a>
             </div>
@@ -482,13 +580,13 @@
 
     <script>
         const eventData = {
-            ppt: { title: "PAPER PRESENTATION", rules: ["One Team Per Dept (Max 3 members).", "IEEE Format required.", "Submit soft copy to: qutrix2k26ppt@gmail.com.", "Topics: AI, IoT, Cyber Security, Deep Learning."], link: "new_form.html" },
-            quiz: { title: "TECHNICAL QUIZ", rules: ["Two members per team.", "Prelims select top 5 teams.", "Technical rounds in finals."], link: "new_form.html" },
-            wordhunt: { title: "WORD HUNT", rules: ["Two members per team.", "Prelims and Final rounds."], link: "new_form.html" },
-            web: { title: "WEB DESIGN", rules: ["Two members per team.", "Design tools: HTML, CSS, JS.", "Judging based on UI/UX and creativity."], link: "new_form.html" },
-            software: { title: "SOFTWARE CONTEST", rules: ["Two members per team.", "Debug code challenges."], link: "new_form.html" },
-            marketing: { title: "MARKETING", rules: ["Three members per team.", "5 minutes for the pitch."], link: "new_form.html" },
-            dance: { title: "DANCE (NON-TECH)", rules: ["Max 5 members per team.", "Karaoke theme required."], link: "new_form.html" }
+            ppt: { title: "PAPER PRESENTATION", rules: ["One Team per Department.", "Maximum of Three Participants per team (Equal participation is must). ", "The paper must be in IEEE Format (pptx format). ", "Full paper - minimum of 6 pages with an abstract, not exceeding 250 words and send it as Soft copy through mail (qutrix2k25ppt@gmail.com).  ", "Title, Participants Name, Mobile Number, E-mail id, College name should be mentioned in your paper and also in ppt.", "Paper should reach us on or before 15th September, 2025. ", "Selected teams will be informed through e-mail or Phone call on 17th September 2025. Selected team should participate in the event and should give a Power Point Presentation at allocated time.  ", "A presentation time schedule of 5 minutes for presentation and an unspecified duration for the questionnaire, with a total of 6 minutes for the overall presentation.", "A bell signals the end of 5 minutes, after which participants should be ready for an open session.", "Strict adherence to time management is crucial, and presenters must not exceed their allotted time.", "The judges' decision is final and binding.","The Topics for Paper Presentation: 1. Cyber Security , 2. AI Evolution (future) , 3. IOT , 4. Industry 5.O , 5. Deep Learning. "], link: "new_form.html" },
+            quiz: { title: "TECHNICAL QUIZ", rules: ["One team per Department.","Two members per team.", "Prelims will be conducted.", "Five Teams will be selected for finals.", "FINALS: Technical rounds."], link: "new_form.html" },
+            wordhunt: { title: "WORD HUNT", rules: ["One team per Department", "Two members per team.", "Prelims will be conducted.", "Five Teams will be selected for finals.", "FINALS: Technical and Non-Technical Rounds."], link: "new_form.html" },
+            web: { title: "WEB DESIGN", rules: ["One team per Department.","Two members per team.", "Prelims will be conducted.", "Five Teams will be selected for finals.", "FINALS: Participants need to design a web page. The best web page designers within allocated time will be declared as winner.", "AI tools are restricted to access."], link: "new_form.html" },
+            software: { title: "SOFTWARE CONTEST", rules: ["One team per Department.","Two members per team.", "Prelims will be conducted.", "Five Teams will be selected for finals.", "FINALS: Participants need to debug the code for the given set of problems in Any Programming Language. The one who solves maximum number of problems correctly in the allotted time shall be declared as winner. "], link: "new_form.html" },
+            marketing: { title: "MARKETING", rules: ["One team per Department.","Three members per team.", "Prelims will be conducted.","5 Teams will be selected for Finals.", "5 Minutes for Presentation.", "Explore your hidden Talent other than dance.", "FINALS: Non-technical Rounds."], link: "new_form.html" },
+            dance: { title: "DANCE (NON-TECH)", rules: ["Maximum of 5 members per team.", "Songs must follow a karaoke theme.", "Boys and Girls cannot be on the same dance team. Each team must have only boys or only girls.", "Proper dress code must be followed and Dance should be decent. ", "Karaoke performance should be appropriate and non-offensive.", "The maximum duration of the dance is 5 minutes per team.", "All participants are asked to complete their registration through the official website and submit a soft copy of their Dress Code and Song through email to qutrix2k26dance@gmail.com on or before September 15th, 2026", "Selected teams will be informed on or before September 17th, 2025. "], link: "new_form.html" }
         };
 
         const overlay = document.getElementById('modalOverlay');

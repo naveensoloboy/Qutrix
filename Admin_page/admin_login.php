@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "<script>alert('Login successful! Redirecting...');window.location.href='registration_data.php';</script>";
             // header("refresh:1;url=registration_data.php");
         } else {
-            echo "<script>alert('Invalid password!');window.location.href='admin_login_form.html';</script>";
+            echo "<script>alert('Invalid Username or Password!');window.location.href='admin_login_form.html';</script>";
         }
     } else {
         echo "<script>alert('Admin not found!');</script>";

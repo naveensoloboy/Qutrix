@@ -1,8 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
+date_default_timezone_set('Asia/Kolkata');
 include __DIR__ . '/../db.php'; // MongoDB connection
 
 $event = isset($_GET['event']) ? $_GET['event'] : '';
@@ -519,7 +517,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'export_csv') {
         <div class="document-title">OFFICIAL REGISTRATION TRANSCRIPT – QUTRIX 2K26</div>
         <div class="meta-data-bar">
             <span><strong>EVENT : </strong> <?php echo htmlspecialchars($event); ?></span>
-            <span><strong>TIMESTAMP : </strong> <?php echo date('d-M-Y H:i'); ?></span>
+            <span><strong>TIMESTAMP : </strong> <?php echo date('d-M-Y h:i A'); ?></span>
             <span><strong>TOTAL TEAMS : </strong> <?php echo $totalRegistrations; ?></span>
             <span><strong>INSTITUTIONS : </strong> <?php echo $collegeCount; ?></span>
         </div>
