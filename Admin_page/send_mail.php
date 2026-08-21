@@ -41,7 +41,7 @@ if (isset($_POST['send_mail'])) {
         $mail->Password   = $_ENV['SMTP_PASS'];
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
-        $mail->setFrom('naveen9222777@gmail.com', 'QUTRIX 2K26');
+        $mail->setFrom('qutrix.official@gmail.com', 'QUTRIX 2K26');
         $mail->isHTML(true);
 
         foreach ($selectedEntries as $entry) {

@@ -97,7 +97,7 @@ function show_error_page($message) {
             <h2>Registration Protocol Halted</h2>
             <p>$message</p>
             <a href='javascript:history.back()' class='btn-back'>Return to Form</a>
-            <div class='sys-log'>ERR_REJECTED_BY_CORE_SYNC</div>
+            <div class='sys-log'></div>
         </div>
     </body>
     </html>
@@ -212,8 +212,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $collection = $client->Qutrix->registrations;
 
-        // Maximum file size limit (300 KB)
-        $maxFileSize = 300 * 1024;
+        // Maximum file size limit (100 KB)
+        $maxFileSize = 100 * 1024;
 
         // Function to validate file size
         function validateFileSize($file, $maxFileSize) {
@@ -502,13 +502,13 @@ if (check_event_limit($collection, $roll_no, $college_name, $department)) {
 
         // WhatsApp links
         $whatsapp_links = [
-            "PAPER PRESENTATION" => "https://chat.whatsapp.com/EUHI8RzFKDAKiXJYdkI14c",
-            "QUIZ" => "https://chat.whatsapp.com/KGOW9QlC6DYAm8hXVc32Xd",
-            "WEB DESIGN" => "https://chat.whatsapp.com/LxzcVPsbIMrCa7fuIMraFO",
-            "MARKETING" => "https://chat.whatsapp.com/ES8urKsnJB6IT7I1gAunfp",
-            "SOFTWARE CONTEST" => "https://chat.whatsapp.com/B9XSJywZlzi3zdS1RieHoY",
-            "WORD HUNT" => "https://chat.whatsapp.com/Iw739BFmakDHumBkdLNAUv",
-            
+            "PAPER PRESENTATION" => "https://chat.whatsapp.com/Eg0poBb1xu63wserjmoYa6?mode=gi_t",
+            "QUIZ" => "https://chat.whatsapp.com/Bkyg7RRNbFEBK5OqgmiFA8?mode=gi_t",
+            "WEB DESIGN" => "https://chat.whatsapp.com/JzXSmyoiFFt0FNvsyInJOJ?mode=gi_t",
+            "MARKETING" => "https://chat.whatsapp.com/KejDtOgfQKc7Kq1U5pn84c?mode=gi_t",
+            "SOFTWARE CONTEST" => "https://chat.whatsapp.com/DfkBz1d1kBa14ZZmrW6KeE?mode=gi_t",
+            "WORD HUNT" => "https://chat.whatsapp.com/GYMlozmQaNHKOmlk4O8Vdo?mode=gi_t",
+            "NON TECHNICAL ROUND DANCING" => "https://chat.whatsapp.com/DzAKN3kzmpv6pXs21y0kcz?mode=gi_t"
         ];
 
         // Create PDF directory if it doesn't exist
@@ -847,15 +847,30 @@ echo "
         <div class='btn-container'>";
 
         // Conditional WhatsApp Button
-        if (isset($whatsapp_links[$event]) && $event !== "NON TECHNICAL ROUND DANCING") {
+        if (isset($whatsapp_links[$event])) {
             echo "
             <script>alert('Please join the WhatsApp group for your event!');</script>
             <a href='" . $whatsapp_links[$event] . "' target='_blank' class='btn btn-wa'>
                 <i class='fa-brands fa-whatsapp'></i> JOIN EVENT WHATSAPP GROUP
             </a>";
-        } elseif ($event === "NON TECHNICAL ROUND DANCING") {
-            echo "<p style='font-size: 12px; margin-bottom: 10px;'>Note: No WhatsApp group required for Dance.</p>";
         }
+
+//************************************************************************************************** */
+
+        // if (isset($whatsapp_links[$event]) && $event !== "NON TECHNICAL ROUND DANCING") {
+        //     echo "
+        //     <script>alert('Please join the WhatsApp group for your event!');</script>
+        //     <a href='" . $whatsapp_links[$event] . "' target='_blank' class='btn btn-wa'>
+        //         <i class='fa-brands fa-whatsapp'></i> JOIN EVENT WHATSAPP GROUP
+        //     </a>";
+        // } elseif ($event === "NON TECHNICAL ROUND DANCING") {
+        //     echo "<p style='font-size: 12px; margin-bottom: 10px;'>Note: No WhatsApp group required for Dance.</p>";
+        // }
+
+//****************************************************************************************************** */
+
+
+
 
         // PDF Download Button
         echo "
@@ -866,7 +881,7 @@ echo "
         </div>
 
         <div class='footer-note'>
-            SYSTEM_PROTOCOL: REG_COMPLETE_2026
+            
         </div>
     </div>
 </body>

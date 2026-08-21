@@ -291,7 +291,10 @@ if ($admin_event === "ADMINISTRATOR") {
             </div>
             
             <div class="admin-actions">
-                <a href='send_mail.php'><i class="fas fa-user-plus"></i> Mail</a>
+                <a href='event_settings.php'><i class="fas fa-cog"></i> Event Settings</a>
+                <a href='gallery_manager.php'><i class="fas fa-images"></i> Gallery Manager</a>
+                <a href='timeline_manager.php'><i class="fas fa-calendar-alt"></i> Timeline Manager</a>
+                <a href='send_mail.php'><i class="fas fa-envelope"></i> Mail</a>
                 <a href='admin_register.html'><i class="fas fa-user-plus"></i> New Admin</a>
                 <a href='feedback_display.php'><i class="fas fa-comment-dots"></i> Feedback Logs</a>
                 <!-- <a href='logout.php' style="border-color: #ef4444; color: #ef4444;"><i class="fas fa-power-off"></i> Logout</a> -->
