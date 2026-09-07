@@ -5,7 +5,7 @@ $defaults = [
     'title' => 'QUTRIX 2K26',
     'subtitle' => 'An Intercollegiate Technical Symposium',
     'event_date' => 'Sep 18, 2026 09:00:00',
-    'poster_image' => 'images/img02.jpeg',
+    'poster_image' => 'images/poster_2k26.jpeg',
     'support_network' => [
         'contact1_role' => 'Registration Committee',
         'contact1_name' => 'Naveen S',
@@ -757,14 +757,14 @@ $title_highlight = $title_parts[1] ?? '2K26';
                 Empowering the next generation of computer scientists through innovation and excellence.
             </div>
             <div class="hero-btns">
-                <a href="card.html" class="btn-register">Secure Your Spot <i class="fas fa-arrow-right"></i></a>
+                <a href="card.html" class="btn-register">Register <i class="fas fa-arrow-right"></i></a>
                 <button onclick="openVideoModal()" class="btn-how-to-register">
                     <i class="fas fa-play-circle"></i> How to Register
                 </button>
             </div>
         </div>
         <div class="poster-frame reveal reveal-right">
-            <img id="eventPosterImg" src="<?= htmlspecialchars($settings['poster_image']) ?>" alt="Event Poster" style="max-width: 100%; border-radius: 15px;" onerror="this.src='images/img02.jpeg'">
+            <img id="eventPosterImg" src="<?= htmlspecialchars($settings['poster_image']) ?>" alt="Event Poster" style="max-width: 100%; border-radius: 15px;" onerror="this.src='images/poster_2k26.jpeg'">
         </div>
     </main>
 
