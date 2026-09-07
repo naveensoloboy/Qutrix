@@ -206,6 +206,24 @@ function uploadToCloudinary($file, $cloudinary) {
     return $upload['secure_url'];
 }
 
+// Dedicated function to upload generated local files (like PDF) to Cloudinary
+function uploadPathToCloudinary($filePath, $cloudinary, $publicId = null) {
+    if (!file_exists($filePath)) {
+        return null;
+    }
+
+    $options = [
+        "resource_type" => "auto"
+    ];
+
+    if ($publicId) {
+        $options["public_id"] = $publicId;
+    }
+
+    $upload = $cloudinary->uploadApi()->upload($filePath, $options);
+    return $upload['secure_url'];
+}
+
 // Check if form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
@@ -237,65 +255,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             return in_array($mime_type, $allowed_types);
         }
 
-        // Function to upload file
-        function uploadFile($file, $target_dir = "uploads/") {
-            if (!isset($file) || $file['error'] === UPLOAD_ERR_NO_FILE) {
-                return null; // No file uploaded
-            }
-            
-            // Create directory if it doesn't exist
-            if (!file_exists($target_dir)) {
-                mkdir($target_dir, 0777, true);
-            }
-            
-            $file_extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-            $filename = uniqid() . '_' . bin2hex(random_bytes(8)) . '.' . $file_extension;
-            $destination = $target_dir . $filename;
-            
-            if (move_uploaded_file($file['tmp_name'], $destination)) {
-                return $destination;
-            }
-            
-            return null;
-        }
-
         // File validation checks
         $fileErrors = [];
         
         if (!validateFileSize($_FILES["first_member_bonafide"], $maxFileSize)) {
-            $fileErrors[] = "The first member's bonafide file exceeds the size limit of 300 KB.";
+            $fileErrors[] = "The first member's bonafide file exceeds the size limit of 100 KB.";
         }
-        
         if (!validateFileType($_FILES["first_member_bonafide"])) {
             $fileErrors[] = "The first member's bonafide file must be a JPG, JPEG, PNG, or GIF image.";
         }
         
         if (isset($_FILES["second_member_bonafide"]) && !validateFileSize($_FILES["second_member_bonafide"], $maxFileSize)) {
-            $fileErrors[] = "The second member's bonafide file exceeds the size limit of 300 KB.";
+            $fileErrors[] = "The second member's bonafide file exceeds the size limit of 100 KB.";
         }
-        
         if (isset($_FILES["second_member_bonafide"]) && !validateFileType($_FILES["second_member_bonafide"])) {
             $fileErrors[] = "The second member's bonafide file must be a JPG, JPEG, PNG, or GIF image.";
         }
         
         if (isset($_FILES["third_member_bonafide"]) && !validateFileSize($_FILES["third_member_bonafide"], $maxFileSize)) {
-            $fileErrors[] = "The third member's bonafide file exceeds the size limit of 300 KB.";
+            $fileErrors[] = "The third member's bonafide file exceeds the size limit of 100 KB.";
         }
-        
         if (isset($_FILES["third_member_bonafide"]) && !validateFileType($_FILES["third_member_bonafide"])) {
             $fileErrors[] = "The third member's bonafide file must be a JPG, JPEG, PNG, or GIF image.";
         }
         
         if (isset($_FILES["fourth_member_bonafide"]) && !validateFileSize($_FILES["fourth_member_bonafide"], $maxFileSize)) {
-            $fileErrors[] = "The fourth member's bonafide file exceeds the size limit of 300 KB.";
+            $fileErrors[] = "The fourth member's bonafide file exceeds the size limit of 100 KB.";
         }
-        
         if (isset($_FILES["fourth_member_bonafide"]) && !validateFileType($_FILES["fourth_member_bonafide"])) {
             $fileErrors[] = "The fourth member's bonafide file must be a JPG, JPEG, PNG, or GIF image.";
         }
 
         if (isset($_FILES["fifth_member_bonafide"]) && !validateFileSize($_FILES["fifth_member_bonafide"], $maxFileSize)) {
-            $fileErrors[] = "The fifth member's bonafide file exceeds the size limit of 300 KB.";
+            $fileErrors[] = "The fifth member's bonafide file exceeds the size limit of 100 KB.";
         }
         if (isset($_FILES["fifth_member_bonafide"]) && !validateFileType($_FILES["fifth_member_bonafide"])) {
             $fileErrors[] = "The fifth member's bonafide file must be a JPG, JPEG, PNG, or GIF image.";
@@ -337,7 +329,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $fifth_member_phone = !empty($_POST['fifthmemberphone']) ? $_POST['fifthmemberphone'] : null;
         $fifth_member_email = !empty($_POST['fifthmemberemail']) ? $_POST['fifthmemberemail'] : null;
 
-        
         $currentDateTime = new MongoDB\BSON\UTCDateTime();
 
         // Check if event is selected
@@ -353,10 +344,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ]);
         
         if ($exists) {
-    show_department_error($department, $event);
-}
+            show_department_error($department, $event);
+        }
 
-        // Handle file uploads
+        // Handle file uploads to Cloudinary
         $first_member_bonafide = uploadToCloudinary($_FILES["first_member_bonafide"], $cloudinary);
         $second_member_bonafide = uploadToCloudinary($_FILES["second_member_bonafide"], $cloudinary);
         $third_member_bonafide = uploadToCloudinary($_FILES["third_member_bonafide"], $cloudinary);
@@ -373,96 +364,89 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             "NON TECHNICAL ROUND DANCING" => ["QUIZ", "WEB DESIGN", "WORD HUNT", "MARKETING", "SOFTWARE CONTEST"],
         ];
 
-        // Check conflicts
-        // Check for conflicting events (now also includes college & department for consistency)
-function get_conflicting_event($collection, $roll_no, $conflicting_events, $college_name, $department) {
-    if (!$roll_no) return false;
-    
-    $docs = $collection->find([
-        '$or' => [
-            ["first_member_rollno" => $roll_no],
-            ["second_member_rollno" => $roll_no],
-            ["third_member_rollno" => $roll_no],
-            ["fourth_member_rollno" => $roll_no],
-            ["fifth_member_rollno" => $roll_no]
+        // Check for conflicting events
+        function get_conflicting_event($collection, $roll_no, $conflicting_events, $college_name, $department) {
+            if (!$roll_no) return false;
             
-        ],
-        "college_name" => $college_name,
-        "department" => $department
-    ]);
-    
-    foreach ($docs as $doc) {
-        if (in_array($doc['event'], $conflicting_events)) {
-            return $doc['event'];
+            $docs = $collection->find([
+                '$or' => [
+                    ["first_member_rollno" => $roll_no],
+                    ["second_member_rollno" => $roll_no],
+                    ["third_member_rollno" => $roll_no],
+                    ["fourth_member_rollno" => $roll_no],
+                    ["fifth_member_rollno" => $roll_no]
+                ],
+                "college_name" => $college_name,
+                "department" => $department
+            ]);
+            
+            foreach ($docs as $doc) {
+                if (in_array($doc['event'], $conflicting_events)) {
+                    return $doc['event'];
+                }
+            }
+            
+            return false;
         }
-    }
-    
-    return false;
-}
 
-// Check event limit (roll_no + college + department)
-function check_event_limit($collection, $roll_no, $college_name, $department) {
-    if (!$roll_no) return false;
-    
-    $event_count = $collection->countDocuments([
-        '$or' => [
-            ["first_member_rollno" => $roll_no],
-            ["second_member_rollno" => $roll_no],
-            ["third_member_rollno" => $roll_no],
-            ["fourth_member_rollno" => $roll_no],
-            ["fifth_member_rollno" => $roll_no]
-        ],
-        "college_name" => $college_name,
-        "department" => $department
-    ]);
-    
-    return $event_count >= 2;
-}
-
+        // Check event limit
+        function check_event_limit($collection, $roll_no, $college_name, $department) {
+            if (!$roll_no) return false;
+            
+            $event_count = $collection->countDocuments([
+                '$or' => [
+                    ["first_member_rollno" => $roll_no],
+                    ["second_member_rollno" => $roll_no],
+                    ["third_member_rollno" => $roll_no],
+                    ["fourth_member_rollno" => $roll_no],
+                    ["fifth_member_rollno" => $roll_no]
+                ],
+                "college_name" => $college_name,
+                "department" => $department
+            ]);
+            
+            return $event_count >= 2;
+        }
 
         $all_roll_numbers = [
             $first_member_roll_no, 
             $second_member_roll_no, 
             $third_member_roll_no, 
-            $fourth_member_roll_no,
+            $fourth_member_roll_no, 
             $fifth_member_roll_no
         ];
 
         foreach ($all_roll_numbers as $roll_no) {
-    if (!$roll_no) continue;
-    
-    // Check if roll number already registered for this event
-    $exists = $collection->findOne([
-        '$or' => [
-            ["first_member_rollno" => $roll_no],
-            ["second_member_rollno" => $roll_no],
-            ["third_member_rollno" => $roll_no],
-            ["fourth_member_rollno" => $roll_no],
-            ["fifth_member_rollno" => $roll_no]
-        ],
-        "event" => $event,
-        "college_name" => $college_name,
-        "department" => $department
-    ]);
-    
-    if ($exists) {
-    show_error_page("Roll number <b>$roll_no</b> has already registered for the event: <b>$event</b>.");
-}
+            if (!$roll_no) continue;
+            
+            $exists = $collection->findOne([
+                '$or' => [
+                    ["first_member_rollno" => $roll_no],
+                    ["second_member_rollno" => $roll_no],
+                    ["third_member_rollno" => $roll_no],
+                    ["fourth_member_rollno" => $roll_no],
+                    ["fifth_member_rollno" => $roll_no]
+                ],
+                "event" => $event,
+                "college_name" => $college_name,
+                "department" => $department
+            ]);
+            
+            if ($exists) {
+                show_error_page("Roll number <b>$roll_no</b> has already registered for the event: <b>$event</b>.");
+            }
 
-// Check for conflicting events
-if (isset($conflicting_event_pairs[$event])) {
-    $conflict = get_conflicting_event($collection, $roll_no, $conflicting_event_pairs[$event], $college_name, $department);
-    if ($conflict) {
-        show_error_page("Roll number <b>$roll_no</b> cannot register for <b>$event</b> because they are already registered for <b>$conflict</b>. These events happen simultaneously.");
-    }
-}
+            if (isset($conflicting_event_pairs[$event])) {
+                $conflict = get_conflicting_event($collection, $roll_no, $conflicting_event_pairs[$event], $college_name, $department);
+                if ($conflict) {
+                    show_error_page("Roll number <b>$roll_no</b> cannot register for <b>$event</b> because they are already registered for <b>$conflict</b>. These events happen simultaneously.");
+                }
+            }
 
-// Check event limit
-if (check_event_limit($collection, $roll_no, $college_name, $department)) {
-    show_error_page("Roll number <b>$roll_no</b> from $college_name ($department) has reached the maximum limit of <b>two events</b> per person.");
-}
-}
-
+            if (check_event_limit($collection, $roll_no, $college_name, $department)) {
+                show_error_page("Roll number <b>$roll_no</b> from $college_name ($department) has reached the maximum limit of <b>two events</b> per person.");
+            }
+        }
 
         // Insert registration
         $result = $collection->insertOne([
@@ -497,7 +481,6 @@ if (check_event_limit($collection, $roll_no, $college_name, $department)) {
             "created_at" => $currentDateTime
         ]);
 
-        // Get the inserted ID for the PDF filename
         $registration_id = (string)$result->getInsertedId();
 
         // WhatsApp links
@@ -511,7 +494,7 @@ if (check_event_limit($collection, $roll_no, $college_name, $department)) {
             "NON TECHNICAL ROUND DANCING" => "https://chat.whatsapp.com/DzAKN3kzmpv6pXs21y0kcz?mode=gi_t"
         ];
 
-        // Create PDF directory if it doesn't exist
+        // Create temporary PDF directory if it doesn't exist
         $pdf_dir = "pdfs/";
         if (!file_exists($pdf_dir)) {
             mkdir($pdf_dir, 0777, true);
@@ -530,20 +513,19 @@ if (check_event_limit($collection, $roll_no, $college_name, $department)) {
             font-family: 'Helvetica', 'Arial', sans-serif; 
             margin: 0; 
             padding: 0; 
-            background-color: #ffffff;
+            background-color: #ffffff; 
             color: #333;
         }
         .container { 
-            margin: 40px;
-            border: 2px solid #020617;
-            position: relative;
+            margin: 40px; 
+            border: 2px solid #020617; 
+            position: relative; 
             min-height: 900px;
         }
-        /* Top Accent Bar */
-        .top-bar {
-            height: 10px;
-            background: #fbbf24;
-            width: 100%;
+        .top-bar { 
+            height: 10px; 
+            background: #fbbf24; 
+            width: 100%; 
         }
         .header { 
             text-align: center; 
@@ -554,72 +536,63 @@ if (check_event_limit($collection, $roll_no, $college_name, $department)) {
         .header h1 { 
             margin: 0; 
             font-size: 26px; 
-            letter-spacing: 1px;
+            letter-spacing: 1px; 
             color: #fbbf24; 
         }
         .header h2 { 
             margin: 8px 0 0 0; 
             font-size: 14px; 
             font-weight: normal; 
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #71e4e4;
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            color: #71e4e4; 
         }
-        .header .sub-title {
-            margin-top: 15px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #ffffff;
+        .header .sub-title { 
+            margin-top: 15px; 
+            font-size: 18px; 
+            font-weight: bold; 
+            color: #ffffff; 
         }
-
         .section { 
             padding: 20px 40px; 
-            border-bottom: 1px solid #eeeeee;
+            border-bottom: 1px solid #eeeeee; 
         }
         .section:last-child { border-bottom: none; }
-
         .section-title { 
             font-weight: bold; 
             font-size: 14px; 
             margin-bottom: 12px; 
             color: #020617; 
-            text-transform: uppercase;
-            border-left: 4px solid #fbbf24;
-            padding-left: 10px;
+            text-transform: uppercase; 
+            border-left: 4px solid #fbbf24; 
+            padding-left: 10px; 
         }
-
         .details-table { width: 100%; border-collapse: collapse; }
         .details-table td { 
             padding: 8px 0; 
             vertical-align: top; 
-            font-size: 13px;
+            font-size: 13px; 
         }
         .label { color: #64748b; width: 150px; font-weight: bold; }
-        
-        .member-row {
-            margin-bottom: 5px;
-            padding: 5px 0;
-        }
-
         .footer { 
-            position: absolute;
-            bottom: 0;
-            width: 100%;
+            position: absolute; 
+            bottom: 0; 
+            width: 100%; 
             text-align: center; 
             padding: 20px 0; 
             background: #f8fafc; 
             font-size: 11px; 
-            color: #64748b;
-            border-top: 1px solid #eeeeee;
+            color: #64748b; 
+            border-top: 1px solid #eeeeee; 
         }
-        .watermark {
-            position: absolute;
-            top: 400px;
-            left: 150px;
-            font-size: 80px;
-            color: #f1f1f1;
-            transform: rotate(-45deg);
-            z-index: -1;
+        .watermark { 
+            position: absolute; 
+            top: 400px; 
+            left: 150px; 
+            font-size: 80px; 
+            color: #f1f1f1; 
+            transform: rotate(-45deg); 
+            z-index: -1; 
         }
     </style>
 </head>
@@ -685,8 +658,7 @@ if (check_event_limit($collection, $roll_no, $college_name, $department)) {
 </body>
 </html>";
 
-
-        // Generate and save PDF
+        // Generate and save local PDF file
         $options = new Options();
         $options->set('isRemoteEnabled', true);
         $options->set('isHtml5ParserEnabled', true);
@@ -696,19 +668,25 @@ if (check_event_limit($collection, $roll_no, $college_name, $department)) {
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
         
-        // Save PDF to pdfs folder
         $pdf_filename = "registration_" . $registration_id . ".pdf";
         $pdf_filepath = $pdf_dir . $pdf_filename;
         file_put_contents($pdf_filepath, $dompdf->output());
 
-        // Update the database with PDF path
+        // Upload PDF to Cloudinary
+        $pdf_cloudinary_url = uploadPathToCloudinary($pdf_filepath, $cloudinary, "registration_" . $registration_id);
+
+        // Optional: Remove temporary local PDF file after upload
+        // if (file_exists($pdf_filepath)) { unlink($pdf_filepath); }
+
+        // Update MongoDB with the Cloudinary URL (falls back to local path if upload fails)
+        $saved_pdf_url = $pdf_cloudinary_url ?: $pdf_filepath;
         $collection->updateOne(
             ['_id' => $result->getInsertedId()],
-            ['$set' => ['pdf_path' => $pdf_filepath]]
+            ['$set' => ['pdf_path' => $saved_pdf_url]]
         );
 
         // --- Styled Success Message ---
-echo "
+        echo "
 <!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -855,97 +833,18 @@ echo "
             </a>";
         }
 
-//************************************************************************************************** */
-
-        // if (isset($whatsapp_links[$event]) && $event !== "NON TECHNICAL ROUND DANCING") {
-        //     echo "
-        //     <script>alert('Please join the WhatsApp group for your event!');</script>
-        //     <a href='" . $whatsapp_links[$event] . "' target='_blank' class='btn btn-wa'>
-        //         <i class='fa-brands fa-whatsapp'></i> JOIN EVENT WHATSAPP GROUP
-        //     </a>";
-        // } elseif ($event === "NON TECHNICAL ROUND DANCING") {
-        //     echo "<p style='font-size: 12px; margin-bottom: 10px;'>Note: No WhatsApp group required for Dance.</p>";
-        // }
-
-//****************************************************************************************************** */
-
-
-
-
-        // PDF Download Button
+        // PDF Download Button (pointed to Cloudinary link)
         echo "
-            <a href='$pdf_filepath' download class='btn btn-pdf'>
+            <a href='$saved_pdf_url' target='_blank' download class='btn btn-pdf'>
                 <i class='fa-solid fa-file-pdf'></i> DOWNLOAD CONFIRMATION SLIP
             </a>
             <a href='card.html' style='color: var(--text-gray); font-size: 13px; text-decoration: none; margin-top: 10px;'>Return to Home</a>
         </div>
 
-        <div class='footer-note'>
-            
-        </div>
+        <div class='footer-note'></div>
     </div>
 </body>
 </html>";
-
-      
-
-// Collect all member emails
-/*$emails = [];
-if (!empty($first_member_email)) $emails[] = $first_member_email;
-if (!empty($second_member_email)) $emails[] = $second_member_email;
-if (!empty($third_member_email)) $emails[] = $third_member_email;
-if (!empty($fourth_member_email)) $emails[] = $fourth_member_email;
-if (!empty($fifth_member_email)) $emails[] = $fifth_member_email;
-
-
-try {
-    $mail = new PHPMailer(true);
-
-    // DEBUG (remove after testing)
-    $mail->SMTPDebug = 0;
-
-    // SMTP CONFIG
-    $mail->isSMTP();
-    $mail->Host       = $_ENV['SMTP_HOST'];
-    $mail->SMTPAuth   = true;
-    $mail->Username   = $_ENV['SMTP_USER'];
-    $mail->Password   = $_ENV['SMTP_PASS'];
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port       = 587;
-
-    // IMPORTANT: SAME AS USERNAME
-    $mail->setFrom('', 'Qutrix 2026 Registration');
-
-    // ADD RECIPIENTS SAFELY
-    foreach ($emails as $email) {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $mail->addAddress($email);
-        }
-    }
-
-    // ATTACH PDF
-    $mail->addAttachment($pdf_filepath);
-
-    // EMAIL CONTENT
-    $mail->isHTML(true);
-    $mail->Subject = "Qutrix 2026 Registration Confirmation - $event";
-    $mail->Body = "
-        <h2>Qutrix 2026 - Registration Confirmed</h2>
-        <p>You have successfully registered for <b>$event</b>.</p>
-        <p>Please find the attached confirmation slip.</p>
-        <p><b>Date:</b> 19-09-2026<br>
-           <b>Time:</b> 9:00 AM<br>
-           <b>Venue:</b> Gobi Arts & Science College</p>
-        <br>
-        <p>— Qutrix Registration Team</p>
-    ";
-
-    $mail->send();
-
-} catch (Exception $e) {
-     show_error_page("Mailer Error: " . $mail->ErrorInfo);
-}
-*/
 
     } catch(Exception $e) {
         echo "<div style='text-align:center; padding:20px; background:#ffebee; border-radius:10px; margin:20px;'>";
@@ -955,7 +854,6 @@ try {
         echo "</div>";
     }
 } else {
-    // If form wasn't submitted, redirect to form
     header("Location: new_form.html");
     exit();
 }

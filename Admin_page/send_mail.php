@@ -64,17 +64,33 @@ if (isset($_POST['send_mail'])) {
                     Department: PG & Research Dept of Computer Science</p>
                     <p>Best Regards,<br><b>Team QUTRIX</b></p>
                 </div>";
+
                 if (!empty($userDoc['pdf_path'])) {
-                    $absolutePath = __DIR__ . '/../' . $userDoc['pdf_path'];
-                    if (file_exists($absolutePath)) {
-                        $mail->addAttachment($absolutePath, str_replace(' ', '_', $userDoc['event'])."_Pass.pdf");
+                    $pdfSource = $userDoc['pdf_path'];
+                    $attachmentName = str_replace(' ', '_', $userDoc['event'] ?? 'Registration') . "_Pass.pdf";
+
+                    // Handle Cloudinary URL attachment
+                    if (filter_var($pdfSource, FILTER_VALIDATE_URL)) {
+                        $pdfData = @file_get_contents($pdfSource);
+                        if ($pdfData !== false) {
+                            $mail->addStringAttachment($pdfData, $attachmentName, 'base64', 'application/pdf');
+                        }
+                    } else {
+                        // Fallback for local files
+                        $absolutePath = __DIR__ . '/../' . $pdfSource;
+                        if (file_exists($absolutePath)) {
+                            $mail->addAttachment($absolutePath, $attachmentName);
+                        }
                     }
                 }
+
                 $mail->send();
             }
         }
         echo "<script>alert('Batch transmission complete.');</script>";
-    } catch (Exception $e) { $mailError = $mail->ErrorInfo; }
+    } catch (Exception $e) { 
+        $mailError = $mail->ErrorInfo; 
+    }
 }
 ?>
 
@@ -88,7 +104,8 @@ if (isset($_POST['send_mail'])) {
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --primary: #020617; --accent: #38bdf8; 
+            --primary: #020617; 
+            --accent: #38bdf8; 
             --glass: rgba(255, 255, 255, 0.03); 
             --glass-border: rgba(255, 255, 255, 0.1); 
             --text-dim: #94a3b8; 
@@ -106,7 +123,6 @@ if (isset($_POST['send_mail'])) {
 
         .container { max-width: 1200px; margin: 0 auto; }
 
-        /* HEADER AREA */
         .top-nav {
             display: flex;
             justify-content: space-between;
@@ -117,12 +133,16 @@ if (isset($_POST['send_mail'])) {
         }
 
         .btn-back {
-            text-decoration: none; color: #fff; background: var(--glass);
-            padding: 10px 16px; border-radius: 12px; border: 1px solid var(--glass-border);
-            font-size: 14px; transition: 0.3s;
+            text-decoration: none; 
+            color: #fff; 
+            background: var(--glass);
+            padding: 10px 16px; 
+            border-radius: 12px; 
+            border: 1px solid var(--glass-border);
+            font-size: 14px; 
+            transition: 0.3s;
         }
 
-        /* RESPONSIVE SEARCH & FILTER */
         .filter-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -137,33 +157,48 @@ if (isset($_POST['send_mail'])) {
         .input-group { position: relative; width: 100%; }
         .input-group i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--accent); }
         .input-group input {
-            width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border);
-            padding: 12px 12px 12px 40px; color: #fff; border-radius: 12px; outline: none;
+            width: 100%; 
+            background: rgba(0,0,0,0.2); 
+            border: 1px solid var(--glass-border);
+            padding: 12px 12px 12px 40px; 
+            color: #fff; 
+            border-radius: 12px; 
+            outline: none;
         }
 
-        /* GLOBAL TOGGLE */
         .global-toggle { 
-            background: rgba(56, 189, 248, 0.08); padding: 15px 20px; border-radius: 15px;
-            border: 1px solid var(--accent); margin-bottom: 20px; display: flex; 
-            justify-content: space-between; align-items: center; cursor: pointer;
+            background: rgba(56, 189, 248, 0.08); 
+            padding: 15px 20px; 
+            border-radius: 15px;
+            border: 1px solid var(--accent); 
+            margin-bottom: 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            cursor: pointer;
         }
 
-        /* COLLEGE SECTIONS */
         .college-card { 
-            background: var(--glass); border: 1px solid var(--glass-border); 
-            border-radius: 24px; margin-bottom: 20px; overflow: hidden; 
+            background: var(--glass); 
+            border: 1px solid var(--glass-border); 
+            border-radius: 24px; 
+            margin-bottom: 20px; 
+            overflow: hidden; 
         }
 
         .college-header { 
-            background: rgba(255,255,255,0.05); padding: 15px 20px; 
-            display: flex; justify-content: space-between; align-items: center; 
+            background: rgba(255,255,255,0.05); 
+            padding: 15px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
         }
 
-        /* USER ROW: TRANSFORM TO CARDS ON MOBILE */
         .user-row { 
             display: grid; 
-            grid-template-columns: 280px 1fr; /* Desktop default */
-            padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);
+            grid-template-columns: 280px 1fr;
+            padding: 20px; 
+            border-bottom: 1px solid rgba(255,255,255,0.05);
             transition: 0.3s;
         }
 
@@ -175,25 +210,47 @@ if (isset($_POST['send_mail'])) {
         .email-flex { display: flex; flex-wrap: wrap; gap: 8px; }
 
         .email-chip {
-            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
-            padding: 6px 12px; border-radius: 10px; cursor: pointer; display: flex;
-            align-items: center; gap: 8px; font-size: 13px; transition: 0.2s;
+            background: rgba(255,255,255,0.03); 
+            border: 1px solid var(--glass-border);
+            padding: 6px 12px; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            display: flex;
+            align-items: center; 
+            gap: 8px; 
+            font-size: 13px; 
+            transition: 0.2s;
         }
         .email-chip:hover { border-color: var(--accent); background: rgba(56, 189, 248, 0.1); }
 
-        /* STICKY FOOTER */
         .sticky-footer {
-            position: sticky; bottom: 15px; background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(15px); padding: 15px 25px; border-radius: 20px;
-            border: 1px solid var(--accent); display: flex; justify-content: space-between;
-            align-items: center; z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            position: sticky; 
+            bottom: 15px; 
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(15px); 
+            padding: 15px 25px; 
+            border-radius: 20px;
+            border: 1px solid var(--accent); 
+            display: flex; 
+            justify-content: space-between;
+            align-items: center; 
+            z-index: 1000; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             margin-top: 30px;
         }
 
         .btn-dispatch {
-            background: var(--accent); color: var(--primary); padding: 12px 24px;
-            border-radius: 12px; font-weight: 800; border: none; cursor: pointer;
-            display: flex; align-items: center; gap: 10px; transition: 0.3s;
+            background: var(--accent); 
+            color: var(--primary); 
+            padding: 12px 24px;
+            border-radius: 12px; 
+            font-weight: 800; 
+            border: none; 
+            cursor: pointer;
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            transition: 0.3s;
         }
         .btn-dispatch:hover { background: #fff; transform: translateY(-2px); }
 
@@ -290,7 +347,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const selDisplay = document.getElementById('selCount');
     const search = document.getElementById('liveSearch');
 
-    // Live Filter
     search.addEventListener('input', e => {
         const t = e.target.value.toLowerCase();
         document.querySelectorAll('.college-card').forEach(card => {
