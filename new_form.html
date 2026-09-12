@@ -989,83 +989,19 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // College list data
-            const colleges = [
-    "DR. SNS RAJALAKSHMI COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
-    "NANDHA ARTS AND SCIENCE COLLEGE",
-    "KONGU NADU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)",
-    "VELLALAR COLLEGE FOR WOMEN (AUTONOMOUS)",
-    "BHARATHIAR UNIVERSITY",
-    "VIVEKANANDHA ARTS AND SCIENCE COLLEGE FOR WOMEN",
-    "KONGUNADU COLLEGE OF ENGINEERING AND TECHNOLOGY (AUTONOMOUS)",
-    "SELVAM COLLEGE OF TECHNOLOGY",
-    "NANDHA ENGINEERING COLLEGE (AUTONOMOUS)",
-    "VIVEKANANDHA COLLEGE OF ARTS AND SCIENCES FOR WOMEN (AUTONOMOUS)",
-    "KONGU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)",
-    "SRI VASAVI COLLEGE (AUTONOMOUS)",
-    "K.S.R. COLLEGE OF ENGINEERING",
-    "KSR INSTITUTE FOR ENGINEERING AND TECHNOLOGY",
-    "VIVEKANANDHA COLLEGE OF ENGINEERING FOR WOMEN",
-    "SRI RAMAKRISHNA COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
-    "ST. JOSEPH'S COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
-    "SRI KRISHNA ARTS AND SCIENCE COLLEGE (AUTONOMOUS)",
-    "MUTHAYAMMAL COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
-    "HINDUSTHAN INSTITUTE OF TECHNOLOGY",
-    "KONGU ENGINEERING COLLEGE",
-    "NEHRU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)",
-    "VELLALAR COLLEGE OF EDUCATION FOR WOMEN",
-    "SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE OF ARTS AND SCIENCE",
-    "RATHINAM COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
-    "CMS COLLEGE OF SCIENCE AND COMMERCE (AUTONOMOUS)",
-    "SRI RAMAKRISHNA COLLEGE OF ARTS AND SCIENCE FOR WOMEN",
-    "NIRMALA COLLEGE FOR WOMEN (AUTONOMOUS)",
-    "PSG COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
-    "SRI RAMAKRISHNA MISSION VIDYALAYA MARUTHI COLLEGE OF PHYSICAL EDUCATION",
-    "VIVEKANANDHA INSTITUTE OF ENGINEERING AND TECHNOLOGY FOR WOMEN",
-    "SASURIE COLLEGE OF ARTS AND SCIENCE",
-    "AVINASHILINGAM INSTITUTE FOR HOME SCIENCE AND HIGHER EDUCATION FOR WOMEN (DEEMED TO BE UNIVERSITY)",
-    "SANKARA COLLEGE OF SCIENCE AND COMMERCE",
-    "SRI VASAVI COLLEGE OF EDUCATION",
-    "COIMBATORE INSTITUTE OF TECHNOLOGY (AUTONOMOUS)",
-    "GOVERNMENT ARTS COLLEGE (AUTONOMOUS), COIMBATORE",
-    "CHIKKANNA GOVERNMENT ARTS COLLEGE, TIRUPPUR",
-    "NEHRU INSTITUTE OF INFORMATION TECHNOLOGY AND MANAGEMENT",
-    "SRI RAMAKRISHNA INSTITUTE OF TECHNOLOGY",
-    "SNMV COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
-    "SRI VASAVI COLLEGE OF ARTS AND SCIENCE",
-    "SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE OF EDUCATION",
-    "DR. N.G.P. INSTITUTE OF TECHNOLOGY",
-    "SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
-    "SREE SARASWATHI THYAGARAJA COLLEGE (AUTONOMOUS)",
-    "PARK COLLEGE (AUTONOMOUS)",
-    "SNS COLLEGE OF TECHNOLOGY",
-    "NANDHA COLLEGE OF TECHNOLOGY",
-    "P.K.R. ARTS COLLEGE FOR WOMEN",
-    "J.J. COLLEGE OF ENGINEERING AND TECHNOLOGY",
-    "K.S.R. COLLEGE OF ARTS AND SCIENCE",
-    "SHREE VENKATESHWARA ARTS AND SCIENCE (CO-EDUCATION) COLLEGE",
-    "KPR COLLEGE OF ARTS, SCIENCE AND RESEARCH",
-    "AYYAN THIRUVALLUVAR COLLEGE OF ARTS AND SCIENCE",
-    "PSG COLLEGE OF TECHNOLOGY",
-    "VET INSTITUTE OF ARTS AND SCIENCE",
-    "DR. N.G.P. ARTS AND SCIENCE COLLEGE (AUTONOMOUS)",
-    "EXCEL COLLEGE FOR COMMERCE AND SCIENCE",
-    "EXCEL ENGINEERING COLLEGE (AUTONOMOUS)",
-    "RVS COLLEGE OF ARTS AND SCIENCE",
-    "VINAYAKA MISSION'S KIRUPANANDA VARIYAR ENGINEERING COLLEGE",
-    "KALASALINGAM ACADEMY OF RESEARCH AND EDUCATION",
-    "GOVERNMENT ARTS AND SCIENCE COLLEGE, THITTAMALAI",
-    "MAHENDRA COLLEGE OF ENGINEERING",
-    "HINDUSTHAN COLLEGE OF ARTS AND SCIENCE",
-    "K.S. RANGASAMY COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
-    "DR. GRD COLLEGE OF ARTS AND SCIENCE",
-    "PSGR KRISHNAMMAL COLLEGE FOR WOMEN",
-    "AVINASHI GOVERNMENT ARTS AND SCIENCE COLLEGE",
-    "SREE AMMAN ARTS AND SCIENCE COLLEGE, ERODE",
-    "VELALAR COLLEGE OF ENGINEERING AND TECHNOLOGY (VCET)",
-    "ARULMIGU ARTHANAREESWARAR ARTS AND SCIENCE COLLEGE",
-    "Gasc"
-];
+            // Default fallback colleges list
+            let colleges = [
+                "Erode Sengunthar Engineering College",
+                "Kongu Engineering College",
+                "Velalar College of Engineering and Technology",
+                "Nandha Engineering College",
+                "Gobi Arts & Science College",
+                "PSG College of Technology",
+                "PSG College of Arts and Science",
+                "Coimbatore Institute of Technology",
+                "Sri Vasavi College (Autonomous)",
+                "P.K.R. Arts College for Women"
+            ];
 
             // Get DOM elements
             const dropdownHeader = document.getElementById('dropdownHeader');
@@ -1113,6 +1049,20 @@
                 });
             }
 
+            // Fetch live colleges from MongoDB API
+            async function fetchDynamicColleges() {
+                try {
+                    const res = await fetch('get_colleges.php');
+                    const json = await res.json();
+                    if (json.status === 'success' && Array.isArray(json.data) && json.data.length > 0) {
+                        colleges = json.data;
+                        populateDropdownList(searchInput.value);
+                    }
+                } catch (e) {
+                    console.log('Using local default colleges list', e);
+                }
+            }
+
             // Select a college
             function selectCollege(college) {
                 selectedCollegeText.textContent = college;
@@ -1122,8 +1072,9 @@
                 chevronIcon.className = 'fas fa-chevron-down';
             }
 
-            // Initialize the dropdown
+            // Initialize the dropdown & fetch live colleges
             populateDropdownList();
+            fetchDynamicColleges();
 
             // Toggle dropdown visibility
             dropdownHeader.addEventListener('click', () => {

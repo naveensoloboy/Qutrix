@@ -478,6 +478,7 @@ if ($can_view_all_events) {
                 <a href="event_settings.php"><i class="fas fa-cog"></i> Event Settings</a>
                 <a href="gallery_manager.php"><i class="fas fa-images"></i> Gallery Manager</a>
                 <a href="timeline_manager.php"><i class="fas fa-calendar-alt"></i> Timeline Manager</a>
+                <a href="college_manager.php"><i class="fas fa-university"></i> Colleges Manager</a>
                 <a href="send_mail.php"><i class="fas fa-envelope"></i> Mail</a>
                 <a href="admin_register.html"><i class="fas fa-user-plus"></i> New Admin</a>
                 <a href="feedback_display.php"><i class="fas fa-comment-dots"></i> Feedback Logs</a>
