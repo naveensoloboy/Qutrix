@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>QUTRIX | Executive Showcase</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Space+Grotesk:wght@500;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        :root {
+            --accent: #fbbf24;
+            --accent-glow: rgba(251, 191, 36, 0.35);
+            --bg: #050505;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- SMOOTH SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 8px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; border: 1px solid var(--border); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--bg);
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        #systemCanvas { 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            z-index: -1; 
+            opacity: 0.6; 
+        }
+
+        /* --- HIGHLY RESPONSIVE NAVIGATION --- */
+        .top-nav-wrapper {
+            position: sticky;
+            top: 12px;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            padding: 0 15px;
+            width: 100%;
+        }
+
+        .top-nav {
+            background: rgba(10, 10, 10, 0.85); 
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 8px 16px; 
+            border-radius: 50px; 
+            border: 1px solid var(--border);
+            display: flex; 
+            align-items: center;
+            gap: 12px; 
+            max-width: 100%;
+            overflow-x: auto;
+            scrollbar-width: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+        .top-nav::-webkit-scrollbar { display: none; }
+
+        .top-nav a {
+            color: #aaa; 
+            text-decoration: none; 
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; 
+            transition: all 0.3s ease; 
+            letter-spacing: 1px; 
+            white-space: nowrap;
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .top-nav a:hover { 
+            color: var(--accent); 
+            background: rgba(251, 191, 36, 0.1);
+        }
+
+        .top-nav a.nav-home {
+            color: var(--accent);
+            font-weight: 700;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            background: rgba(251, 191, 36, 0.08);
+        }
+
+        /* --- RESPONSIVE HERO --- */
+        .hero { 
+            padding: 50px 20px 40px; 
+            text-align: center; 
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .hero p { 
+            font-family: 'JetBrains Mono', monospace; 
+            color: var(--accent); 
+            font-size: clamp(11px, 2vw, 13px); 
+            letter-spacing: 4px; 
+            margin-bottom: 12px; 
+            text-transform: uppercase; 
+            font-weight: 600;
+        }
+
+        .hero h1 { 
+            font-family: 'Space Grotesk', sans-serif; 
+            font-size: clamp(2.4rem, 8vw, 6.5rem); 
+            font-weight: 800; 
+            letter-spacing: -2px; 
+            text-transform: uppercase; 
+            line-height: 1.05; 
+            word-wrap: break-word;
+            background: linear-gradient(135deg, #ffffff 40%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 25px rgba(251, 191, 36, 0.15));
+        }
+
+        /* --- YEAR SECTIONS --- */
+        .year-block { 
+            max-width: 1400px; 
+            margin: 0 auto 50px; 
+            padding: 0 4%; 
+        }
+        
+        .sticky-year {
+            position: sticky; 
+            top: 65px; 
+            z-index: 100; 
+            padding: 16px 22px;
+            background: rgba(5, 5, 5, 0.92); 
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border); 
+            border-radius: 16px;
+            margin-bottom: 30px;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        .year-label { 
+            font-family: 'Space Grotesk', sans-serif; 
+            font-size: clamp(1.4rem, 4vw, 2.8rem); 
+            font-weight: 700; 
+            letter-spacing: -1px; 
+            display: flex;
+            align-items: center;
+        }
+
+        .year-label span { 
+            color: var(--accent); 
+            font-size: 0.45em; 
+            font-family: 'JetBrains Mono', monospace; 
+            margin-left: 12px; 
+            text-transform: uppercase; 
+            vertical-align: middle;
+            background: rgba(251, 191, 36, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        .year-version {
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 11px; 
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        /* --- RESPONSIVE GRID (CSS GRID FOR PERFECT RESPONSIVENESS) --- */
+        .masonry { 
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+            gap: 22px;
+        }
+
+        .card {
+            background: var(--glass);
+            border: 1px solid var(--border); 
+            border-radius: 20px; 
+            overflow: hidden;
+            cursor: pointer; 
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .card:hover { 
+            transform: translateY(-8px); 
+            border-color: var(--accent); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px rgba(251, 191, 36, 0.15);
+        }
+
+        .card-img-holder {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            position: relative;
+            background: #111;
+        }
+
+        .card img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+            display: block; 
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+
+        .card:hover img { 
+            transform: scale(1.08); 
+        }
+
+        .card-zoom-badge {
+            position: absolute;
+            top: 12px; right: 12px;
+            width: 34px; height: 34px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 12px;
+            opacity: 0;
+            transition: 0.3s ease;
+        }
+
+        .card:hover .card-zoom-badge {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .card-info { 
+            padding: 16px 20px; 
+            background: rgba(12, 12, 12, 0.95); 
+            border-top: 1px solid var(--border);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card-info h4 { 
+            font-size: 14px; 
+            font-weight: 700; 
+            color: #fff; 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.4;
+        }
+
+        /* --- LIGHTBOX --- */
+        #lightbox {
+            display: none; 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0, 0, 0, 0.95); 
+            z-index: 2000;
+            justify-content: center; 
+            align-items: center; 
+            animation: fadeIn 0.3s ease;
+            touch-action: pan-y;
+        }
+
+        .lb-bg-blur { 
+            position: absolute; 
+            inset: -50px; 
+            background-size: cover; 
+            background-position: center; 
+            filter: blur(60px) brightness(0.25); 
+            z-index: -1; 
+            opacity: 0.7; 
+        }
+
+        #lbImg { 
+            max-width: 90vw; 
+            max-height: 75vh; 
+            border-radius: 12px; 
+            box-shadow: 0 40px 100px rgba(0,0,0,0.9); 
+            border: 1px solid rgba(255,255,255,0.15); 
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .lb-controls { 
+            position: absolute; 
+            bottom: 30px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            background: rgba(15, 15, 15, 0.85); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            padding: 10px 24px; 
+            border-radius: 100px; 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            z-index: 2001; 
+            max-width: 90vw;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        #lbCap { 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 11px; 
+            color: var(--accent); 
+            letter-spacing: 1px; 
+            text-transform: uppercase; 
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .close-lb { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 11px; 
+            font-weight: 700;
+            color: #fff; 
+            background: rgba(255,255,255,0.12); 
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 10px 20px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            z-index: 2002; 
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .close-lb:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .lb-nav { 
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            background: rgba(255,255,255,0.08); 
+            border: 1px solid rgba(255,255,255,0.15); 
+            color: #fff; 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            font-size: 18px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: all 0.3s ease;
+            z-index: 2002;
+        }
+
+        .lb-nav:hover {
+            background: var(--accent);
+            color: #000;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .lb-prev { left: 20px; } 
+        .lb-next { right: 20px; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 900px) { 
+            .masonry { grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); } 
+            .lb-prev { left: 10px; } 
+            .lb-next { right: 10px; }
+            .lb-nav { width: 44px; height: 44px; font-size: 16px; }
+        }
+
+        @media (max-width: 600px) { 
+            .masonry { grid-template-columns: 1fr; } 
+            .hero { padding-top: 35px; }
+            .sticky-year { top: 60px; padding: 12px 16px; }
+            .year-label span { display: none; }
+            .close-lb { top: 15px; right: 15px; padding: 8px 14px; font-size: 10px; }
+            #lbImg { max-width: 95vw; max-height: 70vh; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="systemCanvas"></canvas>
+
+    <!-- RESPONSIVE STICKY TOP NAVIGATION
+    <div class="top-nav-wrapper">
+        <nav class="top-nav">
+            <a href="index.html" class="nav-home"><i class="fas fa-home"></i> HOME</a>
+            <a href="#y2025">2025_EDITION</a>
+            <a href="#y2024">2024_EDITION</a>
+            <a href="#y2023">2023_EDITION</a>
+            <a href="#y2018">2018_EDITION</a>
+        </nav>
+    </div> -->
+
+    <!-- HERO SECTION -->
+    <div class="hero">
+        <p>GASC • Department of Computer Science</p>
+        <h1>QUTRIX<br><span style="color: var(--accent);">GALLERY</span></h1>
+    </div>
+
+    <!-- GALLERY ROOT -->
+    <div id="gallery-root"></div>
+
+    <!-- LIGHTBOX MODAL -->
+    <div id="lightbox">
+        <div class="lb-bg-blur" id="lbBg"></div>
+        <span class="close-lb" onclick="closeLightbox()"><i class="fas fa-times"></i> EXIT_VIEW</span>
+        <button class="lb-nav lb-prev" onclick="changeLightbox(-1, event)" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+        <img id="lbImg" src="" alt="Showcase" onclick="event.stopPropagation()">
+        <button class="lb-nav lb-next" onclick="changeLightbox(1, event)" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+        <div class="lb-controls"><p id="lbCap"></p></div>
+    </div>
+
+    <script>
+        let galleryItems = [
+            // --- GAIT COORDINATORS SECTION ---
+            { year: '', src: 'images/gallery/coordinator/ps_sir.png', title: 'Gait Coordinator', meta: 'EXECUTIVE', isCoordinator: true },
+            { year: '', src: 'images/gallery/coordinator/DSC_9209.JPG', title: 'Gait Coordinator', meta: 'EXECUTIVE', isCoordinator: true },
+            { year: '', src: 'images/gallery/coordinator/DSC_8288.JPG', title: 'Gait Coordinator', meta: 'EXECUTIVE', isCoordinator: true },
+            { year: '', src: 'images/gallery/coordinator/DSC_8289.JPG', title: 'Gait Coordinator', meta: 'EXECUTIVE', isCoordinator: true },
+            { year: '', src: 'images/gallery/coordinator/DSC_7800.JPG', title: 'Gait Coordinator', meta: 'EXECUTIVE', isCoordinator: true },
+
+            // --- 2025 SECTION ---
+            { year: 2025, src: 'images/gallery/2025/DSC_8864.JPG', title: 'Ceremonial Lighting', meta: 'EVOLUTION' },
+            { year: 2025, src: 'images/gallery/2025/DSC_8896.JPG', title: 'Quiz', meta: 'EVOLUTION' },
+            { year: 2025, src: 'images/gallery/2025/DSC_7947.JPG', title: 'Software Contest Prelims', meta: 'EVOLUTION' },
+            { year: 2025, src: 'images/gallery/2025/DSC_7964.JPG', title: '', meta: 'EVOLUTION' },
+
+            // --- 2024 SECTION ---
+            { year: 2024, src: 'images/gallery/2024/DSC_7885.JPG', title: 'Onspot Registration', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_7805.JPG', title: 'Inaugural Ceremony', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_7811.JPG', title: 'Ceremonial Lighting', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_7786.JPG', title: 'Grand Inaugural', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_7823.JPG', title: 'Paper Presentation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8077.JPG', title: 'Quiz', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8070.JPG', title: 'Web Design', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8104.JPG', title: 'Web Design Judge', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8119.JPG', title: 'Software Contest', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8199.JPG', title: 'Software Contest Judge', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8165.JPG', title: 'Dance', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8194.JPG', title: 'Marketing', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8242.JPG', title: 'Marketing Judge', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8262.JPG', title: 'Insightful Observation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8310.JPG', title: 'Insightful Observation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8291.JPG', title: 'Valedictory Function', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/DSC_8324.JPG', title: 'Chief Guest Momentum', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/principal-momentum.JPG', title: 'Principal Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8381.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8383.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8397.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8384.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8382.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8386.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8387.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
+            { year: 2024, src: 'images/gallery/2024/momento/DSC_8388.JPG', title: 'Faculty Felicitation', meta: 'LEGACY' },
+            
+            // --- 2023 SECTION ---
+            { year: 2023, src: 'images/gallery/2023.jpg', title: '', meta: 'LEGACY' },
+
+            // --- 2018 SECTION ---
+            { year: 2018, src: 'images/gallery/2018.jpg', title: '', meta: 'LEGACY' }
+        ];
+
+        function renderGallery() {
+            const root = document.getElementById('gallery-root');
+            root.innerHTML = '';
+
+            const years = [...new Set(galleryItems.filter(item => !item.isCoordinator).map(item => item.year))].sort((a, b) => b - a);
+            const coordinators = galleryItems.filter(item => item.isCoordinator);
+
+            if (coordinators.length > 0) {
+                const coordSection = document.createElement('section');
+                coordSection.className = 'year-block';
+                coordSection.style.marginBottom = "80px";
+                coordSection.innerHTML = `
+                    <div class="sticky-year">
+                        <div class="year-label">GAIT COORDINATOR <span>EXECUTIVE</span></div>
+                        <div class="year-version">CORE_SYSTEM_V.1</div>
+                    </div>
+                    <div class="masonry" id="grid-coordinators"></div>
+                `;
+                root.appendChild(coordSection);
+                
+                const coordGrid = document.getElementById('grid-coordinators');
+                coordinators.forEach(item => {
+                    const globalIndex = galleryItems.indexOf(item);
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.style.borderColor = "rgba(251, 191, 36, 0.3)"; 
+                    card.onclick = () => openLightbox(globalIndex);
+                    card.innerHTML = `
+                        <div class="card-img-holder">
+                            <img src="${item.src}" alt="${item.title}" loading="lazy" onerror="this.src='images/img02.jpeg'">
+                            <div class="card-zoom-badge"><i class="fas fa-expand"></i></div>
+                        </div>
+                        <div class="card-info">
+                            <p style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--accent); margin-bottom: 5px; font-weight: 600;">OFFICIAL_REPRESENTATIVE</p>
+                            <h4>${item.title}</h4>
+                        </div>
+                    `;
+                    coordGrid.appendChild(card);
+                });
+            }
+
+            years.forEach(year => {
+                const yearData = galleryItems.filter(item => item.year === year && !item.isCoordinator);
+                const section = document.createElement('section');
+                section.className = 'year-block';
+                section.id = `y${year}`;
+                section.innerHTML = `
+                    <div class="sticky-year">
+                        <div class="year-label">${year} <span>${yearData[0] ? yearData[0].meta : 'LEGACY'}</span></div>
+                        <div class="year-version">V.${isNaN(year) ? '1' : (year - 2017)}</div>
+                    </div>
+                    <div class="masonry" id="grid-${year}"></div>
+                `;
+                root.appendChild(section);
+
+                const grid = document.getElementById(`grid-${year}`);
+                yearData.forEach(item => {
+                    const globalIndex = galleryItems.indexOf(item);
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.onclick = () => openLightbox(globalIndex);
+                    card.innerHTML = `
+                        <div class="card-img-holder">
+                            <img src="${item.src}" alt="${item.title || 'QUTRIX Gallery'}" loading="lazy" onerror="this.src='images/img02.jpeg'">
+                            <div class="card-zoom-badge"><i class="fas fa-expand"></i></div>
+                        </div>
+                        <div class="card-info"><h4>${item.title}</h4></div>
+                    `;
+                    grid.appendChild(card);
+                });
+            });
+        }
+
+        async function loadGalleryImages() {
+            try {
+                const response = await fetch('get_gallery_images.php');
+                const result = await response.json();
+                if (result.status === 'success' && Array.isArray(result.data) && result.data.length > 0) {
+                    galleryItems = result.data;
+                }
+            } catch (err) {
+                console.log('Using default gallery items fallback', err);
+            }
+            renderGallery();
+        }
+
+        loadGalleryImages();
+
+        let currentImgIndex = 0;
+        function openLightbox(index) {
+            currentImgIndex = index;
+            updateLightbox();
+            document.getElementById('lightbox').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function updateLightbox() {
+            const item = galleryItems[currentImgIndex];
+            document.getElementById('lbImg').src = item.src;
+            document.getElementById('lbBg').style.backgroundImage = `url(${item.src})`;
+            document.getElementById('lbCap').innerText = `${item.year ? item.year + ' ' : ''}${item.title}`;
+        }
+
+        function changeLightbox(dir, event) {
+            if (event) event.stopPropagation();
+            currentImgIndex = (currentImgIndex + dir + galleryItems.length) % galleryItems.length;
+            updateLightbox();
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // --- KEYBOARD SHORTCUTS FOR LIGHTBOX ---
+        window.addEventListener('keydown', (e) => {
+            const lb = document.getElementById('lightbox');
+            if (lb.style.display === 'flex') {
+                if (e.key === 'ArrowRight') changeLightbox(1);
+                if (e.key === 'ArrowLeft') changeLightbox(-1);
+                if (e.key === 'Escape') closeLightbox();
+            }
+        });
+
+        // --- TOUCH SWIPE FOR MOBILE LIGHTBOX ---
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const lbElem = document.getElementById('lightbox');
+
+        lbElem.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        lbElem.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                changeLightbox(1); // Swipe Left -> Next
+            }
+            if (touchEndX > touchStartX + 50) {
+                changeLightbox(-1); // Swipe Right -> Prev
+            }
+        }
+
+        // --- CANVAS NEURAL BACKGROUND ---
+        const canvas = document.getElementById('systemCanvas');
+        const ctx = canvas.getContext('2d');
+        let points = [];
+
+        function init() {
+            canvas.width = window.innerWidth; 
+            canvas.height = window.innerHeight;
+            points = Array.from({length: 35}, () => ({
+                x: Math.random() * canvas.width, 
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.3, 
+                vy: (Math.random() - 0.5) * 0.3
+            }));
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = "rgba(251, 191, 36, 0.05)";
+            ctx.fillStyle = "rgba(255, 255, 255, 0.05)";
+            points.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath(); ctx.arc(p.x, p.y, 1, 0, Math.PI * 2); ctx.fill();
+                for (let j = i + 1; j < points.length; j++) {
+                    let d = Math.hypot(p.x - points[j].x, p.y - points[j].y);
+                    if (d < 180) { 
+                        ctx.beginPath(); 
+                        ctx.moveTo(p.x, p.y); 
+                        ctx.lineTo(points[j].x, points[j].y); 
+                        ctx.stroke(); 
+                    }
+                }
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.onresize = init; 
+        init(); 
+        animate();
+    </script>
+</body>
+</html>

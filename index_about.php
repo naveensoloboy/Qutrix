@@ -1,0 +1,706 @@
+<?php
+include __DIR__ . '/db.php';
+
+$defaults = [
+    'title' => 'QUTRIX 2K26',
+    'faculty_board' => [
+        'Dr. D. VENUGOPAL (Principal)',
+        'Dr. S. Meenakshi (Head)',
+        'Dr. B. Srinivasan',
+        'Dr. G.T. Prabavathi',
+        'Dr. A. Dhanalakshmi',
+        'Dr. P. Prabhusundhar',
+        'Dr. G.A. Mylavathi',
+        'Dr. S. Annapoorani',
+        'Mr. P. Sathishkumar'
+    ]
+];
+
+try {
+    $doc = $db->settings->findOne(['_id' => 'event_config']);
+    if ($doc) {
+        $data = (array)$doc;
+        $settings = array_merge($defaults, $data);
+        if (isset($data['faculty_board'])) {
+            if ($data['faculty_board'] instanceof MongoDB\Model\BSONArray || is_object($data['faculty_board'])) {
+                $settings['faculty_board'] = iterator_to_array($data['faculty_board']);
+            } elseif (is_array($data['faculty_board'])) {
+                $settings['faculty_board'] = $data['faculty_board'];
+            }
+        }
+    } else {
+        $settings = $defaults;
+    }
+} catch (Exception $e) {
+    $settings = $defaults;
+}
+
+$raw_faculty = $settings['faculty_board'] ?? $defaults['faculty_board'];
+if (is_object($raw_faculty) && method_exists($raw_faculty, 'getArrayCopy')) {
+    $faculty_list = $raw_faculty->getArrayCopy();
+} elseif ($raw_faculty instanceof Traversable) {
+    $faculty_list = iterator_to_array($raw_faculty);
+} else {
+    $faculty_list = (array)$raw_faculty;
+}
+
+$featured_faculty = array_slice($faculty_list, 0, 3);
+$extended_faculty = array_slice($faculty_list, 3);
+
+function getFacultyIcon($name) {
+    if (stripos($name, 'Principal') !== false) {
+        return 'fas fa-user-shield';
+    } elseif (stripos($name, 'Head') !== false || stripos($name, 'HOD') !== false) {
+        return 'fas fa-award';
+    }
+    return 'fas fa-user-graduate';
+}
+
+function getFacultyBadge($name) {
+    if (stripos($name, 'Principal') !== false) {
+        return '<span class="role-badge badge-principal">Principal</span>';
+    } elseif (stripos($name, 'Head') !== false || stripos($name, 'HOD') !== false) {
+        return '<span class="role-badge badge-hod">Head of Dept.</span>';
+    }
+    return '';
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | <?= htmlspecialchars($settings['title']) ?></title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #020617;
+            --accent: #fbbf24;
+            --accent-glow: rgba(251, 191, 36, 0.4);
+            --skyblu: #71e4e4;
+            --skyblu-glow: rgba(113, 228, 228, 0.3);
+            --bg-dark: #020617;
+            --glass: rgba(15, 23, 42, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-dim: #94a3b8;
+            --white: #ffffff;
+        }
+
+        /* --- GLOBAL SMOOTH SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; border: 1px solid var(--glass-border); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 100% 50%, rgba(113, 228, 228, 0.08) 0%, transparent 40%);
+            color: #e2e8f0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        #systemCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        /* --- TOP NAV BAR --- */
+        .top-navbar {
+            padding: 1rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--skyblu);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-brand span { color: var(--accent); }
+
+        .btn-nav-home {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-nav-home:hover {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateX(-3px);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        /* --- HEADER & TYPOGRAPHY --- */
+        .header-container {
+            padding: 70px 20px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(251, 191, 36, 0.08);
+            border: 1px solid var(--accent);
+            border-radius: 100px;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.15);
+        }
+
+        .status-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.3); }
+        }
+
+        .page-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            margin: 0 0 15px 0;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 30%, var(--accent) 70%, var(--skyblu) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+            filter: drop-shadow(0 0 35px rgba(251, 191, 36, 0.2));
+        }
+
+        .page-subtitle {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- STATS RIBBON --- */
+        .stats-ribbon {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin: 40px auto 60px;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .stat-pill {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--glass-border);
+            padding: 16px 28px;
+            border-radius: 18px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            transition: 0.3s ease;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .stat-pill:hover {
+            border-color: var(--skyblu);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(113, 228, 228, 0.15);
+        }
+
+        .stat-num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--skyblu);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* --- CARDS CONTAINER --- */
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        .about-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: clamp(30px, 5vw, 55px);
+            margin-bottom: 40px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border-left: 4px solid var(--accent);
+        }
+
+        .about-card:hover {
+            transform: translateY(-6px) scale(1.005);
+            border-color: rgba(251, 191, 36, 0.6);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(251, 191, 36, 0.15);
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent), var(--skyblu), transparent);
+        }
+
+        .about-card h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            color: var(--white);
+            margin-top: 0;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .about-card h2 i {
+            color: var(--accent);
+            font-size: 1.6rem;
+            background: rgba(251, 191, 36, 0.1);
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        .card-tagline {
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            display: block;
+            font-weight: 700;
+        }
+
+        /* --- CONTENT STYLING --- */
+        .about-card ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        .about-card li {
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+            padding-left: 36px;
+            position: relative;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .about-card li::before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--accent);
+            font-size: 0.9rem;
+            background: rgba(251, 191, 36, 0.15);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(113, 228, 228, 0.06), rgba(251, 191, 36, 0.04));
+            padding: 28px;
+            border-radius: 20px;
+            border: 1px dashed rgba(113, 228, 228, 0.3);
+            margin-top: 25px;
+            position: relative;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-size: 1.05rem;
+            color: var(--skyblu);
+            line-height: 1.7;
+        }
+
+        .highlight-box p strong {
+            color: var(--accent);
+        }
+
+        /* --- FACULTY DIRECTORY --- */
+        .faculty-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 18px;
+            margin-top: 30px;
+        }
+
+        .faculty-node {
+            background: rgba(2, 6, 23, 0.7);
+            border: 1px solid var(--glass-border);
+            padding: 18px 22px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faculty-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .faculty-node:hover {
+            background: rgba(251, 191, 36, 0.08);
+            border-color: var(--accent);
+            transform: translateX(4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .faculty-node i {
+            color: var(--accent);
+            font-size: 1.2rem;
+            background: rgba(251, 191, 36, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        .faculty-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--white);
+        }
+
+        .role-badge {
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+        }
+
+        .badge-principal {
+            background: rgba(113, 228, 228, 0.15);
+            color: var(--skyblu);
+            border: 1px solid var(--skyblu);
+        }
+
+        .badge-hod {
+            background: rgba(251, 191, 36, 0.15);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        /* --- ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            filter: blur(15px);
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        /* --- BUTTONS --- */
+        .read-more-btn {
+            background: linear-gradient(135deg, var(--accent), #f59e0b);
+            color: #000;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 25px;
+            box-shadow: 0 10px 25px var(--accent-glow);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .read-more-btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.15);
+            box-shadow: 0 15px 30px var(--accent-glow);
+        }
+
+        #more, #moreFaculty { display: none; }
+
+        @media (max-width: 768px) {
+            .about-card { padding: 30px 20px; }
+            .page-title { font-size: 2.5rem; }
+            .stats-ribbon { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="systemCanvas"></canvas>
+
+    <!-- NAVIGATION BAR -->
+    <!-- <nav class="top-navbar">
+        <a href="index.php" class="nav-brand">
+            QU<span>TRIX</span>
+        </a>
+        <a href="index.php" class="btn-nav-home">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </nav> -->
+
+    <!-- HERO HEADER -->
+    <div class="header-container reveal">
+        <div class="status-badge">
+            <span class="dot"></span> DEPARTMENT OF COMPUTER SCIENCE
+        </div>
+        <h1 class="page-title">About GAIT <br>& QUTRIX</h1>
+        <!-- <p class="page-subtitle">Gobi Arts & Science College · Department of Computer Science</p> -->
+    </div>
+
+    <!-- STATS RIBBON -->
+    <!-- <div class="stats-ribbon reveal">
+        <div class="stat-pill">
+            <span class="stat-num">QUTRIX 2K26</span>
+            <span class="stat-label">Intercollegiate Meet</span>
+        </div>
+        <div class="stat-pill">
+            <span class="stat-num">GAITFEST</span>
+            <span class="stat-label">Intracollegiate Fest</span>
+        </div>
+        <div class="stat-pill">
+            <span class="stat-num">100% FREE</span>
+            <span class="stat-label">Zero Registration Fee</span>
+        </div>
+    </div> -->
+
+    <div class="container">
+        
+        <!-- CARD 1: GAIT -->
+        <div class="about-card reveal">
+            <h2><i class="fas fa-users-gear"></i> GAIT</h2>
+            <span class="card-tagline">GobiArts Association of Information Technology</span>
+            <ul>
+                <li>GAIT is a premier association formed by the Department of Computer Science to bridge the gap between academia and industry.</li>
+                <li>It serves as a professional forum through which students enhance their leadership qualities and organizational abilities.</li>
+            </ul>
+            
+            <div id="more">
+                <ul>
+                    <li>The association regularly organizes Guest Lectures, Workshops, and Seminars featuring industry experts.</li>
+                    <li>GAIT is the driving force behind two major annual events: <strong>QUTRIX</strong> (Intercollegiate) and <strong>GAITFEST</strong> (Intracollegiate).</li>
+                </ul>
+            </div>
+            <button onclick="toggleReadMore('more', 'readMoreBtn')" class="read-more-btn" id="readMoreBtn">
+                <span>Read More About GAIT</span> <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+
+        <!-- CARD 2: QUTRIX -->
+        <div class="about-card reveal">
+            <h2><i class="fas fa-bolt"></i> Intercollegiate meet (QUTRIX)</h2>
+            <span class="card-tagline">State-Level Intercollegiate Event</span>
+            <p style="font-size: 1.05rem; color: #cbd5e1;">It is the annual technical extravaganza and state-level technical symposium conducted every year during the month of September.</p>
+            
+            <div class="highlight-box">
+                <p>QUTRIX invites Computer Science students from various Institutions and Universities across <strong>Tamil Nadu and Pondicherry</strong>. This platform empowers participants to improve communication, demonstrate spirit of teamwork, and master organizational skills through high-stakes competition.</p>
+            </div>
+        </div>
+
+        <!-- CARD 3: GAITFEST -->
+        <div class="about-card reveal">
+            <h2><i class="fas fa-fire"></i> Intra Collegiate meet (GAITFEST)</h2>
+            <span class="card-tagline">Intracollegiate College Event</span>
+            <p style="font-size: 1.05rem; color: #cbd5e1; margin-bottom: 15px;">A vibrant internal platform designed for students to demonstrate their technical prowess and engage in IT-related knowledge sharing.</p>
+            <ul>
+                <li><strong>Core Focus:</strong> Paper Presentation, Technical Quiz, and Word Hunt.</li>
+                <li><strong>Skill Development:</strong> Web Design, Software Contests, and Tech Marketing.</li>
+                <li><strong>Community:</strong> Encourages project showcases and tech talks within the department.</li>
+            </ul>
+        </div>
+
+        <!-- CARD 4: FACULTY BOARD -->
+        <div class="about-card reveal">
+            <h2><i class="fas fa-user-tie"></i> Faculty Members</h2>
+            <span class="card-tagline">Department Faculty</span>
+            <p style="font-size: 1.05rem; color: #cbd5e1;">Our experienced faculty team guiding the department.</p>
+            
+            <div class="faculty-grid" id="featuredFacultyGrid">
+                <?php foreach ($featured_faculty as $fac): ?>
+                    <div class="faculty-node">
+                        <div class="faculty-info">
+                            <i class="<?= getFacultyIcon($fac) ?>"></i>
+                            <span class="faculty-name"><?= htmlspecialchars($fac) ?></span>
+                        </div>
+                        <?= getFacultyBadge($fac) ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            
+            <?php if (!empty($extended_faculty)): ?>
+                <div id="moreFaculty">
+                    <div class="faculty-grid" id="extendedFacultyGrid">
+                        <?php foreach ($extended_faculty as $fac): ?>
+                            <div class="faculty-node">
+                                <div class="faculty-info">
+                                    <i class="<?= getFacultyIcon($fac) ?>"></i>
+                                    <span class="faculty-name"><?= htmlspecialchars($fac) ?></span>
+                                </div>
+                                <?= getFacultyBadge($fac) ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <button onclick="toggleReadMore('moreFaculty', 'readMoreFacultyBtn')" class="read-more-btn" id="readMoreFacultyBtn">
+                    <span>View Full Board</span> <i class="fas fa-chevron-down"></i>
+                </button>
+            <?php endif; ?>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Intersection Observer (Replayable) ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+                else entry.target.classList.remove('active');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // --- Toggle Logic ---
+        function toggleReadMore(contentId, btnId) {
+            const content = document.getElementById(contentId);
+            const btn = document.getElementById(btnId);
+            const icon = btn.querySelector('i');
+            const label = btn.querySelector('span');
+            
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                if (label) label.textContent = contentId === 'more' ? "Read More About GAIT" : "View Full Board";
+                if (icon) icon.className = "fas fa-chevron-down";
+            } else {
+                content.style.display = "block";
+                if (label) label.textContent = "Show Less";
+                if (icon) icon.className = "fas fa-chevron-up";
+            }
+        }
+
+        // --- Neural Background ---
+        const canvas = document.getElementById('systemCanvas');
+        const ctx = canvas.getContext('2d');
+        let points = [];
+        function init() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            points = [];
+            for (let i = 0; i < 50; i++) {
+                points.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3 });
+            }
+        }
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(251, 191, 36, 0.25)"; ctx.strokeStyle = "rgba(113, 228, 228, 0.05)";
+            points.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1; if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath(); ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2); ctx.fill();
+                for (let j = i + 1; j < points.length; j++) {
+                    const dist = Math.hypot(p.x - points[j].x, p.y - points[j].y);
+                    if (dist < 200) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(points[j].x, points[j].y); ctx.stroke(); }
+                }
+            });
+            requestAnimationFrame(draw);
+        }
+        init(); draw(); window.onresize = init;
+    </script>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symposium Feedback | QUTRIX 2K26</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+    /* --- CSS VARIABLES: QUTRIX 2K26 PALETTE --- */
+    :root {
+        --primary: #020617; 
+        --accent: #fbbf24;  
+        --accent-glow: rgba(251, 191, 36, 0.3);
+        --text-gray: #94a3b8;
+        --glass: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --white: #ffffff;
+        --skyblu: #71e4e4;
+    }
+
+    /* --- RESET & GLOBAL STYLES --- */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
+        background-color: var(--primary);
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(113, 228, 228, 0.05) 0%, transparent 20%),
+            radial-gradient(circle at 90% 80%, rgba(251, 191, 36, 0.05) 0%, transparent 20%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: clamp(10px, 4vw, 20px);
+        color: var(--white);
+        overflow-x: hidden;
+    }
+
+    /* --- FORM CONTAINER --- */
+    .feedback-form {
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        padding: clamp(20px, 5vw, 40px);
+        border-radius: 24px;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        width: 100%;
+        max-width: 650px;
+        animation: slideUp 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(24px, 5vw, 32px);
+        color: var(--white);
+        text-align: center;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    h3 {
+        font-size: 13px;
+        color: var(--text-gray);
+        text-align: center;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 35px;
+    }
+
+    /* --- FORM GROUPS & INPUTS --- */
+    .form-group {
+        margin-bottom: 25px;
+        width: 100%;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 12px;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--skyblu);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .feedback-form textarea,
+    .feedback-form input[type="text"] {
+        width: 100%;
+        padding: 14px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        font-size: 16px;
+        color: var(--white);
+        transition: all 0.3s ease;
+        outline: none;
+    }
+
+    .feedback-form textarea { min-height: 100px; resize: vertical; }
+
+    .feedback-form textarea:focus,
+    .feedback-form input[type="text"]:focus {
+        border-color: var(--accent);
+        background: rgba(251, 191, 36, 0.05);
+        box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    /* --- RADIO GRID (RESPONSIVE) --- */
+    .radio-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .radio-options label {
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        padding: 12px 15px;
+        border-radius: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 14px;
+        color: var(--text-gray);
+        transition: 0.3s;
+        margin-bottom: 0;
+    }
+
+    .radio-options input[type="radio"] {
+        accent-color: var(--accent);
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+
+    .radio-options label:hover {
+        border-color: var(--skyblu);
+        background: rgba(113, 228, 228, 0.05);
+    }
+
+    .radio-options input[type="radio"]:checked + span {
+        color: var(--accent);
+        font-weight: 700;
+    }
+
+    /* --- SUBMIT BUTTON --- */
+    button[type="submit"] {
+        width: 100%;
+        padding: 18px;
+        background: var(--accent);
+        color: var(--primary);
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-weight: 800;
+        letter-spacing: 2px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        margin-top: 15px;
+    }
+
+    button[type="submit"]:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px var(--accent-glow);
+        filter: brightness(1.1);
+    }
+
+    /* --- FULL SELECT2 RESPONSIVE OVERRIDES --- */
+    .select2-container {
+        width: 100% !important;
+        margin-bottom: 10px;
+    }
+
+    .select2-container--default .select2-selection--single {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 12px !important;
+        height: 52px !important;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+    /* Fix text overflow when long college name is selected */
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: var(--white) !important;
+        padding-left: 15px !important;
+        padding-right: 35px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        line-height: 50px;
+    }
+
+    /* The arrow icon */
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 50px !important;
+        right: 10px !important;
+    }
+
+    /* Glow effect on focus */
+    .select2-container--default.select2-container--open .select2-selection--single,
+    .select2-container--default.select2-container--focus .select2-selection--single {
+        border-color: var(--accent) !important;
+        box-shadow: 0 0 15px var(--accent-glow) !important;
+    }
+
+    /* Dropdown Panel */
+    .select2-dropdown {
+        background-color: #0f172a !important;
+        border: 1px solid var(--accent) !important;
+        border-radius: 12px !important;
+        z-index: 9999;
+        overflow: hidden;
+    }
+
+    .select2-search__field {
+        background-color: var(--primary) !important;
+        color: white !important;
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 8px !important;
+    }
+
+    .select2-results__option--highlighted[aria-selected] {
+        background-color: var(--accent) !important;
+        color: var(--primary) !important;
+    }
+
+    /* --- MOBILE BREAKPOINTS --- */
+    @media (max-width: 600px) {
+        .radio-options {
+            grid-template-columns: 1fr; /* Stack ratings on mobile */
+        }
+        
+        .feedback-form {
+            padding: 25px 20px;
+        }
+
+        h2 { font-size: 24px; }
+        
+        .select2-container--default .select2-selection--single {
+            height: 48px !important;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <form class="feedback-form" action="feedback.php" method="post">
+        <h2>Feedback Hub</h2>
+        <h3>Transmission Protocol: User Experience</h3>
+
+        <div class="form-group">
+            <label for="name"><i class="fas fa-user-circle"></i> Full Name</label>
+            <input type="text" id="name" placeholder="Identification Name" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="collegename"><i class="fas fa-microchip"></i> Institutional Origin <span style="color:var(--accent);">*</span></label>
+            <select id="collegename" name="collegename" required>
+                <option value="">Search System Database...</option>
+                <option value="DR. SNS RAJALAKSHMI COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">DR. SNS RAJALAKSHMI COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="NANDHA ARTS AND SCIENCE COLLEGE">NANDHA ARTS AND SCIENCE COLLEGE</option>
+                <option value="KONGU NADU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)">KONGU NADU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)</option>
+                <option value="VELLALAR COLLEGE FOR WOMEN (AUTONOMOUS)">VELLALAR COLLEGE FOR WOMEN (AUTONOMOUS)</option>
+                <option value="BHARATHIAR UNIVERSITY">BHARATHIAR UNIVERSITY</option>
+                <option value="VIVEKANANDHA ARTS AND SCIENCE COLLEGE FOR WOMEN">VIVEKANANDHA ARTS AND SCIENCE COLLEGE FOR WOMEN</option>
+                <option value="KONGUNADU COLLEGE OF ENGINEERING AND TECHNOLOGY (AUTONOMOUS)">KONGUNADU COLLEGE OF ENGINEERING AND TECHNOLOGY (AUTONOMOUS)</option>
+                <option value="SELVAM COLLEGE OF TECHNOLOGY">SELVAM COLLEGE OF TECHNOLOGY</option>
+                <option value="NANDHA ENGINEERING COLLEGE (AUTONOMOUS)">NANDHA ENGINEERING COLLEGE (AUTONOMOUS)</option>
+                <option value="VIVEKANANDHA COLLEGE OF ARTS AND SCIENCES FOR WOMEN (AUTONOMOUS)">VIVEKANANDHA COLLEGE OF ARTS AND SCIENCES FOR WOMEN (AUTONOMOUS)</option>
+                <option value="KONGU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)">KONGU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)</option>
+                <option value="SRI VASAVI COLLEGE (AUTONOMOUS)">SRI VASAVI COLLEGE (AUTONOMOUS)</option>
+                <option value="K.S.R. COLLEGE OF ENGINEERING">K.S.R. COLLEGE OF ENGINEERING</option>
+                <option value="KSR INSTITUTE FOR ENGINEERING AND TECHNOLOGY">KSR INSTITUTE FOR ENGINEERING AND TECHNOLOGY</option>
+                <option value="VIVEKANANDHA COLLEGE OF ENGINEERING FOR WOMEN">VIVEKANANDHA COLLEGE OF ENGINEERING FOR WOMEN</option>
+                <option value="SRI RAMAKRISHNA COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">SRI RAMAKRISHNA COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="ST. JOSEPH'S COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">ST. JOSEPH'S COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="SRI KRISHNA ARTS AND SCIENCE COLLEGE (AUTONOMOUS)">SRI KRISHNA ARTS AND SCIENCE COLLEGE (AUTONOMOUS)</option>
+                <option value="MUTHAYAMMAL COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">MUTHAYAMMAL COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="HINDUSTHAN INSTITUTE OF TECHNOLOGY">HINDUSTHAN INSTITUTE OF TECHNOLOGY</option>
+                <option value="KONGU ENGINEERING COLLEGE">KONGU ENGINEERING COLLEGE</option>
+                <option value="NEHRU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)">NEHRU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)</option>
+                <option value="VELLALAR COLLEGE OF EDUCATION FOR WOMEN">VELLALAR COLLEGE OF EDUCATION FOR WOMEN</option>
+                <option value="SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE OF ARTS AND SCIENCE">SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="GOBI ARTS AND SCIENCE COLLEGE (AUTONOMOUS)">GOBI ARTS AND SCIENCE COLLEGE (AUTONOMOUS)</option>
+                <option value="RATHINAM COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">RATHINAM COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="CMS COLLEGE OF SCIENCE AND COMMERCE (AUTONOMOUS)">CMS COLLEGE OF SCIENCE AND COMMERCE (AUTONOMOUS)</option>
+                <option value="SRI RAMAKRISHNA COLLEGE OF ARTS AND SCIENCE FOR WOMEN">SRI RAMAKRISHNA COLLEGE OF ARTS AND SCIENCE FOR WOMEN</option>
+                <option value="NIRMALA COLLEGE FOR WOMEN (AUTONOMOUS)">NIRMALA COLLEGE FOR WOMEN (AUTONOMOUS)</option>
+                <option value="PSG COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">PSG COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="SRI RAMAKRISHNA MISSION VIDYALAYA MARUTHI COLLEGE OF PHYSICAL EDUCATION">SRI RAMAKRISHNA MISSION VIDYALAYA MARUTHI COLLEGE OF PHYSICAL EDUCATION</option>
+                <option value="VIVEKANANDHA INSTITUTE OF ENGINEERING AND TECHNOLOGY FOR WOMEN">VIVEKANANDHA INSTITUTE OF ENGINEERING AND TECHNOLOGY FOR WOMEN</option>
+                <option value="SASURIE COLLEGE OF ARTS AND SCIENCE">SASURIE COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="SANKARA COLLEGE OF SCIENCE AND COMMERCE">SANKARA COLLEGE OF SCIENCE AND COMMERCE</option>
+                <option value="SRI VASAVI COLLEGE OF EDUCATION">SRI VASAVI COLLEGE OF EDUCATION</option>
+                <option value="COIMBATORE INSTITUTE OF TECHNOLOGY (AUTONOMOUS)">COIMBATORE INSTITUTE OF TECHNOLOGY (AUTONOMOUS)</option>
+                <option value="GOVERNMENT ARTS COLLEGE (AUTONOMOUS), COIMBATORE">GOVERNMENT ARTS COLLEGE (AUTONOMOUS), COIMBATORE</option>
+                <option value="CHIKKANNA GOVERNMENT ARTS COLLEGE, TIRUPPUR">CHIKKANNA GOVERNMENT ARTS COLLEGE, TIRUPPUR</option>
+                <option value="NEHRU INSTITUTE OF INFORMATION TECHNOLOGY AND MANAGEMENT">NEHRU INSTITUTE OF INFORMATION TECHNOLOGY AND MANAGEMENT</option>
+                <option value="SRI RAMAKRISHNA INSTITUTE OF TECHNOLOGY">SRI RAMAKRISHNA INSTITUTE OF TECHNOLOGY</option>
+                <option value="SNMV COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">SNMV COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="SRI VASAVI COLLEGE OF ARTS AND SCIENCE">SRI VASAVI COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE OF EDUCATION">SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE of EDUCATION</option>
+                <option value="DR. N.G.P. INSTITUTE OF TECHNOLOGY">DR. N.G.P. INSTITUTE OF TECHNOLOGY</option>
+                <option value="SREE SARASWATHI THYAGARAJA COLLEGE (AUTONOMOUS)">SREE SARASWATHI THYAGARAJA COLLEGE (AUTONOMOUS)</option>
+                <option value="PARK COLLEGE (AUTONOMOUS)">PARK COLLEGE (AUTONOMOUS)</option>
+                <option value="SNS COLLEGE OF TECHNOLOGY">SNS COLLEGE OF TECHNOLOGY</option>
+                <option value="NANDHA COLLEGE OF TECHNOLOGY">NANDHA COLLEGE OF TECHNOLOGY</option>
+                <option value="P.K.R. ARTS COLLEGE FOR WOMEN">P.K.R. ARTS COLLEGE FOR WOMEN</option>
+                <option value="J.J. COLLEGE OF ENGINEERING AND TECHNOLOGY">J.J. COLLEGE OF ENGINEERING AND TECHNOLOGY</option>
+                <option value="K.S.R. COLLEGE OF ARTS AND SCIENCE">K.S.R. COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="SHREE VENKATESHWARA ARTS AND SCIENCE COLLEGE">SHREE VENKATESHWARA ARTS AND SCIENCE COLLEGE</option>
+                <option value="KPR COLLEGE OF ARTS, SCIENCE AND RESEARCH">KPR COLLEGE OF ARTS, SCIENCE AND RESEARCH</option>
+                <option value="AYYAN THIRUVALLUVAR COLLEGE OF ARTS AND SCIENCE">AYYAN THIRUVALLUVAR COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="PSG COLLEGE OF TECHNOLOGY">PSG COLLEGE OF TECHNOLOGY</option>
+                <option value="VET INSTITUTE OF ARTS AND SCIENCE">VET INSTITUTE OF ARTS AND SCIENCE</option>
+                <option value="DR. N.G.P. ARTS AND SCIENCE COLLEGE (AUTONOMOUS)">DR. N.G.P. ARTS AND SCIENCE COLLEGE (AUTONOMOUS)</option>
+                <option value="EXCEL COLLEGE FOR COMMERCE AND SCIENCE">EXCEL COLLEGE FOR COMMERCE AND SCIENCE</option>
+                <option value="EXCEL ENGINEERING COLLEGE (AUTONOMOUS)">EXCEL ENGINEERING COLLEGE (AUTONOMOUS)</option>
+                <option value="RVS COLLEGE OF ARTS AND SCIENCE">RVS COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="VINAYAKA MISSION'S KIRUPANANDA VARIYAR ENGINEERING COLLEGE">VINAYAKA MISSION'S KIRUPANANDA VARIYAR ENGINEERING COLLEGE</option>
+                <option value="KALASALINGAM ACADEMY OF RESEARCH AND EDUCATION">KALASALINGAM ACADEMY OF RESEARCH AND EDUCATION</option>
+                <option value="GOVERNMENT ARTS AND SCIENCE COLLEGE, THITTAMALAI">GOVERNMENT ARTS AND SCIENCE COLLEGE, THITTAMALAI</option>
+                <option value="MAHENDRA COLLEGE OF ENGINEERING">MAHENDRA COLLEGE OF ENGINEERING</option>
+                <option value="HINDUSTHAN COLLEGE OF ARTS AND SCIENCE">HINDUSTHAN COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="K.S. RANGASAMY COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)">K.S. RANGASAMY COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)</option>
+                <option value="DR. GRD COLLEGE OF ARTS AND SCIENCE">DR. GRD COLLEGE OF ARTS AND SCIENCE</option>
+                <option value="PSGR KRISHNAMMAL COLLEGE FOR WOMEN">PSGR KRISHNAMMAL COLLEGE FOR WOMEN</option>
+                <option value="AVINASHI GOVERNMENT ARTS AND SCIENCE COLLEGE">AVINASHI GOVERNMENT ARTS AND SCIENCE COLLEGE</option>
+                <option value="SREE AMMAN ARTS AND SCIENCE COLLEGE, ERODE">SREE AMMAN ARTS AND SCIENCE COLLEGE, ERODE</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>1. Overall opinion of the symposium?</label>
+            <div class="radio-options">
+                <label><input type="radio" name="opinion" value="Very Good" required><span>Very Good</span></label>
+                <label><input type="radio" name="opinion" value="Good"><span>Good</span></label>
+                <label><input type="radio" name="opinion" value="Satisfactory"><span>Satisfactory</span></label>
+                <label><input type="radio" name="opinion" value="Poor"><span>Poor</span></label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>2. Rate the symposium experience?</label>
+            <div class="radio-options">
+                <label><input type="radio" name="experience" value="Very Good" required><span>Very Good</span></label>
+                <label><input type="radio" name="experience" value="Good"><span>Good</span></label>
+                <label><input type="radio" name="experience" value="Satisfactory"><span>Satisfactory</span></label>
+                <label><input type="radio" name="experience" value="Poor"><span>Poor</span></label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>3. Rate the overall organization?</label>
+            <div class="radio-options">
+                <label><input type="radio" name="organization" value="Very Good" required><span>Very Good</span></label>
+                <label><input type="radio" name="organization" value="Good"><span>Good</span></label>
+                <label><input type="radio" name="organization" value="Satisfactory"><span>Satisfactory</span></label>
+                <label><input type="radio" name="organization" value="Poor"><span>Poor</span></label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="comments"><i class="fas fa-comment-alt"></i> Suggestions or Comments</label>
+            <textarea id="comments" name="comments" placeholder="Initialize data transmission..." required></textarea>
+        </div>
+
+        <button type="submit">Submit Feedback</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#collegename').select2({
+                placeholder: "Search College Repository...",
+                allowClear: true,
+                width: '100%'
+            });
+        });
+    </script>
+</body>
+</html>

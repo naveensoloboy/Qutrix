@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Event Registration</title>
+    <style>
+        :root {
+            --primary: #020617;
+            --accent: #fbbf24;
+            --accent-glow: rgba(251, 191, 36, 0.4);
+            --text-gray: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --white: #ffffff;
+            --skyblu: #71e4e4;
+            --skyblu-glow: rgba(113, 228, 228, 0.35);
+            --danger: #fb7185;
+            --input-bg: rgba(255, 255, 255, 0.04);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html, body {
+            min-height: 100%;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 12% 8%, rgba(251, 191, 36, 0.10), transparent 40%),
+                radial-gradient(circle at 88% 92%, rgba(113, 228, 228, 0.10), transparent 45%),
+                var(--primary);
+            color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px 15px;
+        }
+
+        /* Subtle static grid texture for depth */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            background: var(--glass);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.55),
+                0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+            max-width: 1200px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .form-container {
+            padding: 32px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .header-titles {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .eyebrow {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--skyblu);
+            font-weight: 600;
+        }
+
+        .header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--white);
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .close-btn {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.25s ease;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.08);
+            color: var(--accent);
+            border-color: var(--accent-glow);
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        .mandatory-note {
+            color: var(--text-gray);
+            margin-bottom: 24px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 4px;
+        }
+
+        .full-width {
+            grid-column: span 3;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-gray);
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .star {
+            color: var(--accent);
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            background: var(--input-bg);
+            color: var(--white);
+            color-scheme: dark;
+        }
+
+        input::placeholder {
+            color: rgba(148, 163, 184, 0.6);
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--skyblu);
+            background: rgba(113, 228, 228, 0.05);
+            box-shadow: 0 0 0 3px var(--skyblu-glow);
+        }
+
+        select option {
+            background: #0b1120;
+            color: var(--white);
+        }
+
+        /* College Dropdown Styles */
+        .dropdown-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .dropdown-header {
+            padding: 13px 14px;
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--input-bg);
+            transition: all 0.25s ease;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .dropdown-header i {
+            color: var(--skyblu);
+            transition: transform 0.25s ease;
+        }
+
+        .dropdown-header:hover {
+            border-color: var(--skyblu);
+        }
+
+        .dropdown-header.open {
+            border-radius: 10px 10px 0 0;
+            border-color: var(--skyblu);
+            box-shadow: 0 0 0 3px var(--skyblu-glow);
+        }
+
+        #selectedCollegeText {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding-right: 10px;
+        }
+
+        .search-box {
+            padding: 13px 14px;
+            border: none;
+            border-bottom: 1px solid var(--glass-border);
+            width: 100%;
+            outline: none;
+            font-size: 15px;
+            background: #0b1120;
+            color: var(--white);
+        }
+
+        .search-box::placeholder {
+            color: var(--text-gray);
+        }
+
+        .dropdown-list {
+            position: absolute;
+            width: 100%;
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid var(--skyblu);
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            background: #0b1120;
+            z-index: 100;
+            display: none;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+        }
+
+        .dropdown-list.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 14px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            font-size: 14px;
+            color: var(--text-gray);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .dropdown-item:hover, .dropdown-item.highlighted {
+            background: rgba(113, 228, 228, 0.08);
+            color: var(--white);
+        }
+
+        .dropdown-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .dropdown-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+        }
+
+        .no-results {
+            padding: 12px 14px;
+            color: var(--text-gray);
+            font-style: italic;
+            font-size: 14px;
+        }
+
+        /* === Event section === */
+        .event-section h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+
+        .event-section h3 .star {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* === Event Radio Buttons (Modern Pill Style) === */
+        .radio-group {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 18px;
+            margin-top: 14px;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--skyblu);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .event-radio {
+            position: relative;
+        }
+
+        .event-radio input[type="radio"] {
+            display: none;
+        }
+
+        .event-radio label {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.02);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
+            min-width: 140px;
+            text-align: center;
+            margin-bottom: 0;
+            text-transform: none;
+        }
+
+        /* Hover effect */
+        .event-radio label:hover {
+            background: rgba(113, 228, 228, 0.08);
+            border-color: var(--skyblu);
+            color: var(--white);
+        }
+
+        /* Selected state */
+        .event-radio input[type="radio"]:checked + label {
+            background: linear-gradient(135deg, var(--accent), #f59e0b);
+            color: #1a1200;
+            border-color: var(--accent);
+            box-shadow: 0 4px 18px var(--accent-glow);
+        }
+
+        .file-input {
+            margin-top: 6px;
+            width: 100%;
+            padding: 12px;
+            border: 1.5px dashed var(--glass-border);
+            border-radius: 10px;
+            background: var(--input-bg);
+            transition: all 0.25s ease;
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .file-input::file-selector-button {
+            background: rgba(251, 191, 36, 0.12);
+            color: var(--accent);
+            border: 1px solid var(--accent-glow);
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-weight: 600;
+            font-size: 12px;
+            margin-right: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .file-input::file-selector-button:hover {
+            background: rgba(251, 191, 36, 0.2);
+        }
+
+        .file-input:hover {
+            border-color: var(--skyblu);
+            background: rgba(113, 228, 228, 0.04);
+        }
+
+        .file-warning {
+            color: var(--danger);
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .member-section {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 20px;
+            margin-top: 14px;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .member-section h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--white);
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--glass-border);
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 28px;
+            grid-column: span 2;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .submitbtn {
+            background: linear-gradient(135deg, var(--accent), #f59e0b);
+            color: #1a1200;
+            box-shadow: 0 8px 24px var(--accent-glow);
+        }
+
+        .submitbtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px var(--accent-glow);
+        }
+
+        .resetbtn {
+            background: transparent;
+            color: var(--text-gray);
+            border: 1px solid var(--glass-border);
+        }
+
+        .resetbtn:hover {
+            transform: translateY(-2px);
+            border-color: var(--skyblu);
+            color: var(--white);
+            background: rgba(113, 228, 228, 0.05);
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 13px;
+            margin-top: 8px;
+            font-weight: 500;
+            min-height: 16px;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--white);
+            margin: 26px 0 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--glass-border);
+            grid-column: span 2;
+            font-size: 19px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--skyblu);
+            box-shadow: 0 0 10px var(--skyblu-glow);
+            flex-shrink: 0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* ==== Large Desktops (1440px and up) ==== */
+        @media (min-width: 1440px) {
+            .container {
+                max-width: 1200px;
+            }
+            .form-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+            .section-title {
+                grid-column: span 3;
+            }
+            .button-group {
+                grid-column: span 3;
+            }
+        }
+
+        /* ==== Laptops / Medium Desktops (992px – 1439px) ==== */
+        @media (max-width: 1439px) and (min-width: 992px) {
+            .container {
+                max-width: 900px;
+            }
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .section-title {
+                grid-column: span 2;
+            }
+            .button-group {
+                grid-column: span 2;
+            }
+        }
+
+        /* ==== Tablets (768px – 991px) ==== */
+        @media (max-width: 991px) {
+            .form-container {
+                padding: 24px;
+            }
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+            }
+            .section-title {
+                font-size: 17px;
+                grid-column: span 2;
+            }
+            .button-group {
+                flex-direction: row;
+                grid-column: span 2;
+            }
+        }
+
+        /* ==== Small Tablets / Large Phones (576px – 767px) ==== */
+        @media (max-width: 767px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width, .section-title, .button-group {
+                grid-column: span 1;
+            }
+            .radio-group {
+                flex-direction: column;
+            }
+            .event-radio label {
+                width: 100%;
+            }
+            .header h1 {
+                font-size: 20px;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+        }
+
+        /* ==== Phones (361px – 575px) ==== */
+        @media (max-width: 575px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                border-radius: 14px;
+            }
+            .form-container {
+                padding: 18px;
+            }
+            .dropdown-header, input, select {
+                font-size: 14px;
+                padding: 11px;
+            }
+            .event-radio label {
+                padding: 9px 12px;
+                font-size: 13px;
+                min-width: 0;
+            }
+            .section-title {
+                font-size: 16px;
+            }
+            button {
+                font-size: 14px;
+                padding: 13px;
+            }
+        }
+
+        /* ==== Extra Small Phones (up to 360px) ==== */
+        @media (max-width: 360px) {
+            .header h1 {
+                font-size: 17px;
+            }
+            label {
+                font-size: 11px;
+            }
+            .event-radio label {
+                padding: 7px 10px;
+                font-size: 12px;
+            }
+            .dropdown-header, input, select {
+                padding: 9px;
+                font-size: 12px;
+            }
+            button {
+                font-size: 12px;
+                padding: 11px;
+            }
+        }
+
+        /* Accessibility: visible keyboard focus */
+        a:focus-visible,
+        button:focus-visible,
+        .dropdown-header:focus-visible,
+        input:focus-visible {
+            outline: 2px solid var(--skyblu);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-container">
+            <form id="registrationForm" action="register.php" method="post" enctype="multipart/form-data">
+                <div class="header">
+                    <div class="header-titles">
+                        <span class="eyebrow">Team Sign-up</span>
+                        <h1>Event Registration</h1>
+                    </div>
+                    <a href="card.html" class="close-btn" aria-label="Close registration form">
+                        <i class="fa-solid fa-xmark"></i>
+                    </a>
+                </div>
+
+                <p class="mandatory-note">Fields marked with <span class="star">*</span> are mandatory</p>
+
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="collegename">
+                            <span>College Name</span>
+                            <span class="star">*</span>
+                        </label>
+
+                        <div class="dropdown-container">
+                            <div class="dropdown-header" id="dropdownHeader" tabindex="0">
+                                <span id="selectedCollegeText">Select a college</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+
+                            <div class="dropdown-list" id="dropdownList">
+                                <input type="text" class="search-box" id="searchInput" placeholder="Search colleges...">
+                                <div id="optionsList"></div>
+                            </div>
+                            <input type="hidden" id="collegename" name="collegename" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label for="department">
+                            <span>Department</span>
+                            <span class="star">*</span>
+                        </label>
+                        <select class="dropdown-listd" id="department" name="department" required >
+                            <option value="">Select Department</option>
+
+                            <!-- Undergraduate -->
+                            <option value="B.Sc. Computer Science">B.Sc. Computer Science</option>
+                            <option value="B.Sc. Information Technology">B.Sc. Information Technology (IT)</option>
+                            <option value="B.Sc. Computer Technology">B.Sc. Computer Technology</option>
+                            <option value="B.Sc. Software Systems">B.Sc. Software Systems / Software Engineering</option>
+                            <option value="B.Sc. Data Science">B.Sc. Data Science</option>
+                            <option value="B.Sc. Artificial Intelligence & Machine Learning">B.Sc. Artificial Intelligence & Machine Learning (AI & ML)</option>
+                            <option value="B.Sc. Cyber Security">B.Sc. Cyber Security</option>
+                            <option value="B.Sc. Cloud Computing / Networking">B.Sc. Cloud Computing / Networking</option>
+                            <option value="BCA">BCA (Bachelor of Computer Applications)</option>
+
+                            <!-- Postgraduate -->
+                            <option value="M.Sc. Computer Science">M.Sc. Computer Science</option>
+                            <option value="M.Sc. Information Technology">M.Sc. Information Technology</option>
+                            <option value="M.Sc. Software Systems">M.Sc. Software Systems / Software Engineering</option>
+                            <option value="M.Sc. Data Science">M.Sc. Data Science</option>
+                            <option value="M.Sc. Artificial Intelligence / Machine Learning">M.Sc. Artificial Intelligence / Machine Learning</option>
+                            <option value="M.Sc. Cyber Security / Information Security">M.Sc. Cyber Security / Information Security</option>
+                            <option value="M.Sc. Cloud Computing / Big Data Analytics">M.Sc. Cloud Computing / Big Data Analytics</option>
+                            <option value="MCA">MCA (Master of Computer Applications)</option>
+
+                            <!-- Engineering -->
+                            <option value="Computer Science and Engineering">Computer Science and Engineering (CSE)</option>
+                            <option value="Information Technology">Information Technology (IT)</option>
+                            <option value="Artificial Intelligence & Data Science">Artificial Intelligence & Data Science (AI & DS)</option>
+                            <option value="Artificial Intelligence & Machine Learning">Artificial Intelligence & Machine Learning (AI & ML)</option>
+                            <option value="Cyber Security">Cyber Security</option>
+                            <option value="Cloud Computing / Big Data">Cloud Computing / Big Data</option>
+                            <option value="Software Engineering">Software Engineering</option>
+                            <option value="Computer and Communication Engineering">Computer and Communication Engineering</option>
+                            <option value="Internet of Things">Internet of Things (IoT)</option>
+
+                            <!-- Fallback -->
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+
+
+                    <div id="other-department" class="form-group full-width" style="display: none;">
+                        <label for="other_department_name">
+                            <span>Please specify your department</span>
+                            <span class="star">*</span>
+                        </label>
+                        <input type="text" id="other_department_name" name="other_department" placeholder="Enter Department Name">
+                    </div>
+
+                    <div class="event-section full-width">
+                        <h3 id="event-heading">Select Event <span class="star">*</span></h3>
+                        <div class="radio-group" role="group" aria-labelledby="event-heading">
+                            <div class="event-radio">
+                                <input type="radio" name="event" id="radio1" value="PAPER PRESENTATION">
+                                <label for="radio1">PAPER PRESENTATION</label>
+                            </div>
+                            <div class="event-radio">
+                                <input type="radio" name="event" id="radio2" value="WEB DESIGN">
+                                <label for="radio2">WEB DESIGN</label>
+                            </div>
+                            <div class="event-radio">
+                                <input type="radio" name="event" id="radio3" value="SOFTWARE CONTEST">
+                                <label for="radio3">SOFTWARE CONTEST</label>
+                            </div>
+                            <div class="event-radio">
+                                <input type="radio" name="event" id="radio4" value="MARKETING">
+                                <label for="radio4">MARKETING</label>
+                            </div>
+                            <div class="event-radio">
+                                <input type="radio" name="event" id="radio5" value="QUIZ">
+                                <label for="radio5">QUIZ</label>
+                            </div>
+                            <div class="event-radio">
+                                <input type="radio" name="event" id="radio6" value="WORD HUNT">
+                                <label for="radio6">WORD HUNT</label>
+                            </div>
+                            <div class="event-radio">
+                                <input type="radio" name="event" id="radio7" value="NON TECHNICAL ROUND DANCING">
+                                <label for="radio7">DANCE (NON TECHNICAL ROUND)</label>
+                            </div>
+                        </div>
+                        <div id="event-message" class="error-message"></div>
+                    </div>
+
+                    <h3 class="section-title">Team Members</h3>
+
+                    <div class="member-section full-width">
+                        <h4>First Member</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="firstmembername">
+                                    <span>Name</span>
+                                    <span class="star">*</span>
+                                </label>
+                                <input type="text" id="firstmembername" name="firstmembername" placeholder="First Member Name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="firstmemberrno">
+                                    <span>Roll No.</span>
+                                    <span class="star">*</span>
+                                </label>
+                                <input type="text" id="firstmemberrno" name="firstmemberrno" placeholder="First Member Roll No." required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="firstmemberphone">
+                                    <span>Phone No.</span>
+                                    <span class="star">*</span>
+                                </label>
+                                <input type="tel" id="firstmemberphone" name="firstmemberphone" pattern="[0-9]{10}" placeholder="10-digit Phone No." required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="firstmemberemail">
+                                    <span>Email</span>
+                                    <span class="star">*</span>
+                                </label>
+                                <input type="email" id="firstmemberemail" name="firstmemberemail" placeholder="Email Address" required>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="first_member_bonafide">Bonafide Image</label>
+                                <input type="file" id="first_member_bonafide" class="file-input" name="first_member_bonafide" accept="image/*">
+                                <p id="first-file-size-warning" class="file-warning">File size exceeds 900 KB!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="member-section full-width">
+                        <h4>Second Member</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="secondmembername">
+                                    <span>Name</span>
+                                    <span class="star">*</span>
+                                </label>
+                                <input type="text" id="secondmembername" name="secondmembername" placeholder="Second Member Name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="secondmemberrno">
+                                    <span>Roll No.</span>
+                                    <span class="star">*</span>
+                                </label>
+                                <input type="text" id="secondmemberrno" name="secondmemberrno" placeholder="Second Member Roll No." required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="secondmemberphone">
+                                    <span>Phone No.</span>
+                                    <span class="star">*</span>
+                                </label>
+                                <input type="tel" id="secondmemberphone" name="secondmemberphone" pattern="[0-9]{10}" placeholder="10-digit Phone No." required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="secondmemberemail">
+                                    <span>Email</span>
+                                    <span class="star">*</span>
+                                </label>
+                                <input type="email" id="secondmemberemail" name="secondmemberemail" placeholder="Email Address" required>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="second_member_bonafide">Bonafide Image</label>
+                                <input type="file" id="second_member_bonafide" class="file-input" name="second_member_bonafide" accept="image/*">
+                                <p id="second-file-size-warning" class="file-warning">File size exceeds 900 KB!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="third-member-section" class="member-section full-width" style="display: none;">
+                        <h4>Third Member</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="thirdmembername">Name</label>
+                                <input type="text" id="thirdmembername" name="thirdmembername" placeholder="Third Member Name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="thirdmemberrno">Roll No.</label>
+                                <input type="text" id="thirdmemberrno" name="thirdmemberrno" placeholder="Third Member Roll No.">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="thirdmemberphone">Phone No.</label>
+                                <input type="tel" id="thirdmemberphone" name="thirdmemberphone" pattern="[0-9]{10}" placeholder="10-digit Phone No.">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="thirdmemberemail">Email</label>
+                                <input type="email" id="thirdmemberemail" name="thirdmemberemail" placeholder="Email Address">
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="third_member_bonafide">Bonafide Image</label>
+                                <input type="file" id="third_member_bonafide" class="file-input" name="third_member_bonafide" accept="image/*">
+                                <p id="third-file-size-warning" class="file-warning">File size exceeds 900 KB!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="fourth-member-section" class="member-section full-width" style="display: none;">
+                        <h4>Fourth Member</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="fourthmembername">Name</label>
+                                <input type="text" id="fourthmembername" name="fourthmembername" placeholder="Fourth Member Name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fourthmemberrno">Roll No.</label>
+                                <input type="text" id="fourthmemberrno" name="fourthmemberrno" placeholder="Fourth Member Roll No.">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fourthmemberphone">Phone No.</label>
+                                <input type="tel" id="fourthmemberphone" name="fourthmemberphone" pattern="[0-9]{10}" placeholder="10-digit Phone No.">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fourthmemberemail">Email</label>
+                                <input type="email" id="fourthmemberemail" name="fourthmemberemail" placeholder="Email Address">
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="fourth_member_bonafide">Bonafide Image</label>
+                                <input type="file" id="fourth_member_bonafide" class="file-input" name="fourth_member_bonafide" accept="image/*">
+                                <p id="fourth-file-size-warning" class="file-warning">File size exceeds 900 KB!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="fifth-member-section" class="member-section full-width" style="display: none;">
+                        <h4>Fifth Member</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="fifthmembername">Name</label>
+                                <input type="text" id="fifthmembername" name="fifthmembername" placeholder="Fifth Member Name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fifthmemberrno">Roll No.</label>
+                                <input type="text" id="fifthmemberrno" name="fifthmemberrno" placeholder="Fifth Member Roll No.">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fifthmemberphone">Phone No.</label>
+                                <input type="tel" id="fifthmemberphone" name="fifthmemberphone" pattern="[0-9]{10}" placeholder="10-digit Phone No.">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fifthmemberemail">Email</label>
+                                <input type="email" id="fifthmemberemail" name="fifthmemberemail" placeholder="Email Address">
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="fifth_member_bonafide">Bonafide Image</label>
+                                <input type="file" id="fifth_member_bonafide" class="file-input" name="fifth_member_bonafide" accept="image/*">
+                                <p id="fifth-file-size-warning" class="file-warning">File size exceeds 900 KB!</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="button-group">
+                        <button type="submit" class="submitbtn">
+                            <i class="fas fa-user-plus"></i> Register Now
+                        </button>
+                        <button type="reset" class="resetbtn">
+                            <i class="fas fa-redo"></i> Reset Form
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // College list data
+            const colleges = [
+    "DR. SNS RAJALAKSHMI COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
+    "NANDHA ARTS AND SCIENCE COLLEGE",
+    "KONGU NADU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)",
+    "VELLALAR COLLEGE FOR WOMEN (AUTONOMOUS)",
+    "BHARATHIAR UNIVERSITY",
+    "VIVEKANANDHA ARTS AND SCIENCE COLLEGE FOR WOMEN",
+    "KONGUNADU COLLEGE OF ENGINEERING AND TECHNOLOGY (AUTONOMOUS)",
+    "SELVAM COLLEGE OF TECHNOLOGY",
+    "NANDHA ENGINEERING COLLEGE (AUTONOMOUS)",
+    "VIVEKANANDHA COLLEGE OF ARTS AND SCIENCES FOR WOMEN (AUTONOMOUS)",
+    "KONGU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)",
+    "SRI VASAVI COLLEGE (AUTONOMOUS)",
+    "K.S.R. COLLEGE OF ENGINEERING",
+    "KSR INSTITUTE FOR ENGINEERING AND TECHNOLOGY",
+    "VIVEKANANDHA COLLEGE OF ENGINEERING FOR WOMEN",
+    "SRI RAMAKRISHNA COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
+    "ST. JOSEPH'S COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
+    "SRI KRISHNA ARTS AND SCIENCE COLLEGE (AUTONOMOUS)",
+    "MUTHAYAMMAL COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
+    "HINDUSTHAN INSTITUTE OF TECHNOLOGY",
+    "KONGU ENGINEERING COLLEGE",
+    "NEHRU ARTS AND SCIENCE COLLEGE (AUTONOMOUS)",
+    "VELLALAR COLLEGE OF EDUCATION FOR WOMEN",
+    "SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE OF ARTS AND SCIENCE",
+    "RATHINAM COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
+    "CMS COLLEGE OF SCIENCE AND COMMERCE (AUTONOMOUS)",
+    "SRI RAMAKRISHNA COLLEGE OF ARTS AND SCIENCE FOR WOMEN",
+    "NIRMALA COLLEGE FOR WOMEN (AUTONOMOUS)",
+    "PSG COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
+    "SRI RAMAKRISHNA MISSION VIDYALAYA MARUTHI COLLEGE OF PHYSICAL EDUCATION",
+    "VIVEKANANDHA INSTITUTE OF ENGINEERING AND TECHNOLOGY FOR WOMEN",
+    "SASURIE COLLEGE OF ARTS AND SCIENCE",
+    "AVINASHILINGAM INSTITUTE FOR HOME SCIENCE AND HIGHER EDUCATION FOR WOMEN (DEEMED TO BE UNIVERSITY)",
+    "SANKARA COLLEGE OF SCIENCE AND COMMERCE",
+    "SRI VASAVI COLLEGE OF EDUCATION",
+    "COIMBATORE INSTITUTE OF TECHNOLOGY (AUTONOMOUS)",
+    "GOVERNMENT ARTS COLLEGE (AUTONOMOUS), COIMBATORE",
+    "CHIKKANNA GOVERNMENT ARTS COLLEGE, TIRUPPUR",
+    "NEHRU INSTITUTE OF INFORMATION TECHNOLOGY AND MANAGEMENT",
+    "SRI RAMAKRISHNA INSTITUTE OF TECHNOLOGY",
+    "SNMV COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
+    "SRI VASAVI COLLEGE OF ARTS AND SCIENCE",
+    "SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE OF EDUCATION",
+    "DR. N.G.P. INSTITUTE OF TECHNOLOGY",
+    "SRI RAMAKRISHNA MISSION VIDYALAYA COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
+    "SREE SARASWATHI THYAGARAJA COLLEGE (AUTONOMOUS)",
+    "PARK COLLEGE (AUTONOMOUS)",
+    "SNS COLLEGE OF TECHNOLOGY",
+    "NANDHA COLLEGE OF TECHNOLOGY",
+    "P.K.R. ARTS COLLEGE FOR WOMEN",
+    "J.J. COLLEGE OF ENGINEERING AND TECHNOLOGY",
+    "K.S.R. COLLEGE OF ARTS AND SCIENCE",
+    "SHREE VENKATESHWARA ARTS AND SCIENCE (CO-EDUCATION) COLLEGE",
+    "KPR COLLEGE OF ARTS, SCIENCE AND RESEARCH",
+    "AYYAN THIRUVALLUVAR COLLEGE OF ARTS AND SCIENCE",
+    "PSG COLLEGE OF TECHNOLOGY",
+    "VET INSTITUTE OF ARTS AND SCIENCE",
+    "DR. N.G.P. ARTS AND SCIENCE COLLEGE (AUTONOMOUS)",
+    "EXCEL COLLEGE FOR COMMERCE AND SCIENCE",
+    "EXCEL ENGINEERING COLLEGE (AUTONOMOUS)",
+    "RVS COLLEGE OF ARTS AND SCIENCE",
+    "VINAYAKA MISSION'S KIRUPANANDA VARIYAR ENGINEERING COLLEGE",
+    "KALASALINGAM ACADEMY OF RESEARCH AND EDUCATION",
+    "GOVERNMENT ARTS AND SCIENCE COLLEGE, THITTAMALAI",
+    "MAHENDRA COLLEGE OF ENGINEERING",
+    "HINDUSTHAN COLLEGE OF ARTS AND SCIENCE",
+    "K.S. RANGASAMY COLLEGE OF ARTS AND SCIENCE (AUTONOMOUS)",
+    "DR. GRD COLLEGE OF ARTS AND SCIENCE",
+    "PSGR KRISHNAMMAL COLLEGE FOR WOMEN",
+    "AVINASHI GOVERNMENT ARTS AND SCIENCE COLLEGE",
+    "SREE AMMAN ARTS AND SCIENCE COLLEGE, ERODE",
+    "VELALAR COLLEGE OF ENGINEERING AND TECHNOLOGY (VCET)",
+    "ARULMIGU ARTHANAREESWARAR ARTS AND SCIENCE COLLEGE",
+    "Gasc"
+];
+
+            // Get DOM elements
+            const dropdownHeader = document.getElementById('dropdownHeader');
+            const dropdownList = document.getElementById('dropdownList');
+            const searchInput = document.getElementById('searchInput');
+            const optionsList = document.getElementById('optionsList');
+            const selectedCollegeText = document.getElementById('selectedCollegeText');
+            const collegeNameInput = document.getElementById('collegename');
+            const chevronIcon = dropdownHeader.querySelector('i');
+            const departmentSelect = document.getElementById('department');
+            const otherDepartmentInput = document.getElementById('other-department');
+            const otherDepartmentNameInput = document.getElementById('other_department_name');
+            const eventRadios = document.querySelectorAll('input[name="event"]');
+            const eventMessage = document.getElementById('event-message');
+            const secondMemberField = document.getElementById('secondmembername');
+            const secondMemberRollNoField = document.getElementById('secondmemberrno');
+            const secondMemberPhoneField = document.getElementById('secondmemberphone');
+            const secondMemberEmailField = document.getElementById('secondmemberemail');
+            const thirdMemberSection = document.getElementById('third-member-section');
+            const fourthMemberSection = document.getElementById('fourth-member-section');
+            const fifthMemberSection = document.getElementById('fifth-member-section');
+            const form = document.getElementById('registrationForm');
+
+            // Populate the dropdown with colleges
+            function populateDropdownList(filter = '') {
+                optionsList.innerHTML = '';
+
+                const filteredColleges = colleges.filter(college =>
+                    college.toLowerCase().includes(filter.toLowerCase())
+                );
+
+                if (filteredColleges.length === 0) {
+                    optionsList.innerHTML = '<div class="no-results">No colleges found</div>';
+                    return;
+                }
+
+                filteredColleges.forEach(college => {
+                    const div = document.createElement('div');
+                    div.className = 'dropdown-item';
+                    div.textContent = college;
+                    div.addEventListener('click', () => {
+                        selectCollege(college);
+                    });
+                    optionsList.appendChild(div);
+                });
+            }
+
+            // Select a college
+            function selectCollege(college) {
+                selectedCollegeText.textContent = college;
+                collegeNameInput.value = college;
+                dropdownList.classList.remove('show');
+                dropdownHeader.classList.remove('open');
+                chevronIcon.className = 'fas fa-chevron-down';
+            }
+
+            // Initialize the dropdown
+            populateDropdownList();
+
+            // Toggle dropdown visibility
+            dropdownHeader.addEventListener('click', () => {
+                const isOpen = dropdownList.classList.toggle('show');
+                dropdownHeader.classList.toggle('open', isOpen);
+                chevronIcon.className = isOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
+
+                if (isOpen) {
+                    searchInput.focus();
+                }
+            });
+
+            // Filter colleges based on search input
+            searchInput.addEventListener('input', () => {
+                populateDropdownList(searchInput.value);
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!dropdownHeader.contains(e.target) && !dropdownList.contains(e.target)) {
+                    dropdownList.classList.remove('show');
+                    dropdownHeader.classList.remove('open');
+                    chevronIcon.className = 'fas fa-chevron-down';
+                }
+            });
+
+            // Keyboard navigation
+            searchInput.addEventListener('keydown', (e) => {
+                const items = optionsList.querySelectorAll('.dropdown-item');
+                if (items.length === 0) return;
+
+                let currentItem = Array.from(items).find(item => item.classList.contains('highlighted'));
+
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (!currentItem) {
+                        items[0].classList.add('highlighted');
+                    } else {
+                        currentItem.classList.remove('highlighted');
+                        const nextItem = currentItem.nextElementSibling || items[0];
+                        nextItem.classList.add('highlighted');
+                        nextItem.scrollIntoView({ block: 'nearest' });
+                    }
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (!currentItem) {
+                        items[items.length - 1].classList.add('highlighted');
+                    } else {
+                        currentItem.classList.remove('highlighted');
+                        const prevItem = currentItem.previousElementSibling || items[items.length - 1];
+                        prevItem.classList.add('highlighted');
+                        prevItem.scrollIntoView({ block: 'nearest' });
+                    }
+                } else if (e.key === 'Enter' && currentItem) {
+                    e.preventDefault();
+                    currentItem.click();
+                }
+            });
+
+            // Toggle other department field
+            function toggleOtherDepartment() {
+                if (departmentSelect.value === 'Others') {
+                    otherDepartmentInput.style.display = 'block';
+                    otherDepartmentNameInput.setAttribute('required', 'required');
+                } else {
+                    otherDepartmentInput.style.display = 'none';
+                    otherDepartmentNameInput.removeAttribute('required');
+                }
+            }
+
+            departmentSelect.addEventListener('change', toggleOtherDepartment);
+
+            // Handle event selection
+            function handleEventSelection() {
+                let selectedEvent = '';
+
+                // Get selected event
+                eventRadios.forEach((radio) => {
+                    if (radio.checked) {
+                        selectedEvent = radio.value;
+                    }
+                });
+
+                // Handle member fields based on selected event
+                if (selectedEvent === 'NON TECHNICAL ROUND DANCING') {
+                    secondMemberField.removeAttribute('required');
+                    secondMemberRollNoField.removeAttribute('required');
+                    secondMemberPhoneField.removeAttribute('required');
+                    secondMemberEmailField.removeAttribute('required');
+                    thirdMemberSection.style.display = 'block';
+                    fourthMemberSection.style.display = 'block';
+                    fifthMemberSection.style.display = 'block';
+                } else {
+                    secondMemberField.setAttribute('required', 'required');
+                    secondMemberRollNoField.setAttribute('required', 'required');
+                    secondMemberPhoneField.setAttribute('required', 'required');
+                    secondMemberEmailField.setAttribute('required', 'required');
+                    fourthMemberSection.style.display = 'none';
+                    fifthMemberSection.style.display = 'none';
+
+                    if (selectedEvent === 'PAPER PRESENTATION' || selectedEvent === 'MARKETING') {
+                        thirdMemberSection.style.display = 'block';
+                    } else {
+                        thirdMemberSection.style.display = 'none';
+                    }
+                }
+            }
+
+            // Add event listeners to radio buttons
+            eventRadios.forEach((radio) => {
+                radio.addEventListener('change', handleEventSelection);
+            });
+
+            // File size validation
+            function validateFileSize(inputElement, warningElementId) {
+                const maxSize = 900 * 1024; // 900 KB in bytes
+                const warningElement = document.getElementById(warningElementId);
+
+                if (inputElement.files.length > 0 && inputElement.files[0].size > maxSize) {
+                    warningElement.style.display = 'block';
+                    inputElement.value = ''; // Clear the file input
+                } else {
+                    warningElement.style.display = 'none';
+                }
+            }
+
+            // Add file validation event listeners
+            document.getElementById('first_member_bonafide').addEventListener('change', function() {
+                validateFileSize(this, 'first-file-size-warning');
+            });
+
+            document.getElementById('second_member_bonafide').addEventListener('change', function() {
+                validateFileSize(this, 'second-file-size-warning');
+            });
+
+            document.getElementById('third_member_bonafide').addEventListener('change', function() {
+                validateFileSize(this, 'third-file-size-warning');
+            });
+
+            document.getElementById('fourth_member_bonafide').addEventListener('change', function() {
+                validateFileSize(this, 'fourth-file-size-warning');
+            });
+
+            document.getElementById('fifth_member_bonafide').addEventListener('change', function() {
+                validateFileSize(this, 'fifth-file-size-warning');
+            });
+
+            // Form submission handler
+            form.addEventListener('submit', function(e) {
+                let isValid = true;
+
+                // Check if college is selected
+                if (!collegeNameInput.value) {
+                    isValid = false;
+                    dropdownHeader.style.borderColor = '#fb7185';
+                    window.scrollTo(0, 0);
+                } else {
+                    dropdownHeader.style.borderColor = '';
+                }
+
+                // Check if an event is selected
+                let eventSelected = false;
+                eventRadios.forEach((radio) => {
+                    if (radio.checked) eventSelected = true;
+                });
+
+                if (!eventSelected) {
+                    isValid = false;
+                    eventMessage.textContent = "Please select an event.";
+                    window.scrollTo(0, 0);
+                } else {
+                    eventMessage.textContent = "";
+                }
+
+                // Check if other department is filled if "Others" is selected
+                if (departmentSelect.value === 'Others' && !otherDepartmentNameInput.value.trim()) {
+                    isValid = false;
+                    otherDepartmentNameInput.focus();
+                    alert("Please specify your department name.");
+                }
+
+                if (!isValid) {
+                    e.preventDefault();
+                }
+            });
+
+            // Reset form handler
+            form.addEventListener('reset', function() {
+                selectedCollegeText.textContent = "Select a college";
+                collegeNameInput.value = "";
+                dropdownHeader.style.borderColor = "";
+                eventMessage.textContent = "";
+                thirdMemberSection.style.display = 'none';
+                fourthMemberSection.style.display = 'none';
+                fifthMemberSection.style.display = 'none';
+
+                // Reset file warnings
+                document.querySelectorAll('.file-warning').forEach(warning => {
+                    warning.style.display = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

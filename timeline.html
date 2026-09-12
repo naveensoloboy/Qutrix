@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>QUTRIX-2K26 Event Schedule</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+
+<style>
+
+:root{
+
+--primary:#020617;
+--accent:#fbbf24;
+--accent-glow:rgba(251,191,36,.4);
+--text-gray:#94a3b8;
+--glass:rgba(255,255,255,.03);
+--glass-border:rgba(255,255,255,.08);
+--white:#ffffff;
+--skyblu:#71e4e4;
+
+}
+
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+
+}
+
+body{
+
+background:var(--primary);
+
+color:white;
+
+padding:60px 20px;
+
+}
+
+.container{
+
+max-width:1150px;
+
+margin:auto;
+
+}
+
+.header{
+
+text-align:center;
+
+margin-bottom:50px;
+
+}
+
+.header h1{
+
+font-size:48px;
+
+color:var(--accent);
+
+letter-spacing:2px;
+
+}
+
+.header p{
+
+color:var(--text-gray);
+
+margin-top:10px;
+
+font-size:18px;
+
+}
+
+.time-block{
+
+margin-bottom:45px;
+
+animation:fadeUp .8s ease;
+
+}
+
+.time-header{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:12px;
+
+padding:12px 24px;
+
+border-radius:40px;
+
+background:linear-gradient(90deg,#fbbf24,#f59e0b);
+
+color:#111827;
+
+font-weight:700;
+
+font-size:18px;
+
+margin-bottom:22px;
+
+box-shadow:0 0 18px var(--accent-glow);
+
+}
+
+.events{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+gap:22px;
+
+}
+
+.card{
+
+background:var(--glass);
+
+backdrop-filter:blur(18px);
+
+border:1px solid var(--glass-border);
+
+border-radius:18px;
+
+padding:22px;
+
+transition:.35s;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.card::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+left:0;
+
+height:4px;
+
+width:100%;
+
+background:linear-gradient(90deg,var(--accent),transparent);
+
+}
+
+.card:hover{
+
+transform:translateY(-8px);
+
+border-color:var(--accent);
+
+box-shadow:0 0 25px rgba(251,191,36,.25);
+
+}
+
+.icon{
+
+width:58px;
+
+height:58px;
+
+border-radius:15px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+background:rgba(251,191,36,.08);
+
+font-size:24px;
+
+color:var(--accent);
+
+margin-bottom:18px;
+
+}
+
+.card h3{
+
+font-size:22px;
+
+margin-bottom:10px;
+
+}
+
+.card p{
+
+margin-top:15px;
+
+color:var(--text-gray);
+
+font-size:15px;
+
+}
+
+.badge{
+
+display:inline-block;
+
+padding:6px 15px;
+
+border-radius:30px;
+
+font-size:12px;
+
+font-weight:700;
+
+letter-spacing:.5px;
+
+margin-top:8px;
+
+}
+
+.prelim{
+
+background:#2563eb;
+
+color:white;
+
+}
+
+.final{
+
+background:#16a34a;
+
+color:white;
+
+}
+
+.break{
+
+background:#d97706;
+
+color:white;
+
+}
+
+.special{
+
+background:#9333ea;
+
+color:white;
+
+}
+
+.break-box{
+
+background:rgba(251,191,36,.08);
+
+border:2px solid rgba(251,191,36,.35);
+
+text-align:center;
+
+padding:30px;
+
+border-radius:20px;
+
+}
+
+.break-box h2{
+
+font-size:30px;
+
+color:var(--accent);
+
+margin-bottom:10px;
+
+}
+
+.break-box p{
+
+color:white;
+
+font-size:18px;
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(35px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+@media(max-width:768px){
+
+.header h1{
+
+font-size:34px;
+
+}
+
+.time-header{
+
+font-size:15px;
+
+}
+
+.card h3{
+
+font-size:19px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<h1>QUTRIX-2K26</h1>
+
+<p>Intercollegiate Technical Symposium • Event Schedule</p>
+
+</div>
+<!-- =========================
+09:00 AM - 09:10 AM
+========================== -->
+
+<div class="time-block">
+
+    <div class="time-header">
+        <i class="fa-solid fa-clock"></i>
+        09:00 AM - 09:10 AM
+    </div>
+
+    <div class="events">
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fa-solid fa-flag-checkered"></i>
+            </div>
+
+            <h3>Inauguration</h3>
+
+            <span class="badge special">OPENING</span>
+
+            <p>📍 KAM Hall</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+09:15 AM - 10:15 AM
+========================== -->
+
+<div class="time-block">
+
+    <div class="time-header">
+        <i class="fa-solid fa-clock"></i>
+        09:15 AM - 10:15 AM
+    </div>
+
+    <div class="events">
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fa-solid fa-file-lines"></i>
+            </div>
+
+            <h3>Paper Presentation</h3>
+
+            <span class="badge final">FINALS</span>
+
+            <p>📍 KAM Hall</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+10:20 AM - 10:50 AM
+========================== -->
+
+<div class="time-block">
+
+    <div class="time-header">
+        <i class="fa-solid fa-clock"></i>
+        10:20 AM - 10:50 AM
+    </div>
+
+    <div class="events">
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
+
+            <h3>Quiz</h3>
+
+            <span class="badge prelim">PRELIMS</span>
+
+            <p>📍 KMR Auditorium</p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fa-solid fa-code"></i>
+            </div>
+
+            <h3>Web Design</h3>
+
+            <span class="badge prelim">PRELIMS</span>
+
+            <p>📍 KMR Auditorium</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+10:50 AM - 11:10 AM
+========================== -->
+
+<div class="time-block">
+
+    <div class="time-header">
+        <i class="fa-solid fa-mug-hot"></i>
+        10:50 AM - 11:10 AM
+    </div>
+
+    <div class="break-box">
+
+        <h2>☕ REFRESHMENT</h2>
+
+        <p>KAM Hall Outside</p>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+11:10 AM - 12:15 PM
+========================== -->
+
+<div class="time-block">
+
+    <div class="time-header">
+        <i class="fa-solid fa-clock"></i>
+        11:10 AM - 12:15 PM
+    </div>
+
+    <div class="events">
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fa-solid fa-music"></i>
+            </div>
+
+            <h3>Dance</h3>
+
+            <span class="badge final">FINALS</span>
+
+            <p>📍 KAM Hall</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+11:15 AM - 11:45 AM
+========================== -->
+
+<div class="time-block">
+
+    <div class="time-header">
+        <i class="fa-solid fa-clock"></i>
+        11:15 AM - 11:45 AM
+    </div>
+
+    <div class="events">
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fa-solid fa-bullhorn"></i>
+            </div>
+
+            <h3>Marketing</h3>
+
+            <span class="badge prelim">PRELIMS</span>
+
+            <p>📍 KMR Auditorium</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+11:45 AM - 12:15 PM
+========================== -->
+
+<div class="time-block">
+
+    <div class="time-header">
+        <i class="fa-solid fa-clock"></i>
+        11:45 AM - 12:15 PM
+    </div>
+
+    <div class="events">
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fa-solid fa-laptop-code"></i>
+            </div>
+
+            <h3>Software Contest</h3>
+
+            <span class="badge prelim">PRELIMS</span>
+
+            <p>📍 Lab-II</p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fa-solid fa-font"></i>
+            </div>
+
+            <h3>Word Hunt</h3>
+
+            <span class="badge prelim">PRELIMS</span>
+
+            <p>📍 KMR Auditorium</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+12:15 PM - 01:00 PM
+========================== -->
+
+<div class="time-block">
+
+    <div class="time-header">
+        <i class="fa-solid fa-utensils"></i>
+        12:15 PM - 01:00 PM
+    </div>
+
+    <div class="break-box">
+
+        <h2>🍽 LUNCH</h2>
+
+        <p>KMR Auditorium</p>
+
+    </div>
+
+</div>
+<!-- =========================
+01:00 PM - 02:00 PM
+========================== -->
+
+<div class="time-block">
+
+    <div class="time-header">
+        <i class="fa-solid fa-clock"></i>
+        01:00 PM - 02:00 PM
+    </div>
+
+    <div class="events">
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
+
+            <h3>Quiz</h3>
+
+            <span class="badge final">FINALS</span>
+
+            <p>📍 KMR Auditorium</p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fa-solid fa-code"></i>
+            </div>
+
+            <h3>Web Design</h3>
+
+            <span class="badge final">FINALS</span>
+
+            <p>📍 Lab-II</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+02:00 PM - 03:00 PM
+========================== -->
+
+<div class="time-block">
+
+    <div class="time-header">
+        <i class="fa-solid fa-clock"></i>
+        02:00 PM - 03:00 PM
+    </div>
+
+    <div class="events">
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fa-solid fa-font"></i>
+            </div>
+
+            <h3>Word Hunt</h3>
+
+            <span class="badge final">FINALS</span>
+
+            <p>📍 KAM Hall</p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fa-solid fa-laptop-code"></i>
+            </div>
+
+            <h3>Software Contest</h3>
+
+            <span class="badge final">FINALS</span>
+
+            <p>📍 Lab-II</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+03:00 PM - 04:00 PM
+========================== -->
+
+<div class="time-block">
+
+    <div class="time-header">
+        <i class="fa-solid fa-clock"></i>
+        03:00 PM - 04:00 PM
+    </div>
+
+    <div class="events">
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fa-solid fa-bullhorn"></i>
+            </div>
+
+            <h3>Marketing</h3>
+
+            <span class="badge final">FINALS</span>
+
+            <p>📍 KAM Hall</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+04:15 PM - 05:00 PM
+========================== -->
+
+<div class="time-block">
+
+    <div class="time-header">
+        <i class="fa-solid fa-clock"></i>
+        04:15 PM - 05:00 PM
+    </div>
+
+    <div class="events">
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <h3>Valedictory Function</h3>
+
+            <span class="badge special">CLOSING CEREMONY</span>
+
+            <p>📍 KAM Hall</p>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+<script>
+// --- DYNAMIC TIMELINE SCHEDULE FETCH ---
+async function loadTimelineSchedule() {
+    try {
+        const response = await fetch('get_timeline_settings.php');
+        const result = await response.json();
+
+        if (result.status === 'success' && Array.isArray(result.data) && result.data.length > 0) {
+            renderTimelineData(result.data);
+        }
+    } catch (err) {
+        console.log('Using static default timeline layout', err);
+    }
+}
+
+function renderTimelineData(slots) {
+    const container = document.querySelector('.container');
+    if (!container) return;
+
+    // Preserve header
+    const headerHtml = `
+        <div class="header">
+            <h1>QUTRIX-2K26</h1>
+            <p>Intercollegiate Technical Symposium • Event Schedule</p>
+        </div>
+    `;
+
+    let html = headerHtml;
+
+    slots.forEach(slot => {
+        if (slot.is_break) {
+            html += `
+                <div class="time-block">
+                    <div class="time-header">
+                        <i class="${slot.icon || 'fa-solid fa-mug-hot'}"></i>
+                        ${escapeHtml(slot.time_slot)}
+                    </div>
+                    <div class="break-box">
+                        <h2>${escapeHtml(slot.break_title)}</h2>
+                        <p>${escapeHtml(slot.break_venue)}</p>
+                    </div>
+                </div>
+            `;
+        } else {
+            let eventsHtml = '';
+            if (Array.isArray(slot.events)) {
+                slot.events.forEach(ev => {
+                    eventsHtml += `
+                        <div class="card">
+                            <div class="icon">
+                                <i class="${ev.icon || 'fa-solid fa-clock'}"></i>
+                            </div>
+                            <h3>${escapeHtml(ev.title)}</h3>
+                            <span class="badge ${ev.badge_type || 'prelim'}">${escapeHtml(ev.badge || 'PRELIMS')}</span>
+                            <p>${escapeHtml(ev.venue || '')}</p>
+                        </div>
+                    `;
+                });
+            }
+
+            html += `
+                <div class="time-block">
+                    <div class="time-header">
+                        <i class="fa-solid fa-clock"></i>
+                        ${escapeHtml(slot.time_slot)}
+                    </div>
+                    <div class="events">
+                        ${eventsHtml}
+                    </div>
+                </div>
+            `;
+        }
+    });
+
+    container.innerHTML = html;
+    initAnimations();
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
+function initAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+                entry.target.style.transition = "all .8s ease";
+            }
+        });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll(".time-block").forEach((block) => {
+        block.style.opacity = "0";
+        block.style.transform = "translateY(40px)";
+        observer.observe(block);
+    });
+
+    document.querySelectorAll(".card").forEach(card => {
+        card.addEventListener("mouseenter", () => {
+            card.style.boxShadow = "0 0 35px rgba(251,191,36,.35)";
+            card.style.borderColor = "#fbbf24";
+        });
+        card.addEventListener("mouseleave", () => {
+            card.style.boxShadow = "";
+            card.style.borderColor = "rgba(255,255,255,.08)";
+        });
+    });
+
+    document.querySelectorAll(".time-header").forEach(header => {
+        header.addEventListener("mouseenter", () => {
+            header.style.transform = "scale(1.03)";
+            header.style.boxShadow = "0 0 30px rgba(251,191,36,.55)";
+        });
+        header.addEventListener("mouseleave", () => {
+            header.style.transform = "scale(1)";
+            header.style.boxShadow = "0 0 18px rgba(251,191,36,.40)";
+        });
+    });
+}
+
+loadTimelineSchedule();
+</script>
+
+</body>
+</html>
