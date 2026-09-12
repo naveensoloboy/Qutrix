@@ -737,6 +737,7 @@ $title_highlight = $title_parts[1] ?? '2K26';
             <li><a href="#home">Home</a></li>
             <li><a href="index_about.html">About</a></li>
             <!-- <li><a href="gallery.html">Gallery</a></li> -->
+            <li><a href="gallery.html">Gallery</a></li>
             <li><a href="card.html">Events</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
