@@ -854,7 +854,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "</div>";
     }
 } else {
-    header("Location: new_form.html");
+    header("Location: new_form.php");
     exit();
 }
 ?>

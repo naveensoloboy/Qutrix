@@ -1,3 +1,474 @@
+<?php
+
+$registrationEnabled = getenv('REGISTRATION_ENABLED') === 'true';
+
+if (!$registrationEnabled) {
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Important for mobile responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Registration Closed | Qutrix</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(99, 102, 241, 0.25),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(139, 92, 246, 0.20),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #0f172a,
+                    #111827,
+                    #1e1b4b
+                );
+
+            color: #ffffff;
+
+            overflow-x: hidden;
+        }
+
+        /* Background decorative circles */
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+
+            width: 280px;
+            height: 280px;
+
+            border-radius: 50%;
+
+            filter: blur(80px);
+
+            opacity: 0.35;
+
+            pointer-events: none;
+        }
+
+        body::before {
+            top: -100px;
+            left: -100px;
+
+            background: #6366f1;
+        }
+
+        body::after {
+            right: -100px;
+            bottom: -100px;
+
+            background: #8b5cf6;
+        }
+
+        /* Main container */
+
+        .page {
+            width: 100%;
+            max-width: 520px;
+
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Card */
+
+        .card {
+            width: 100%;
+
+            padding: 42px 36px;
+
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border: 1px solid rgba(255, 255, 255, 0.14);
+
+            border-radius: 28px;
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+            animation: cardAppear 0.6s ease-out;
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Icon */
+
+        .icon-wrapper {
+            width: 82px;
+            height: 82px;
+
+            margin: 0 auto 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.10);
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.20);
+        }
+
+        .icon {
+            font-size: 38px;
+        }
+
+        /* Brand */
+
+        .brand {
+            font-size: 14px;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            color: rgba(255, 255, 255, 0.65);
+
+            margin-bottom: 12px;
+        }
+
+        /* Heading */
+
+        h1 {
+            font-size: clamp(26px, 5vw, 38px);
+
+            line-height: 1.15;
+
+            font-weight: 800;
+
+            letter-spacing: -0.8px;
+
+            margin-bottom: 16px;
+        }
+
+        /* Description */
+
+        .description {
+            max-width: 410px;
+
+            margin: 0 auto;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+
+            color: rgba(255, 255, 255, 0.70);
+        }
+
+        /* Status */
+
+        .status {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+
+            margin-top: 26px;
+
+            padding: 10px 16px;
+
+            border-radius: 999px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #f59e0b;
+
+            box-shadow:
+                0 0 0 4px rgba(245, 158, 11, 0.12);
+        }
+
+        /* Footer */
+
+        .footer {
+            margin-top: 28px;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+            color: rgba(255, 255, 255, 0.40);
+        }
+
+        /* Tablet */
+
+        @media (max-width: 768px) {
+
+            body {
+                padding: 18px;
+            }
+
+            .card {
+                padding: 38px 30px;
+                border-radius: 24px;
+            }
+
+            .icon-wrapper {
+                width: 76px;
+                height: 76px;
+            }
+
+            .icon {
+                font-size: 34px;
+            }
+        }
+
+        /* Mobile */
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 14px;
+            }
+
+            .page {
+                max-width: 100%;
+            }
+
+            .card {
+                padding: 34px 22px;
+                border-radius: 22px;
+            }
+
+            .icon-wrapper {
+                width: 70px;
+                height: 70px;
+
+                margin-bottom: 20px;
+            }
+
+            .icon {
+                font-size: 31px;
+            }
+
+            .brand {
+                font-size: 12px;
+                letter-spacing: 1.6px;
+            }
+
+            h1 {
+                font-size: 27px;
+                letter-spacing: -0.5px;
+            }
+
+            .description {
+                font-size: 14px;
+                line-height: 1.65;
+            }
+
+            .status {
+                margin-top: 22px;
+                font-size: 12px;
+                padding: 9px 14px;
+            }
+
+            .footer {
+                margin-top: 24px;
+                font-size: 11px;
+            }
+        }
+
+        /* Very small phones */
+
+        @media (max-width: 360px) {
+
+            body {
+                padding: 10px;
+            }
+
+            .card {
+                padding: 28px 17px;
+                border-radius: 20px;
+            }
+
+            .icon-wrapper {
+                width: 62px;
+                height: 62px;
+            }
+
+            .icon {
+                font-size: 28px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .description {
+                font-size: 13px;
+            }
+        }
+
+        /* Landscape mobile */
+
+        @media (max-height: 500px) and (orientation: landscape) {
+
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 24px;
+            }
+
+            .icon-wrapper {
+                width: 55px;
+                height: 55px;
+                margin-bottom: 12px;
+            }
+
+            .icon {
+                font-size: 25px;
+            }
+
+            h1 {
+                font-size: 25px;
+                margin-bottom: 10px;
+            }
+
+            .description {
+                line-height: 1.5;
+            }
+
+            .status {
+                margin-top: 15px;
+            }
+        }
+
+        /* Accessibility */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .card {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="page">
+
+        <section class="card">
+
+            <div class="icon-wrapper">
+                <span class="icon">🔒</span>
+            </div>
+
+            <div class="brand">
+                Qutrix
+            </div>
+
+            <h1>
+                Registrations are Closed
+            </h1>
+
+            <p class="description">
+                Registration for Qutrix is currently unavailable.
+                Please check again later for registration updates.
+            </p>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                Registration Temporarily Closed
+            </div>
+
+            <div class="footer">
+                Thank you for your interest in Qutrix.
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
+
+<?php
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

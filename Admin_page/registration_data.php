@@ -443,9 +443,9 @@ if ($can_view_all_events) {
                 </tbody>
             </table>
         <?php else: ?>
-            <div style="padding: 30px; text-align: center; color: var(--text-dim);">
+            <!-- <div style="padding: 30px; text-align: center; color: var(--text-dim);">
                 No registrations found.
-            </div>
+            </div> -->
         <?php endif; ?>
     </div>
 
