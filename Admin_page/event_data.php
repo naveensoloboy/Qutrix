@@ -34,15 +34,25 @@ if (!function_exists('safeString')) {
     }
 }
 
-// --- FULL CSV EXPORT LOGIC ---
-if (isset($_GET['action']) && $_GET['action'] == 'export_csv') {
-    // Clear any previous output to ensure a clean CSV
-    ob_end_clean();
+// --- FULL EXCEL / CSV EXPORT LOGIC ---
+if (isset($_GET['action']) && ($_GET['action'] == 'export_csv' || $_GET['action'] == 'export_excel')) {
+    // Clear any previous output buffers safely
+    while (ob_get_level() > 0) {
+        ob_end_clean();
+    }
    
+    $clean_event_name = !empty($event) ? preg_replace('/[^A-Za-z0-9_\-]/', '_', $event) : 'All_Events';
+    $filename = 'Registrations_' . $clean_event_name . '_' . date('Ymd_His') . '.csv';
+
     header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename=Registrations_'.str_replace(' ', '_', $event).'_'.date('Ymd').'.csv');
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
+    header('Cache-Control: max-age=0');
+    header('Pragma: public');
    
     $output = fopen('php://output', 'w');
+
+    // Write UTF-8 BOM byte marker so Excel opens Unicode/CSV natively
+    fwrite($output, "\xEF\xBB\xBF");
    
     // 1. Define Column Headers (All 31 Columns)
     fputcsv($output, [
@@ -55,27 +65,61 @@ if (isset($_GET['action']) && $_GET['action'] == 'export_csv') {
         'Registration Timestamp'
     ]);
 
+    // Helper for safe CSV values
+    $getSafeVal = function($val) {
+        if ($val instanceof MongoDB\BSON\UTCDateTime) {
+            return $val->toDateTime()->setTimezone(new DateTimeZone('Asia/Kolkata'))->format('Y-m-d H:i:s');
+        } elseif (is_array($val) || $val instanceof MongoDB\Model\BSONArray) {
+            return implode(', ', (array)$val);
+        } elseif (is_string($val) || is_numeric($val)) {
+            return (string)$val;
+        }
+        return '';
+    };
+
     // 2. Fetch and Write Data
     $export_result = $db->registrations->find($filter, $options);
     $count = 1;
     foreach ($export_result as $row) {
+        $timestamp = isset($row['created_at']) ? $getSafeVal($row['created_at']) : 'N/A';
+
         fputcsv($output, [
             $count++,
-            $row['college_name'] ?? 'N/A',
-            $row['department'] ?? 'N/A',
-            $row['event'] ?? 'N/A',
+            $getSafeVal($row['college_name'] ?? 'N/A'),
+            $getSafeVal($row['department'] ?? 'N/A'),
+            $getSafeVal($row['event'] ?? 'N/A'),
             // Member 1
-            $row['first_member_name'] ?? '', $row['first_member_rollno'] ?? '', $row['first_member_phone'] ?? '', $row['first_member_email'] ?? '', $row['first_member_bonafide'] ?? '',
+            $getSafeVal($row['first_member_name'] ?? ''),
+            $getSafeVal($row['first_member_rollno'] ?? ''),
+            $getSafeVal($row['first_member_phone'] ?? ''),
+            $getSafeVal($row['first_member_email'] ?? ''),
+            $getSafeVal($row['first_member_bonafide'] ?? ''),
             // Member 2
-            $row['second_member_name'] ?? '', $row['second_member_rollno'] ?? '', $row['second_member_phone'] ?? '', $row['second_member_email'] ?? '', $row['second_member_bonafide'] ?? '',
+            $getSafeVal($row['second_member_name'] ?? ''),
+            $getSafeVal($row['second_member_rollno'] ?? ''),
+            $getSafeVal($row['second_member_phone'] ?? ''),
+            $getSafeVal($row['second_member_email'] ?? ''),
+            $getSafeVal($row['second_member_bonafide'] ?? ''),
             // Member 3
-            $row['third_member_name'] ?? '', $row['third_member_rollno'] ?? '', $row['third_member_phone'] ?? '', $row['third_member_email'] ?? '', $row['third_member_bonafide'] ?? '',
+            $getSafeVal($row['third_member_name'] ?? ''),
+            $getSafeVal($row['third_member_rollno'] ?? ''),
+            $getSafeVal($row['third_member_phone'] ?? ''),
+            $getSafeVal($row['third_member_email'] ?? ''),
+            $getSafeVal($row['third_member_bonafide'] ?? ''),
             // Member 4
-            $row['fourth_member_name'] ?? '', $row['fourth_member_rollno'] ?? '', $row['fourth_member_phone'] ?? '', $row['fourth_member_email'] ?? '', $row['fourth_member_bonafide'] ?? '',
+            $getSafeVal($row['fourth_member_name'] ?? ''),
+            $getSafeVal($row['fourth_member_rollno'] ?? ''),
+            $getSafeVal($row['fourth_member_phone'] ?? ''),
+            $getSafeVal($row['fourth_member_email'] ?? ''),
+            $getSafeVal($row['fourth_member_bonafide'] ?? ''),
             // Member 5
-            $row['fifth_member_name'] ?? '', $row['fifth_member_rollno'] ?? '', $row['fifth_member_phone'] ?? '', $row['fifth_member_email'] ?? '', $row['fifth_member_bonafide'] ?? '',
+            $getSafeVal($row['fifth_member_name'] ?? ''),
+            $getSafeVal($row['fifth_member_rollno'] ?? ''),
+            $getSafeVal($row['fifth_member_phone'] ?? ''),
+            $getSafeVal($row['fifth_member_email'] ?? ''),
+            $getSafeVal($row['fifth_member_bonafide'] ?? ''),
             // Date
-            isset($row['created_at']) ? $row['created_at']->toDateTime()->format('Y-m-d H:i:s') : 'N/A'
+            $timestamp
         ]);
     }
     fclose($output);
